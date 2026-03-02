@@ -142,6 +142,36 @@ Create new `.md` files in `.claude/agents/` following the existing format. Refer
 | `bin/local-stack.sh start` | Start dev environment |
 | `bin/deploy-staging.sh` | Deploy to staging |
 
+## Syncing Template Updates
+
+When the template gets new versions (v1.1, v2.0), projects created from it can selectively adopt improvements.
+
+### First-time setup
+
+```bash
+bin/sync-from-template.sh --setup
+```
+
+This adds the template as a read-only git remote.
+
+### Check what changed
+
+```bash
+bin/sync-from-template.sh                  # report mode — shows what's new
+bin/sync-from-template.sh --tag v2.0.0     # compare against specific version
+```
+
+Output categorizes every file as `[NEW]`, `[UPDATED]`, or `[SAME]`.
+
+### Adopt changes selectively
+
+```bash
+bin/sync-from-template.sh --interactive    # prompted per file: accept / diff / skip
+bin/sync-from-template.sh --apply docs/GOTCHAS.md   # accept one specific file
+```
+
+You're never forced to take anything. Your project-specific customizations are preserved unless you explicitly accept the template version.
+
 ## Philosophy
 
 This template embodies three core beliefs:
