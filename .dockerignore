@@ -1,0 +1,33 @@
+# Dependencies (reinstalled in Docker build)
+node_modules/
+dashboard/node_modules/
+
+# Build artifacts
+.next/
+dashboard/.next/
+dist/
+
+# OS artifacts
+.DS_Store
+*.log
+
+# Git
+.git/
+.gitignore
+
+# Tests (not needed at runtime — CI runs them before Docker build)
+test/
+coverage/
+
+# Docs (not needed at runtime)
+docs/
+
+# IDE
+.vscode/
+.idea/
+
+# Secrets (injected at runtime via Secret Manager, NOT baked into image)
+.env
+.env.*
+**/service-account*.json
+**/credentials*.json

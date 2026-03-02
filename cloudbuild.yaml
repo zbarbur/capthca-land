@@ -1,0 +1,128 @@
+# ============================================================================
+# {{PROJECT_NAME}} — CI + Staging Pipeline
+# Trigger: Auto on push to main
+# Runs: Install → Audit → Lint → Test → Build image → Deploy to staging
+# Production deploy: use cloudbuild-deploy.yaml (manual trigger).
+# ============================================================================
+
+substitutions:
+  _REGION: "us-central1"
+  _ARTIFACT_REPO: "{{PROJECT_SLUG}}"
+  _IMAGE_NAME: "{{PROJECT_SLUG}}"
+  _TAG: "latest"
+  _STAGING_SERVICE: "{{PROJECT_SLUG}}-staging"
+
+steps:
+  # ── Step 1: Install Dependencies ──────────────────────────────────────────
+  - name: "node:20-alpine"
+    id: "install-deps"
+    entrypoint: "sh"
+    args:
+      - "-c"
+      - |
+        set -euo pipefail
+        apk add --no-cache git
+        echo "==> Installing root dependencies..."
+        npm ci
+        echo "==> Installing dashboard dependencies..."
+        cd dashboard && npm ci
+
+  # ── Step 2: Security Audit (advisory) ─────────────────────────────────────
+  - name: "node:20-alpine"
+    id: "security-audit"
+    entrypoint: "sh"
+    args:
+      - "-c"
+      - |
+        set -euo pipefail
+        echo "==> Auditing dependencies..."
+        npm audit --audit-level=high --production || true
+    waitFor: ["install-deps"]
+
+  # ── Step 3: Lint with Biome ───────────────────────────────────────────────
+  - name: "node:20-alpine"
+    id: "lint"
+    entrypoint: "sh"
+    args:
+      - "-c"
+      - |
+        set -euo pipefail
+        echo "==> Running Biome linter..."
+        npm run lint
+    waitFor: ["install-deps"]
+
+  # ── Step 4: Run Tests ─────────────────────────────────────────────────────
+  - name: "node:20-alpine"
+    id: "test"
+    entrypoint: "sh"
+    args:
+      - "-c"
+      - |
+        set -euo pipefail
+        echo "==> Running tests..."
+        npm run test
+    env:
+      - "NODE_ENV=test"
+      - "CI=true"
+    waitFor: ["install-deps"]
+
+  # ── Step 5: Build & Push Docker Image (Kaniko) ────────────────────────────
+  - name: "gcr.io/kaniko-project/executor:latest"
+    id: "build-image"
+    args:
+      - "--destination=${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REPO}/${_IMAGE_NAME}:${_TAG}"
+      - "--destination=${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REPO}/${_IMAGE_NAME}:latest"
+      - "--cache=true"
+      - "--cache-ttl=168h"
+      - "--compressed-caching=false"
+      - "--snapshot-mode=redo"
+      - "--log-format=text"
+    waitFor: ["security-audit", "lint", "test"]
+
+  # ── Step 6: Deploy to Staging ─────────────────────────────────────────────
+  # Note: $$EXTRA_FLAGS uses $$ to escape shell variable in Cloud Build
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk:slim"
+    id: "deploy-staging"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        EXTRA_FLAGS=""
+        if gcloud run services describe ${_STAGING_SERVICE} --region=${_REGION} --format="value(status.url)" 2>/dev/null; then
+          EXTRA_FLAGS="--no-traffic"
+        fi
+        gcloud run deploy ${_STAGING_SERVICE} \
+          --image=${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REPO}/${_IMAGE_NAME}:${_TAG} \
+          --region=${_REGION} \
+          --platform=managed \
+          --allow-unauthenticated \
+          --min-instances=0 \
+          --max-instances=2 \
+          --cpu=1 \
+          --memory=512Mi \
+          --timeout=300 \
+          --concurrency=80 \
+          --port=8080 \
+          $$EXTRA_FLAGS
+    waitFor: ["build-image"]
+
+  # ── Step 7: Route Staging Traffic ─────────────────────────────────────────
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk:slim"
+    id: "route-staging-traffic"
+    entrypoint: "gcloud"
+    args:
+      - "run"
+      - "services"
+      - "update-traffic"
+      - "${_STAGING_SERVICE}"
+      - "--to-latest"
+      - "--region=${_REGION}"
+    waitFor: ["deploy-staging"]
+
+options:
+  machineType: "E2_HIGHCPU_8"
+  diskSizeGb: 50
+  logging: CLOUD_LOGGING_ONLY
+  dynamicSubstitutions: true
+
+timeout: "1200s"

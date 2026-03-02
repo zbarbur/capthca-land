@@ -1,0 +1,44 @@
+# ============================================================================
+# Cloud Build context exclusions
+# Similar to .dockerignore but keeps test/ for CI steps (lint/test run before
+# Docker build). The Dockerfile/.dockerignore keeps tests out of the final image.
+# ============================================================================
+
+# Dependencies (reinstalled in build)
+node_modules/
+dashboard/node_modules/
+
+# Build artifacts
+.next/
+dashboard/.next/
+dist/
+
+# OS artifacts
+.DS_Store
+*.log
+
+# Environment files
+.env*
+
+# Markdown docs (not needed at runtime)
+*.md
+
+# Git
+.git/
+.git-blame-ignore-revs
+
+# Test coverage output
+coverage/
+
+# Documentation (not needed at runtime)
+docs/
+
+# IDE
+.vscode/
+.idea/
+
+# Claude Code config
+.claude/
+
+# Husky hooks (git-only)
+.husky/

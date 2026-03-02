@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+.next/
+dashboard/.next/
+
+# OS artifacts
+.DS_Store
+
+# Runtime data
+data/
+
+# Generated files
+*.generated.*
+
+# Credentials & secrets — NEVER commit these
+.env
+.env.*
+**/service-account*.json
+**/credentials*.json
+
+# Local stack
+.local-stack/
