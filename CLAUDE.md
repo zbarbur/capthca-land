@@ -25,6 +25,15 @@ Before running any infrastructure, dev, or management command, check this list f
 ### Data & Utilities
 - **Generate demo data**: `bin/gen-demo.sh`
 
+## Bug Tracking
+
+- **Report a bug**: `/report-bug [description]` — creates a GitHub issue or appends to KANBAN.md
+- **Fix a bug**: `/fix-bug <issue-number|search-text>` — fetches issue, investigates, proposes fix, implements after approval
+- **Tracker config**: `.claude/project.json` — set `tracker.type` to `"github"` or `"none"`
+- When `tracker.type` is `"github"`, bugs are tracked as GitHub issues with severity labels
+- When `tracker.type` is `"none"` or the file is missing, bugs fall back to KANBAN.md entries
+- Sprint start includes bug triage; sprint end includes issue reconciliation
+
 ## Code Style
 
 - Biome v2 for linting/formatting (tabs, double quotes, trailing commas)

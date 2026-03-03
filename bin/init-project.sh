@@ -46,6 +46,36 @@ ENV_PREFIX="${ENV_PREFIX:-$DEFAULT_PREFIX}"
 
 YEAR=$(date +%Y)
 
+# ── Bug Tracker ───────────────────────────────────────────────────────
+
+echo ""
+echo "==> Bug Tracker Configuration"
+echo "    Options: github, none"
+read -p "Bug tracker type [none]: " TRACKER_TYPE
+TRACKER_TYPE="${TRACKER_TYPE:-none}"
+
+TRACKER_REPO=""
+if [ "$TRACKER_TYPE" = "github" ]; then
+	if ! command -v gh &>/dev/null; then
+		echo "Warning: 'gh' CLI not found. Install it from https://cli.github.com/"
+		echo "Falling back to tracker type 'none'."
+		TRACKER_TYPE="none"
+	else
+		# Try to auto-detect repo from gh
+		DETECTED_REPO=$(gh repo view --json nameWithOwner -q '.nameWithOwner' 2>/dev/null || true)
+		if [ -n "$DETECTED_REPO" ]; then
+			read -p "GitHub repo [$DETECTED_REPO]: " TRACKER_REPO
+			TRACKER_REPO="${TRACKER_REPO:-$DETECTED_REPO}"
+		else
+			read -p "GitHub repo (owner/name): " TRACKER_REPO
+		fi
+		if [ -z "$TRACKER_REPO" ]; then
+			echo "Warning: No repo provided. Falling back to tracker type 'none'."
+			TRACKER_TYPE="none"
+		fi
+	fi
+fi
+
 echo ""
 echo "==> Configuration:"
 echo "    Name:        $PROJECT_NAME"
@@ -54,6 +84,7 @@ echo "    Description: $PROJECT_DESCRIPTION"
 echo "    Author:      $AUTHOR"
 echo "    Team:        $TEAM_NAME"
 echo "    Env Prefix:  $ENV_PREFIX"
+echo "    Tracker:     $TRACKER_TYPE${TRACKER_REPO:+ ($TRACKER_REPO)}"
 echo ""
 read -p "Proceed? (y/n): " CONFIRM
 if [ "$CONFIRM" != "y" ]; then
@@ -91,6 +122,16 @@ find "$PROJECT_DIR" \
 done
 
 echo "==> Placeholders replaced."
+
+# ── Generate project.json ─────────────────────────────────────────────
+
+echo "==> Writing .claude/project.json..."
+cat > "$PROJECT_DIR/.claude/project.json" <<EOF
+{
+	"project": { "name": "$PROJECT_NAME", "slug": "$PROJECT_SLUG" },
+	"tracker": { "type": "$TRACKER_TYPE", "repo": "$TRACKER_REPO" }
+}
+EOF
 
 # ── Install dependencies ───────────────────────────────────────────────
 
@@ -131,5 +172,7 @@ echo "  npm test          — Run tests"
 echo "  npm run ci        — Full CI check (lint + typecheck + test)"
 echo "  npm run lint      — Lint only"
 echo "  npm run format    — Auto-format"
+echo "  /report-bug       — Report a bug (creates GitHub issue or KANBAN entry)"
+echo "  /fix-bug <N>      — Investigate and fix a tracked bug"
 echo ""
 echo "Optional: Delete dashboard/ if you don't need a Next.js frontend."

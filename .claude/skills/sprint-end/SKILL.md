@@ -34,6 +34,42 @@ Read and update `docs/process/KANBAN.md`:
 - Ask: any new tech debt items?
 - Write the updated KANBAN.md
 
+## Phase 2b: Issue Reconciliation
+
+Read `.claude/project.json` for tracker configuration.
+
+### GitHub Mode (`tracker.type === "github"`)
+
+1. Find issue references in sprint commits:
+   ```bash
+   git log --oneline --grep="Fixes #" --grep="fixes #" --grep="Closes #" --grep="closes #"
+   ```
+
+2. Extract referenced issue numbers and check their status:
+   ```bash
+   gh issue view {N} --repo "{tracker.repo}" --json state,title
+   ```
+
+3. Present a reconciliation table:
+   | Issue | Title | Status | Suggested Action |
+   |-------|-------|--------|-----------------|
+   | #N | {title} | open/closed | Close (fixed in commit abc) / Carry forward |
+
+4. For issues the user approves to close:
+   ```bash
+   gh issue close {N} --repo "{tracker.repo}" --comment "Closed as part of Sprint {N} — fixed in {commit_sha}"
+   ```
+
+5. For unresolved bugs, add them to KANBAN.md backlog.
+
+### File-Based Mode (`tracker.type === "none"` or missing)
+
+Check KANBAN.md for any `[BUG]` items that were addressed during the sprint. Ask the user which ones to move to Done.
+
+### No Tracker
+
+Skip this phase and continue.
+
 ## Phase 3: Knowledge Transfer
 
 ### Sprint Handover

@@ -25,7 +25,39 @@ git status                   # should be: clean working tree
 
 Run `npm run ci` and report pass/fail. If it fails, diagnose before proceeding.
 
-## Step 2: Select Sprint Scope
+## Step 2: Bug Triage
+
+Read `.claude/project.json` for tracker configuration.
+
+### GitHub Mode (`tracker.type === "github"`)
+
+Fetch open bugs sorted by severity and age:
+
+```bash
+gh issue list --repo "{tracker.repo}" --label "bug" --state open --json number,title,labels,createdAt --limit 50
+```
+
+Present a table:
+
+| # | Title | Severity | Age | Labels |
+|---|-------|----------|-----|--------|
+
+### File-Based Mode (`tracker.type === "none"` or missing)
+
+Read `docs/process/KANBAN.md` and extract any items tagged `[BUG]`.
+
+### No Open Bugs
+
+If no open bugs are found, report: "No open bugs — continuing to scope selection." and proceed.
+
+### User Selection
+
+Ask the user which bugs (if any) to include in the sprint scope. Selected bugs will become task specs in the Write Task Specs step with:
+- **Goal:** Fix bug #{N} — {title}
+- **Specialist:** based on bug category
+- A DoD item: `Fixes #{N}` in commit message (GitHub mode)
+
+## Step 3: Select Sprint Scope
 
 Read `docs/process/KANBAN.md` and present:
 1. **Backlog items** — show the full list
@@ -35,7 +67,7 @@ Ask the user:
 - Which items to pull into this sprint?
 - What is the sprint theme (1-sentence summary)?
 
-## Step 3: Write Task Specs
+## Step 4: Write Task Specs
 
 For each selected item, generate a task spec using the template from `docs/process/TASK_TEMPLATE.md`:
 
@@ -57,7 +89,7 @@ For each selected item, generate a task spec using the template from `docs/proce
 
 Present each task spec to the user for review and adjustment. Then write all specs to `TODO.md`.
 
-## Step 4: Validate Completeness
+## Step 5: Validate Completeness
 
 Review all task specs and verify:
 - Every task has at least 2 DoD checkboxes
@@ -68,18 +100,18 @@ Review all task specs and verify:
 
 Report any gaps and suggest fixes.
 
-## Step 5: Update KANBAN.md
+## Step 6: Update KANBAN.md
 
 Move selected items from Backlog to "Sprint {N} — Doing" section.
 
-## Step 6: Create Sprint Branch
+## Step 7: Create Sprint Branch
 
 ```bash
 git checkout -b sprint{N}/main
 git push -u origin sprint{N}/main
 ```
 
-## Step 7: Confirm Ready
+## Step 8: Confirm Ready
 
 Present a summary:
 - Sprint number and theme

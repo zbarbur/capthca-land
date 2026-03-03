@@ -30,7 +30,15 @@ npm run ci
 
 ## Sprint Planning
 
-### 3. Select Scope from KANBAN
+### 3. Bug Triage
+
+- [ ] Read `.claude/project.json` for tracker config
+- [ ] **GitHub mode**: `gh issue list --label "bug" --state open` — review open bugs by severity
+- [ ] **No tracker**: check KANBAN.md for `[BUG]` entries
+- [ ] Select bugs to include in sprint scope (if any)
+- [ ] Selected bugs will become task specs in step 4
+
+### 4. Select Scope from KANBAN
 
 - [ ] Open `docs/process/KANBAN.md`
 - [ ] Review **Backlog** section — prioritize by impact and dependencies
@@ -44,7 +52,7 @@ npm run ci
 - Large (L) tasks: 1-2 per sprint
 - Mix recommended: 1L + 2M + 1S, or 3M + 2S
 
-### 4. Write Task Specs in TODO.md
+### 5. Write Task Specs in TODO.md
 
 - [ ] Clear TODO.md of previous sprint content (archive if needed)
 - [ ] Write sprint header: `## Sprint {N} — {Theme}`
@@ -53,7 +61,7 @@ npm run ci
 - [ ] Assign specialists from `SQUAD_PLANNING.md`
 - [ ] Set complexity (S/M/L) for each task
 
-### 5. Validate Completeness
+### 6. Validate Completeness
 
 For every task in TODO.md, verify:
 
@@ -66,7 +74,7 @@ For every task in TODO.md, verify:
 - [ ] **Test Plan** describes what tests to write
 - [ ] **Demo Data Impact** is assessed
 
-### 6. Dependency Validation
+### 7. Dependency Validation
 
 - [ ] No circular dependencies between tasks
 - [ ] Dependencies reference valid task IDs
@@ -76,12 +84,12 @@ For every task in TODO.md, verify:
 
 ## Sprint Initialization
 
-### 7. Update KANBAN Doing Section
+### 8. Update KANBAN Doing Section
 
 - [ ] Move selected items from **Backlog** to **Doing** in KANBAN.md
 - [ ] Keep items in **Backlog** that were not selected
 
-### 8. Create Sprint Branch
+### 9. Create Sprint Branch
 
 ```bash
 git checkout -b sprint{N}/main
@@ -90,7 +98,7 @@ git checkout -b sprint{N}/main
 - [ ] Sprint branch created from latest `main`
 - [ ] Branch name follows convention: `sprint{N}/main`
 
-### 9. Commit Planning Artifacts
+### 10. Commit Planning Artifacts
 
 ```bash
 git add TODO.md docs/process/KANBAN.md

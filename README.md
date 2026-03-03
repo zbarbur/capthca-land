@@ -6,7 +6,7 @@ A reusable GitHub template repository for building software projects with **Clau
 
 This template captures 12+ sprints of hard-won engineering knowledge:
 
-- **12 Claude Code skills** — Slash commands for project planning, deploy, rollback, sprint management, code review, testing, security audit, refactoring, API design, and documentation
+- **14 Claude Code skills** — Slash commands for project planning, deploy, rollback, sprint management, bug tracking, code review, testing, security audit, refactoring, API design, and documentation
 - **7 specialist agents** — Pre-defined Claude Code agent roles with clear responsibilities
 - **10 engineering guides** — Error handling, security, API design, testing, deployment, data integrity, secrets, context maintenance, code health, documentation
 - **12 process documents** — Sprint planning, execution, closure checklists, kanban board, task templates, coding standards
@@ -112,6 +112,8 @@ cat docs/process/BOOTSTRAP.md
 │   │   ├── rollback/            # /rollback staging|production
 │   │   ├── sprint-start/        # /sprint-start — initialize sprint
 │   │   ├── sprint-end/          # /sprint-end — close sprint
+│   │   ├── report-bug/          # /report-bug — create bug report
+│   │   ├── fix-bug/             # /fix-bug — investigate and fix a bug
 │   │   ├── new-task/            # /new-task — create task spec
 │   │   ├── review/              # /review — code review against standards
 │   │   ├── design-api/          # /design-api — API endpoint design
@@ -120,6 +122,7 @@ cat docs/process/BOOTSTRAP.md
 │   │   ├── refactor/            # /refactor — code health analysis & refactoring
 │   │   ├── document/            # /document — create, update, audit documentation
 │   │   └── plan/                # /plan — project inception & strategic planning
+│   ├── project.json             # Project config (name, slug, tracker)
 │   └── MEMORY.md                # Persistent memory skeleton
 ├── Dockerfile                   # Multi-stage build template
 ├── cloudbuild.yaml              # CI + staging pipeline
@@ -168,7 +171,7 @@ Create new `.md` files in `.claude/agents/` following the existing format. Refer
 
 ## Skills (Slash Commands)
 
-The template includes 12 Claude Code skills that wrap your operational workflows with intelligence. They auto-fix failures, validate inputs, and guide you through multi-step processes.
+The template includes 14 Claude Code skills that wrap your operational workflows with intelligence. They auto-fix failures, validate inputs, and guide you through multi-step processes.
 
 | Skill | Command | What it does |
 |-------|---------|-------------|
@@ -183,6 +186,8 @@ The template includes 12 Claude Code skills that wrap your operational workflows
 | Security Audit | `/security-audit [scope]` | Comprehensive audit across 6 categories with formal severity report |
 | Refactor | `/refactor [file\|--dupes\|--dead\|--fix]` | Code health analysis, duplication/dead code detection, safe refactoring |
 | Document | `/document [research\|design\|architecture\|audit\|runbook]` | Create, update, audit docs; staleness detection; external review prep |
+| Report Bug | `/report-bug [description]` | Creates GitHub issue or KANBAN entry with severity, repro steps, environment |
+| Fix Bug | `/fix-bug <issue\|search>` | Fetches bug details, investigates root cause, proposes fix, implements after approval |
 | Plan | `/plan [project\|roadmap\|sprint\|scope]` | Project charter, roadmap reviews, sprint allocation, scope analysis |
 
 **Skills vs shell scripts:** Shell scripts are dumb (fail and exit). Skills **adapt** — if lint fails, they fix and retry. If deploy succeeds but smoke tests fail, they investigate and suggest rollback.

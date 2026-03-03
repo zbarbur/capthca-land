@@ -56,11 +56,20 @@ npm run ci
 - [Sprint {N}] {Completed item 2}
 ```
 
+### 6. Issue Reconciliation
+
+- [ ] Read `.claude/project.json` for tracker config
+- [ ] **GitHub mode**: find issue refs in sprint commits (`git log --grep="Fixes #"`)
+- [ ] Check which referenced issues are still open
+- [ ] Present reconciliation table (issue, status, suggested action)
+- [ ] Close approved issues with `gh issue close` + comment
+- [ ] Carry unresolved bugs forward to KANBAN backlog
+
 ---
 
 ## Phase 3: Knowledge Transfer
 
-### 6. Write Sprint Handover
+### 7. Write Sprint Handover
 
 Create `docs/sprints/SPRINT{N}_HANDOVER.md` with:
 
@@ -102,7 +111,7 @@ Create `docs/sprints/SPRINT{N}_HANDOVER.md` with:
 - New test files: {list}
 ```
 
-### 7. Update PROJECT_CONTEXT.md
+### 8. Update PROJECT_CONTEXT.md
 
 - [ ] Update **Status** and **Last Sync** date
 - [ ] Update **Test Coverage** numbers
@@ -110,7 +119,7 @@ Create `docs/sprints/SPRINT{N}_HANDOVER.md` with:
 - [ ] Update **Current State** description
 - [ ] Update **Architecture Summary** if it changed
 
-### 8. Update MEMORY.md
+### 9. Update MEMORY.md
 
 - [ ] Add lessons learned from this sprint
 - [ ] Update sprint status (mark current sprint as COMPLETED)
@@ -138,7 +147,7 @@ If this project was created from the Agentic Scrum Template, periodically sync n
 
 ## Phase 4: Clean Slate
 
-### 9. Branch Cleanup
+### 10. Branch Cleanup
 
 - [ ] Sprint branch merged to `main` via PR
 - [ ] Feature branches deleted (local and remote)
@@ -151,7 +160,7 @@ git branch -d sprint{N}/main
 # Delete any remaining feature branches
 ```
 
-### 10. Verify Clean State
+### 11. Verify Clean State
 
 - [ ] On `main` branch
 - [ ] Working tree clean
@@ -173,6 +182,7 @@ Before declaring the sprint closed, confirm:
 
 - [ ] All quality gates passed (CI, staging, production)
 - [ ] KANBAN.md is updated (Doing empty, Done populated)
+- [ ] Issue reconciliation complete (GitHub issues closed or carried forward)
 - [ ] TODO.md reflects final state
 - [ ] Sprint handover written at `docs/sprints/SPRINT{N}_HANDOVER.md`
 - [ ] PROJECT_CONTEXT.md refreshed

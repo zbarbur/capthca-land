@@ -1,0 +1,10 @@
+{
+	"project": {
+		"name": "{{PROJECT_NAME}}",
+		"slug": "{{PROJECT_SLUG}}"
+	},
+	"tracker": {
+		"type": "none",
+		"repo": ""
+	}
+}
