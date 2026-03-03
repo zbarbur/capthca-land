@@ -85,6 +85,18 @@ For each changed file, check against these categories:
 - [ ] No secrets baked into images
 - [ ] Cloud Run compatible (stateless, 0.0.0.0 binding)
 
+### 8. Code Health (`docs/guides/CODE_HEALTH.md`)
+- [ ] No files exceeding 300 lines (if changed file is over, flag for extraction)
+- [ ] No functions exceeding 30 lines (look for extraction opportunities)
+- [ ] No duplicated logic (same pattern appearing in 3+ places — extract to shared function)
+- [ ] No dead code introduced (unused imports, unreachable branches, commented-out blocks)
+- [ ] Single responsibility — changed file doesn't mix unrelated concerns
+- [ ] Nesting depth ≤ 3 levels (use guard clauses / early returns to flatten)
+- [ ] No circular dependencies introduced (A imports B imports A)
+- [ ] Functions have ≤ 4 parameters (use options object for more)
+- [ ] No magic numbers or hardcoded strings (extract to named constants)
+- [ ] Business logic in lib/ modules, not inline in route handlers (testability)
+
 ## Report Format
 
 Present findings grouped by severity:
@@ -111,6 +123,7 @@ Present findings grouped by severity:
 - Critical: N | Warning: N | Suggestion: N
 - Test coverage: [adequate / needs work / missing]
 - Security: [clean / issues found]
+- Code health: [clean / issues found]
 - Ready to merge: [yes / no — fix critical issues first]
 ```
 
