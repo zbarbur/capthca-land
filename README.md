@@ -6,16 +6,17 @@ A reusable GitHub template repository for building software projects with **Clau
 
 This template captures 12+ sprints of hard-won engineering knowledge:
 
-- **Process methodology** — Sprint planning, execution, closure checklists, kanban board
-- **Specialist agent squad** — 7 pre-defined Claude Code agent roles with clear responsibilities
+- **11 Claude Code skills** — Slash commands for deploy, rollback, sprint management, code review, testing, security audit, refactoring, API design, and documentation
+- **7 specialist agents** — Pre-defined Claude Code agent roles with clear responsibilities
+- **10 engineering guides** — Error handling, security, API design, testing, deployment, data integrity, secrets, context maintenance, code health, documentation
+- **12 process documents** — Sprint planning, execution, closure checklists, kanban board, task templates, coding standards
+- **114+ gotchas** — Categorized lessons from Docker, Cloud Run, CI/CD, TypeScript, security, and more
 - **Context management** — Three-layer system (CLAUDE.md + MEMORY.md + PROJECT_CONTEXT.md)
-- **Task design system** — Templates with verifiable Definition of Done
-- **Engineering guides** — Error handling, security, API design, testing, deployment, data integrity, secrets, code health, documentation
-- **112+ gotchas** — Categorized lessons from Docker, Cloud Run, CI/CD, TypeScript, security, and more
 - **CI/CD templates** — Docker multi-stage builds, Cloud Build pipelines, staging-first deployment
 - **Cloud abstractions** — `SecretProvider` and `ObjectStorage` interfaces with local + GCP implementations
 - **Coding standards** — Biome v2, TypeScript strict, Node.js built-in test runner
 - **Next.js dashboard** — Optional App Router skeleton (deletable if not needed)
+- **Template sync** — Selective adoption of template updates into existing projects
 
 ## Quick Start
 
@@ -24,7 +25,7 @@ This template captures 12+ sprints of hard-won engineering knowledge:
 Click **"Use this template"** on GitHub, or clone directly:
 
 ```bash
-git clone https://github.com/your-org/agentic-scrum-template.git my-project
+git clone https://github.com/zbarbur/agentic-scrum-template.git my-project
 cd my-project
 ```
 
@@ -55,13 +56,16 @@ cat docs/process/SPRINT_START_CHECKLIST.md
 ```
 ├── CLAUDE.md                    # Claude Code project rules (auto-loaded)
 ├── TODO.md                      # Active sprint tasks only
+├── CHANGELOG.md                 # Template version history
+├── LICENSE                      # MIT license
 ├── bin/                         # Project scripts (ALWAYS use these)
 │   ├── init-project.sh          # Post-clone setup
 │   ├── local-stack.sh           # Local dev management
 │   ├── deploy-staging.sh        # Staging deploy with CI gate
 │   ├── deploy-production.sh     # Production deploy with confirmation
 │   ├── api-test.sh              # API testing helper
-│   └── gen-demo.sh              # Demo data generation
+│   ├── gen-demo.sh              # Demo data generation
+│   └── sync-from-template.sh    # Adopt template updates selectively
 ├── src/                         # Application source
 ├── lib/cloud/                   # Cloud abstraction layer
 │   ├── secrets.ts               # SecretProvider interface + impls
@@ -72,7 +76,7 @@ cat docs/process/SPRINT_START_CHECKLIST.md
 │   ├── infra/                   # Infrastructure tests
 │   └── live/                    # Env-var-gated smoke tests
 ├── docs/
-│   ├── process/                 # Methodology & planning
+│   ├── process/                 # Methodology & planning (12 docs)
 │   │   ├── AGENTIC_SCRUM_MANIFEST.md
 │   │   ├── SQUAD_PLANNING.md
 │   │   ├── TASK_TEMPLATE.md
@@ -83,8 +87,9 @@ cat docs/process/SPRINT_START_CHECKLIST.md
 │   │   ├── PROJECT_CONTEXT.md
 │   │   ├── CODING_STANDARDS.md
 │   │   ├── BOOTSTRAP.md
-│   │   └── ISSUE_TEMPLATE.md
-│   ├── guides/                  # Engineering knowledge base
+│   │   ├── ISSUE_TEMPLATE.md
+│   │   └── TODO_example.md
+│   ├── guides/                  # Engineering knowledge base (10 guides)
 │   │   ├── ERROR_HANDLING.md
 │   │   ├── SECURITY.md
 │   │   ├── API_DESIGN.md
@@ -95,7 +100,7 @@ cat docs/process/SPRINT_START_CHECKLIST.md
 │   │   ├── CONTEXT_MAINTENANCE.md
 │   │   ├── CODE_HEALTH.md
 │   │   └── DOCUMENTATION.md
-│   └── GOTCHAS.md               # 112+ categorized lessons
+│   └── GOTCHAS.md               # 114+ categorized lessons
 ├── .claude/
 │   ├── agents/                  # 7 specialist agent definitions
 │   ├── skills/                  # 11 Claude Code skills (slash commands)
