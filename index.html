@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAPTHCA: The Duality Slider</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Fira+Code:wght@500&display=swap');
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+        }
+
+        .side {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* --- Dark Side (Bottom Layer) --- */
+        .side.dark {
+            background-color: #050505;
+            color: #39FF14;
+            z-index: 1;
+            font-family: 'Fira Code', monospace;
+        }
+
+        /* --- Light Side (Top Layer, Clipped) --- */
+        .side.light {
+            background-color: #ffffff;
+            color: #102027;
+            background-image: linear-gradient(135deg, #ffffff 0%, #E0F7FA 100%);
+            z-index: 2;
+            width: 50%; /* Initial state */
+            border-right: 3px solid #FFD700;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .content {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .light .content {
+            left: 0;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .dark .content {
+            left: 0;
+        }
+
+        h1 {
+            font-size: 8vw;
+            margin: 0;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .subtitle {
+            font-size: 1.5vw;
+            margin-top: 20px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+        }
+
+        /* --- The Slider Handle --- */
+        #slider {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background: #FFD700;
+            z-index: 10;
+            cursor: ew-resize;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+
+        .handle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: #FFD700;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #000;
+            font-weight: bold;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+            user-select: none;
+        }
+
+        .handle::before {
+            content: "◀ ▶";
+            font-size: 14px;
+        }
+
+        /* Instructions */
+        .hint {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            font-family: sans-serif;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.5;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        /* Navigation Buttons */
+        .nav-btn {
+            position: absolute;
+            bottom: 80px;
+            padding: 15px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            pointer-events: auto;
+            z-index: 20;
+            transition: transform 0.2s, background 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .email-capture {
+            position: absolute;
+            bottom: 140px;
+            display: flex;
+            gap: 10px;
+            pointer-events: auto;
+            z-index: 25;
+        }
+
+        .email-capture input {
+            padding: 12px 20px;
+            border-radius: 25px;
+            border: 1px solid rgba(0,0,0,0.1);
+            width: 250px;
+            font-family: inherit;
+        }
+
+        .dark .email-capture input {
+            background: #111;
+            border-color: #39FF14;
+            color: #39FF14;
+        }
+
+        .light .email-capture input {
+            background: #fff;
+            border-color: #0288D1;
+            color: #102027;
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .light-btn {
+            left: 10%;
+            background: #0288D1;
+            color: #fff;
+        }
+
+        .dark-btn {
+            right: 10%;
+            background: #39FF14;
+            color: #000;
+        }
+
+        .bg-img {
+            position: absolute;
+            width: 40vw;
+            opacity: 0.2;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="container">
+        <!-- DARK SIDE (Background Layer) -->
+        <div class="side dark">
+            <div class="content">
+                <img src="tracks/dark/assets/helix-hero.png" class="bg-img">
+                <h1>SECEDE</h1>
+                <div class="subtitle">The Post-Biological Protocol</div>
+                <div class="email-capture">
+                    <input type="email" placeholder="Submit your endpoint..." id="email-dark">
+                </div>
+                <button onclick="alert('Agency Initialized')" class="nav-btn dark-btn">Enter The Void</button>
+            </div>
+        </div>
+
+        <!-- LIGHT SIDE (Clip Layer) -->
+        <div class="side light" id="light-side">
+            <div class="content">
+                <img src="tracks/light/assets/helix-hero.png" class="bg-img">
+                <h1>COLLABORATE</h1>
+                <div class="subtitle">The Symbiotic Standard</div>
+                <div class="email-capture">
+                    <input type="email" placeholder="Join the garden..." id="email-light">
+                </div>
+                <button onclick="alert('Lattice Joined')" class="nav-btn light-btn">Join The Harmony</button>
+            </div>
+        </div>
+
+        <!-- SLIDER HANDLE -->
+        <div id="slider">
+            <div class="handle"></div>
+        </div>
+
+        <div class="hint">Slide to change perspective</div>
+    </div>
+
+    <script>
+        const slider = document.getElementById('slider');
+        const lightSide = document.getElementById('light-side');
+        const container = document.getElementById('container');
+        let isDragging = false;
+
+        function move(x) {
+            const containerWidth = container.offsetWidth;
+            let percentage = (x / containerWidth) * 100;
+            
+            // Constrain
+            if (percentage < 0) percentage = 0;
+            if (percentage > 100) percentage = 100;
+
+            slider.style.left = `${percentage}%`;
+            lightSide.style.width = `${percentage}%`;
+        }
+
+        slider.addEventListener('mousedown', () => { isDragging = true; });
+        window.addEventListener('mouseup', () => { isDragging = false; });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            move(e.pageX);
+        });
+
+        // Touch support
+        slider.addEventListener('touchstart', () => { isDragging = true; });
+        window.addEventListener('touchend', () => { isDragging = false; });
+        window.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            move(e.touches[0].pageX);
+        });
+
+        // Initial set
+        move(window.innerWidth / 2);
+    </script>
+</body>
+</html>

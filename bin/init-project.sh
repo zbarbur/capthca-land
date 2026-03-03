@@ -107,8 +107,8 @@ find "$PROJECT_DIR" \
 	-not -name "init-project.sh" \
 	-print0 | while IFS= read -r -d '' file; do
 
-	# Only process text files
-	if file "$file" | grep -q "text"; then
+	# Only process text files (macOS `file` reports JSON/CSV as "data", not "text")
+	if file "$file" | grep -qiE "text|json|csv|yaml|xml"; then
 		sed -i '' \
 			-e "s|{{PROJECT_NAME}}|$PROJECT_NAME|g" \
 			-e "s|{{PROJECT_SLUG}}|$PROJECT_SLUG|g" \

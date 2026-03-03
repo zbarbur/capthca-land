@@ -1,7 +1,7 @@
 {
-	"name": "{{PROJECT_SLUG}}",
+	"name": "capthca-land",
 	"version": "0.1.0",
-	"description": "{{PROJECT_DESCRIPTION}}",
+	"description": "Dual-narrative identity protocol exploring human-AI symbiosis",
 	"type": "module",
 	"main": "./src/index.ts",
 	"scripts": {

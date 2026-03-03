@@ -1,0 +1,17 @@
+:root {
+    --bg: #ffffff;
+    --text: #263238;
+    --ethereal-blue: #E0F7FA;
+    --sunrise-gold: #FFD700;
+    --sage-green: #4CAF50;
+    --accent-blue: #0288D1;
+    --deep-navy: #102027;
+    --card-bg: rgba(248, 253, 255, 0.7);
+    --border: #e1f5fe;
+}
+
+body.theme-light {
+    color: var(--text);
+    background: linear-gradient(135deg, #ffffff 0%, #f7fdfd 50%, #fffef7 100%);
+    background-attachment: fixed;
+}

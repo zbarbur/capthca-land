@@ -15,7 +15,8 @@
 			"!dashboard/.next",
 			"!dashboard/components/ui",
 			"!dashboard/app/globals.css",
-			"!docs/**/*.html"
+			"!docs/**/*.html",
+			"!app/styles/**/*.css"
 		]
 	},
 	"formatter": {
