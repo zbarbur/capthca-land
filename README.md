@@ -96,6 +96,13 @@ cat docs/process/SPRINT_START_CHECKLIST.md
 │   └── GOTCHAS.md               # 112+ categorized lessons
 ├── .claude/
 │   ├── agents/                  # 7 specialist agent definitions
+│   ├── skills/                  # 6 Claude Code skills (slash commands)
+│   │   ├── deploy/              # /deploy local|staging|production|demo
+│   │   ├── rollback/            # /rollback staging|production
+│   │   ├── sprint-start/        # /sprint-start — initialize sprint
+│   │   ├── sprint-end/          # /sprint-end — close sprint
+│   │   ├── new-task/            # /new-task — create task spec
+│   │   └── review/              # /review — code review against standards
 │   └── MEMORY.md                # Persistent memory skeleton
 ├── Dockerfile                   # Multi-stage build template
 ├── cloudbuild.yaml              # CI + staging pipeline
@@ -141,6 +148,21 @@ Create new `.md` files in `.claude/agents/` following the existing format. Refer
 | `npm run format` | Auto-format with Biome |
 | `bin/local-stack.sh start` | Start dev environment |
 | `bin/deploy-staging.sh` | Deploy to staging |
+
+## Skills (Slash Commands)
+
+The template includes 6 Claude Code skills that wrap your operational workflows with intelligence. They auto-fix failures, validate inputs, and guide you through multi-step processes.
+
+| Skill | Command | What it does |
+|-------|---------|-------------|
+| Deploy | `/deploy local\|staging\|prod\|demo` | Pre-flight checks → CI gate → build → deploy → smoke test |
+| Rollback | `/rollback staging\|prod` | Lists revisions, shows error context, executes rollback |
+| Sprint Start | `/sprint-start` | Walks through checklist, selects scope, writes task specs, creates branch |
+| Sprint End | `/sprint-end` | Updates TODO/KANBAN, writes handover, updates context, cleans up |
+| New Task | `/new-task [description]` | Generates task spec from template, validates DoD, appends to TODO.md |
+| Review | `/review [files\|staged\|pr]` | Reviews against coding standards, security, error handling, test coverage |
+
+**Skills vs shell scripts:** Shell scripts are dumb (fail and exit). Skills **adapt** — if lint fails, they fix and retry. If deploy succeeds but smoke tests fail, they investigate and suggest rollback.
 
 ## Syncing Template Updates
 

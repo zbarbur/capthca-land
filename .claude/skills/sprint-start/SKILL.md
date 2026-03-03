@@ -1,0 +1,95 @@
+---
+name: sprint-start
+description: Initialize a new sprint. Walks through the sprint start checklist, selects scope from KANBAN, writes task specs, creates sprint branch.
+---
+
+# Sprint Start Skill
+
+You are initializing a new sprint for {{PROJECT_NAME}}. The user invoked `/sprint-start $ARGUMENTS`.
+
+If an argument is provided, use it as the sprint number. Otherwise, determine the next sprint number from the latest handover in `docs/sprints/` or from MEMORY.md.
+
+## Step 1: Verify Clean Slate
+
+Run these checks and report results:
+
+```bash
+git branch --show-current    # should be: main
+git status                   # should be: clean working tree
+```
+
+- [ ] On `main` branch — if not, warn and ask to switch
+- [ ] Working tree clean — if not, warn about uncommitted changes
+- [ ] Previous sprint TODO.md is cleared — read TODO.md, check if it has active tasks
+- [ ] Previous sprint handover exists — check `docs/sprints/SPRINT{N-1}_HANDOVER.md`
+
+Run `npm run ci` and report pass/fail. If it fails, diagnose before proceeding.
+
+## Step 2: Select Sprint Scope
+
+Read `docs/process/KANBAN.md` and present:
+1. **Backlog items** — show the full list
+2. **Tech debt items** — show the full list
+
+Ask the user:
+- Which items to pull into this sprint?
+- What is the sprint theme (1-sentence summary)?
+
+## Step 3: Write Task Specs
+
+For each selected item, generate a task spec using the template from `docs/process/TASK_TEMPLATE.md`:
+
+```markdown
+## Task {N}.{X}: [Title]
+**Goal:** [derived from KANBAN item]
+**Specialist:** [suggest based on task domain]
+**Complexity:** [Small|Medium|Large — estimate from scope]
+**DoD:**
+- [ ] [specific, verifiable criterion]
+- [ ] [specific, verifiable criterion]
+- [ ] Tests added in `test/[file].test.ts`, `npm run ci` passes
+**Technical Specs:**
+- [concrete implementation details]
+**Test Plan:**
+- Test file: `test/[name].test.ts`
+- Expected test count: ~N
+```
+
+Present each task spec to the user for review and adjustment. Then write all specs to `TODO.md`.
+
+## Step 4: Validate Completeness
+
+Review all task specs and verify:
+- Every task has at least 2 DoD checkboxes
+- Every task has at least 2 technical spec bullets
+- Specialist role is valid
+- No circular dependencies
+- Demo data impact is considered
+
+Report any gaps and suggest fixes.
+
+## Step 5: Update KANBAN.md
+
+Move selected items from Backlog to "Sprint {N} — Doing" section.
+
+## Step 6: Create Sprint Branch
+
+```bash
+git checkout -b sprint{N}/main
+git push -u origin sprint{N}/main
+```
+
+## Step 7: Confirm Ready
+
+Present a summary:
+- Sprint number and theme
+- Number of tasks with complexity breakdown
+- Sprint branch name
+- Confirm CI passes on sprint branch
+
+## Important Rules
+
+- ALWAYS use `docs/process/TASK_TEMPLATE.md` format for task specs
+- NEVER put backlog items in TODO.md — only active sprint tasks
+- ALWAYS ask the user to confirm scope before writing task specs
+- DoD items must be independently verifiable — reject vague items like "works well"
