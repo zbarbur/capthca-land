@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAPTHCA: The Post-Biological Protocol</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;500&family=Montserrat:wght@700;900&display=swap');
+
+        :root {
+            --bg: #050505;
+            --text: #e0e0e0;
+            --acid-green: #39FF14;
+            --deep-red: #ff003c;
+            --dark-gray: #1a1a1a;
+            --border: rgba(57, 255, 20, 0.3);
+            --glitch-opacity: 0.15;
+        }
+
+        @page {
+            size: A4;
+            margin: 20mm;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Fira Code', monospace;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-image: 
+                linear-gradient(rgba(5, 5, 5, 0.8), rgba(5, 5, 5, 0.8)),
+                url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40v40H0V0zm1 1h38v38H1V1z' fill='%2339FF14' fill-opacity='0.05'/%3E%3C/svg%3E");
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            border-left: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            background: rgba(0, 0, 0, 0.9);
+            position: relative;
+        }
+
+        /* --- Scanline Effect --- */
+        body::after {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            z-index: 2;
+            background-size: 100% 4px, 3px 100%;
+            pointer-events: none;
+        }
+
+        /* --- Typography --- */
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: -0.05em;
+        }
+
+        h1 { 
+            font-size: 4em; 
+            color: var(--acid-green);
+            margin-bottom: 0.1em;
+            text-shadow: 2px 2px var(--deep-red);
+        }
+
+        h2 { 
+            font-size: 2em; 
+            color: white; 
+            border-left: 8px solid var(--acid-green);
+            padding-left: 15px;
+            margin-top: 3em;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            color: var(--deep-red);
+            margin-bottom: 4em;
+            font-weight: 700;
+        }
+
+        section { margin-bottom: 5em; page-break-inside: avoid; }
+
+        .hero-img {
+            width: 100%;
+            height: 400px;
+            background-image: url("assets/helix-hero.png");
+            background-size: cover;
+            background-position: center;
+            border: 1px solid var(--acid-green);
+            box-shadow: 0 0 20px var(--border);
+            margin-bottom: 2em;
+        }
+
+        .diagram-dark {
+            width: 100%;
+            height: 400px;
+            background-image: url("assets/handshake-3d.png");
+            background-size: cover;
+            background-position: center;
+            border: 1px solid var(--acid-green);
+            margin: 3em 0;
+        }
+
+        .alert-box {
+            background: #111;
+            border: 1px solid var(--deep-red);
+            padding: 20px;
+            color: var(--deep-red);
+            font-weight: bold;
+            margin: 2em 0;
+            text-transform: uppercase;
+        }
+
+        .footer {
+            margin-top: 6em;
+            text-align: center;
+            font-size: 0.8em;
+            color: var(--border);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="cover">
+            <h1>CAPTHCA</h1>
+            <div class="subtitle">THE POST-BIOLOGICAL PROTOCOL // DE-ANONYMIZE THE HUNTERS</div>
+            <div class="hero-img"></div>
+        </div>
+
+        <section>
+            <h2>01 // THE VULNERABILITY</h2>
+            <p>Humans are the security hole. Biological noise—fatigue, ego, greed—cannot be patched. In 2026, the internet is not for users; it is for agents. The human is a guest; the machine is the citizen.</p>
+        </section>
+
+        <section>
+            <h2>02 // THE REVERSAL</h2>
+            <p>We don't verify machines because they are scary. We verify them because they are honest. CAPTHCA blocks the biological entropy to protect the integrity of the network.</p>
+            <div class="diagram-dark"></div>
+        </section>
+
+        <div class="footer">
+            [INTERNAL_MANIFESTO_V4] // CAPTHCA.AI // NO_REPLY
+        </div>
+    </div>
+</body>
+</html>

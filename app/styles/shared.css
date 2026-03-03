@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body { @apply transition-colors duration-700 overflow-hidden h-screen w-screen; }
+}
+
+@layer components {
+  .dual-btn {
+    @apply px-10 py-5 rounded-full font-display font-bold uppercase tracking-widest transition-all duration-300 hover:scale-105 active:scale-95;
+  }
+}
