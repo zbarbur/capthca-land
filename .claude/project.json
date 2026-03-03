@@ -1,10 +1,4 @@
 {
-	"project": {
-		"name": "{{PROJECT_NAME}}",
-		"slug": "{{PROJECT_SLUG}}"
-	},
-	"tracker": {
-		"type": "none",
-		"repo": ""
-	}
+	"project": { "name": "CAPTHCA land", "slug": "capthca-land" },
+	"tracker": { "type": "github", "repo": "claude" }
 }

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ============================================================================
-# {{PROJECT_NAME}} — Local Development Stack
+# CAPTHCA land — Local Development Stack
 # Usage: bin/local-stack.sh [start|stop|status|start-prod]
 # ============================================================================
 set -euo pipefail

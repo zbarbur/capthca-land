@@ -1,5 +1,5 @@
 # ============================================================================
-# {{PROJECT_NAME}} — Production Dockerfile
+# CAPTHCA land — Production Dockerfile
 # Compatible with GCP Cloud Run (stateless, 0.0.0.0 binding, PORT env var)
 # ============================================================================
 
@@ -34,7 +34,7 @@ ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
 # Runtime secrets (injected by Secret Manager, NOT baked into image):
-#   {{ENV_PREFIX}}AUTH_SECRET  -> env var (session signing key)
+#   CAPTHCA_LAND_AUTH_SECRET  -> env var (session signing key)
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs

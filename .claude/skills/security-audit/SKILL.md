@@ -5,7 +5,7 @@ description: Run a comprehensive security audit against the codebase. Checks aut
 
 # Security Audit Skill
 
-You are performing a security audit of {{PROJECT_NAME}}. The user invoked `/security-audit $ARGUMENTS`.
+You are performing a security audit of CAPTHCA land. The user invoked `/security-audit $ARGUMENTS`.
 
 ## Determine Scope
 
@@ -185,7 +185,7 @@ grep -rn "console.log.*password\|console.log.*secret\|console.log.*token\|consol
 Generate a formal audit report:
 
 ```markdown
-# Security Audit Report — {{PROJECT_NAME}}
+# Security Audit Report — CAPTHCA land
 **Date:** [today's date]
 **Scope:** [full | category]
 **Auditor:** Claude Code security-audit skill

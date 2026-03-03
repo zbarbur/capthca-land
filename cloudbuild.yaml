@@ -1,5 +1,5 @@
 # ============================================================================
-# {{PROJECT_NAME}} — CI + Staging Pipeline
+# CAPTHCA land — CI + Staging Pipeline
 # Trigger: Auto on push to main
 # Runs: Install → Audit → Lint → Test → Build image → Deploy to staging
 # Production deploy: use cloudbuild-deploy.yaml (manual trigger).
@@ -7,10 +7,10 @@
 
 substitutions:
   _REGION: "us-central1"
-  _ARTIFACT_REPO: "{{PROJECT_SLUG}}"
-  _IMAGE_NAME: "{{PROJECT_SLUG}}"
+  _ARTIFACT_REPO: "capthca-land"
+  _IMAGE_NAME: "capthca-land"
   _TAG: "latest"
-  _STAGING_SERVICE: "{{PROJECT_SLUG}}-staging"
+  _STAGING_SERVICE: "capthca-land-staging"
 
 steps:
   # ── Step 1: Install Dependencies ──────────────────────────────────────────

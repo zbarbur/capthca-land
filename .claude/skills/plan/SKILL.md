@@ -5,7 +5,7 @@ description: Project inception and strategic planning. Create project charters, 
 
 # Plan Skill
 
-You are performing project planning for {{PROJECT_NAME}}. The user invoked `/plan $ARGUMENTS`.
+You are performing project planning for CAPTHCA land. The user invoked `/plan $ARGUMENTS`.
 
 ## Determine Mode
 
@@ -59,7 +59,7 @@ Ask the user structured questions to understand the project. Don't assume — as
 Based on the discovery answers, produce `docs/PROJECT_CHARTER.md`:
 
 ```markdown
-# Project Charter — {{PROJECT_NAME}}
+# Project Charter — CAPTHCA land
 
 **Created:** [date]
 **Last reviewed:** [date]

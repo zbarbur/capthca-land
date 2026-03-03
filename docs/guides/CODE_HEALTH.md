@@ -1,6 +1,6 @@
 # Code Health Guide
 
-Principles and patterns for keeping {{PROJECT_NAME}} maintainable as it grows. This guide covers module design, duplication, complexity management, and test-driven refactoring.
+Principles and patterns for keeping CAPTHCA land maintainable as it grows. This guide covers module design, duplication, complexity management, and test-driven refactoring.
 
 ## Core Principles
 

@@ -5,7 +5,7 @@ description: Run tests intelligently — diagnose failures, analyze coverage gap
 
 # Test Skill
 
-You are managing tests for {{PROJECT_NAME}}. The user invoked `/test $ARGUMENTS`.
+You are managing tests for CAPTHCA land. The user invoked `/test $ARGUMENTS`.
 
 ## Determine Mode
 
@@ -113,12 +113,12 @@ Perform a manual coverage analysis (no coverage tool needed):
 3. If vars are missing:
    ```
    Missing environment variables for live tests:
-     {{ENV_PREFIX}}API_URL  — set to your staging/production URL
-     {{ENV_PREFIX}}TOKEN    — set to a valid API token
+     CAPTHCA_LAND_API_URL  — set to your staging/production URL
+     CAPTHCA_LAND_TOKEN    — set to a valid API token
 
    Example:
-     export {{ENV_PREFIX}}API_URL=https://staging.example.com
-     export {{ENV_PREFIX}}TOKEN=your_token_here
+     export CAPTHCA_LAND_API_URL=https://staging.example.com
+     export CAPTHCA_LAND_TOKEN=your_token_here
      /test live
    ```
 

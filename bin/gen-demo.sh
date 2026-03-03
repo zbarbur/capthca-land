@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ============================================================================
-# {{PROJECT_NAME}} — Demo Data Generator
+# CAPTHCA land — Demo Data Generator
 # Usage: bin/gen-demo.sh [--count N] [--dry-run]
 #
 # Generates realistic demo data for development and staging.

@@ -1,4 +1,4 @@
-# Session Bootstrap Protocol — {{PROJECT_NAME}}
+# Session Bootstrap Protocol — CAPTHCA land
 
 ## Overview
 

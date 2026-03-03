@@ -1,8 +1,8 @@
-# {{PROJECT_NAME}} — Project Memory
+# CAPTHCA land — Project Memory
 
 ## Project Purpose
 <!-- One sentence: what does this project do and why? -->
-{{PROJECT_DESCRIPTION}}
+A landing page for the CAPTHCA protocol intiative
 
 ## Project Tools — ALWAYS USE THESE
 **STOP and check here before running ANY infrastructure/dev command.**

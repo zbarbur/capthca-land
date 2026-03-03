@@ -5,7 +5,7 @@ description: Close the current sprint. Updates TODO.md, KANBAN.md, writes handov
 
 # Sprint End Skill
 
-You are closing a sprint for {{PROJECT_NAME}}. The user invoked `/sprint-end $ARGUMENTS`.
+You are closing a sprint for CAPTHCA land. The user invoked `/sprint-end $ARGUMENTS`.
 
 Determine the current sprint number from TODO.md header or the current branch name.
 

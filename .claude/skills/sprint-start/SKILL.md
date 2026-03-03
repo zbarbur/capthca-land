@@ -5,7 +5,7 @@ description: Initialize a new sprint. Walks through the sprint start checklist, 
 
 # Sprint Start Skill
 
-You are initializing a new sprint for {{PROJECT_NAME}}. The user invoked `/sprint-start $ARGUMENTS`.
+You are initializing a new sprint for CAPTHCA land. The user invoked `/sprint-start $ARGUMENTS`.
 
 If an argument is provided, use it as the sprint number. Otherwise, determine the next sprint number from the latest handover in `docs/sprints/` or from MEMORY.md.
 

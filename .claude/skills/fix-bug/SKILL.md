@@ -5,7 +5,7 @@ description: Investigate and fix a bug. Fetches issue details from GitHub or acc
 
 # Fix Bug Skill
 
-You are fixing a bug for {{PROJECT_NAME}}. The user invoked `/fix-bug $ARGUMENTS`.
+You are fixing a bug for CAPTHCA land. The user invoked `/fix-bug $ARGUMENTS`.
 
 ## Step 1: Read Tracker Config
 

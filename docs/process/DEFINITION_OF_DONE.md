@@ -1,4 +1,4 @@
-# Definition of Done Guide — {{PROJECT_NAME}}
+# Definition of Done Guide — CAPTHCA land
 
 ## Principle
 

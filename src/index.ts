@@ -1,4 +1,4 @@
-// {{PROJECT_NAME}} — Entry Point
+// CAPTHCA land — Entry Point
 // Replace this with your application's entry point.
 
-console.log("{{PROJECT_NAME}} is running.");
+console.log("CAPTHCA land is running.");

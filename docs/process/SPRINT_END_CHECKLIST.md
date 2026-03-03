@@ -1,4 +1,4 @@
-# Sprint End Checklist — {{PROJECT_NAME}}
+# Sprint End Checklist — CAPTHCA land
 
 Follow this checklist when closing a sprint. Every step is required.
 
@@ -74,7 +74,7 @@ npm run ci
 Create `docs/sprints/SPRINT{N}_HANDOVER.md` with:
 
 ```markdown
-# Sprint {N} Handover — {{PROJECT_NAME}}
+# Sprint {N} Handover — CAPTHCA land
 
 ## Sprint Theme
 {One sentence describing what this sprint was about}

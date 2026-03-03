@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ============================================================================
-# {{PROJECT_NAME}} — Deploy to Staging
+# CAPTHCA land — Deploy to Staging
 # Usage: bin/deploy-staging.sh [service] [--skip-checks]
 #
 # Runs full CI checks before deploying unless --skip-checks is passed.

@@ -5,7 +5,7 @@ description: Create a new sprint task with full spec using the task template. Va
 
 # New Task Skill
 
-You are creating a new sprint task for {{PROJECT_NAME}}. The user invoked `/new-task $ARGUMENTS`.
+You are creating a new sprint task for CAPTHCA land. The user invoked `/new-task $ARGUMENTS`.
 
 Arguments may include a task title or description. If empty, ask what the task should accomplish.
 

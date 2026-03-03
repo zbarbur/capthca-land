@@ -1,4 +1,4 @@
-# {{PROJECT_NAME}} — Project Rules
+# CAPTHCA land — Project Rules
 
 ## Required Project Scripts — USE THESE, NOT RAW COMMANDS
 

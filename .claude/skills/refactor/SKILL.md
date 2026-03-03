@@ -5,7 +5,7 @@ description: Analyze code for duplication, complexity, dead code, and extraction
 
 # Refactor Skill
 
-You are performing code analysis and refactoring for {{PROJECT_NAME}}. The user invoked `/refactor $ARGUMENTS`.
+You are performing code analysis and refactoring for CAPTHCA land. The user invoked `/refactor $ARGUMENTS`.
 
 ## Determine Mode
 
@@ -102,7 +102,7 @@ Build a dependency map and flag issues.
 ### Step 6: Produce Report
 
 ```markdown
-## Code Health Report — {{PROJECT_NAME}}
+## Code Health Report — CAPTHCA land
 **Date:** [today]
 **Scope:** [full | file | module]
 

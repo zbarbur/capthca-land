@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-	title: "{{PROJECT_NAME}}",
-	description: "{{PROJECT_DESCRIPTION}}",
+	title: "CAPTHCA land",
+	description: "A landing page for the CAPTHCA protocol intiative",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

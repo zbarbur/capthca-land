@@ -1,4 +1,4 @@
-# Sprint Start Checklist — {{PROJECT_NAME}}
+# Sprint Start Checklist — CAPTHCA land
 
 Follow this checklist at the beginning of every sprint. Do not skip steps.
 

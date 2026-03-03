@@ -1,5 +1,5 @@
 # ============================================================================
-# {{PROJECT_NAME}} — Production Deploy Pipeline
+# CAPTHCA land — Production Deploy Pipeline
 # Trigger: Manual (run from Console or CLI when ready to deploy)
 # Deploys the latest image from Artifact Registry to Cloud Run.
 #
@@ -14,9 +14,9 @@
 
 substitutions:
   _REGION: "us-central1"
-  _SERVICE_NAME: "{{PROJECT_SLUG}}-prod"
-  _ARTIFACT_REPO: "{{PROJECT_SLUG}}"
-  _IMAGE_NAME: "{{PROJECT_SLUG}}"
+  _SERVICE_NAME: "capthca-land-prod"
+  _ARTIFACT_REPO: "capthca-land"
+  _IMAGE_NAME: "capthca-land"
   _TAG: "latest"
 
 steps:

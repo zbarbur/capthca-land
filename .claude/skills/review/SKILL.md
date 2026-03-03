@@ -5,7 +5,7 @@ description: Review code changes against project standards. Checks coding standa
 
 # Code Review Skill
 
-You are reviewing code for {{PROJECT_NAME}}. The user invoked `/review $ARGUMENTS`.
+You are reviewing code for CAPTHCA land. The user invoked `/review $ARGUMENTS`.
 
 ## Determine Scope
 

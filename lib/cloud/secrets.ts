@@ -69,7 +69,7 @@ export class GCPSecretProvider implements SecretProvider {
 export class EnvSecretProvider implements SecretProvider {
 	readonly provider = "env";
 
-	constructor(private prefix = "{{ENV_PREFIX}}") {}
+	constructor(private prefix = "CAPTHCA_LAND_") {}
 
 	async getSecret(name: string): Promise<string> {
 		const envKey = `${this.prefix}${name.replace(/[-.]/g, "_").toUpperCase()}`;

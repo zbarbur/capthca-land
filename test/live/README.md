@@ -10,9 +10,9 @@ pointing to a running instance and valid credentials.
 ### Required Environment Variables
 
 ```bash
-export {{ENV_PREFIX}}API_URL="https://your-staging-url.example.com"
-export {{ENV_PREFIX}}TOKEN="your-api-token"
-export {{ENV_PREFIX}}TENANT_ID="your-test-tenant-id"
+export CAPTHCA_LAND_API_URL="https://your-staging-url.example.com"
+export CAPTHCA_LAND_TOKEN="your-api-token"
+export CAPTHCA_LAND_TENANT_ID="your-test-tenant-id"
 ```
 
 ### Running
@@ -34,12 +34,12 @@ import { describe, it, before } from "node:test";
 import assert from "node:assert/strict";
 
 describe("API smoke tests", () => {
-  const apiUrl = process.env.{{ENV_PREFIX}}API_URL;
-  const token = process.env.{{ENV_PREFIX}}TOKEN;
+  const apiUrl = process.env.CAPTHCA_LAND_API_URL;
+  const token = process.env.CAPTHCA_LAND_TOKEN;
 
   before(() => {
     if (!apiUrl || !token) {
-      console.log("Skipping: {{ENV_PREFIX}}API_URL and {{ENV_PREFIX}}TOKEN not set");
+      console.log("Skipping: CAPTHCA_LAND_API_URL and CAPTHCA_LAND_TOKEN not set");
       process.exit(0);
     }
   });

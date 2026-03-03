@@ -1,6 +1,6 @@
 # Documentation Guide
 
-Standards and practices for creating, maintaining, and reviewing documentation in {{PROJECT_NAME}}. Good documentation enables external reviews, accelerates onboarding, and preserves decisions across sprints.
+Standards and practices for creating, maintaining, and reviewing documentation in CAPTHCA land. Good documentation enables external reviews, accelerates onboarding, and preserves decisions across sprints.
 
 ## Why Documentation Matters
 

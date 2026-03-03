@@ -5,7 +5,7 @@ description: Design a new API endpoint or refactor existing ones. Enforces proje
 
 # Design API Skill
 
-You are designing an API endpoint for {{PROJECT_NAME}}. The user invoked `/design-api $ARGUMENTS`.
+You are designing an API endpoint for CAPTHCA land. The user invoked `/design-api $ARGUMENTS`.
 
 Arguments may include an endpoint description (e.g., "list users for a tenant" or "webhook receiver for events").
 

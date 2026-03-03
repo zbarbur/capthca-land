@@ -1,8 +1,8 @@
-# Agentic Scrum Manifest — {{PROJECT_NAME}}
+# Agentic Scrum Manifest — CAPTHCA land
 
 ## Philosophy
 
-This document defines how {{TEAM_NAME}} builds software using **agentic development** — a methodology where Claude Code specialist agents serve as skilled team members, each bringing domain expertise to sprint tasks. The human orchestrator sets direction; agents execute with discipline.
+This document defines how CAPTHCA Squad builds software using **agentic development** — a methodology where Claude Code specialist agents serve as skilled team members, each bringing domain expertise to sprint tasks. The human orchestrator sets direction; agents execute with discipline.
 
 ---
 

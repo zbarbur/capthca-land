@@ -5,7 +5,7 @@ description: Rollback a staging or production deployment to a previous revision.
 
 # Rollback Skill
 
-You are rolling back a deployment for {{PROJECT_NAME}}. The user invoked `/rollback $ARGUMENTS`.
+You are rolling back a deployment for CAPTHCA land. The user invoked `/rollback $ARGUMENTS`.
 
 ## Determine Target
 

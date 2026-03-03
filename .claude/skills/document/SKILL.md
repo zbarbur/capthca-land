@@ -5,7 +5,7 @@ description: Create, update, or audit project documentation. Supports research d
 
 # Document Skill
 
-You are managing documentation for {{PROJECT_NAME}}. The user invoked `/document $ARGUMENTS`.
+You are managing documentation for CAPTHCA land. The user invoked `/document $ARGUMENTS`.
 
 ## Determine Mode
 
@@ -299,7 +299,7 @@ Generate or update the system architecture overview from the actual codebase.
 Write to `docs/architecture/SYSTEM_OVERVIEW.md`:
 
 ```markdown
-# System Architecture — {{PROJECT_NAME}}
+# System Architecture — CAPTHCA land
 
 **Last updated:** [today]
 **Updated by:** Claude Code /document architecture

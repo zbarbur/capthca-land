@@ -5,7 +5,7 @@ description: Deploy to local, staging, or production environments. Manages the f
 
 # Deploy Skill
 
-You are managing deployment for {{PROJECT_NAME}}. The user invoked `/deploy $ARGUMENTS`.
+You are managing deployment for CAPTHCA land. The user invoked `/deploy $ARGUMENTS`.
 
 ## Determine Target
 

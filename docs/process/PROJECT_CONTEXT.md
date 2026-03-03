@@ -1,4 +1,4 @@
-# Project Context — {{PROJECT_NAME}}
+# Project Context — CAPTHCA land
 
 > This file provides a high-level snapshot of the project's current state.
 > Updated at the end of every sprint. See `SPRINT_END_CHECKLIST.md`.

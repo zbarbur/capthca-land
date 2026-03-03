@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ============================================================================
-# {{PROJECT_NAME}} — API Test Helper
+# CAPTHCA land — API Test Helper
 # Usage: bin/api-test.sh [curl-args] /api/path
 #
 # Sends authenticated requests to the local dev server.
@@ -8,12 +8,12 @@
 # ============================================================================
 set -euo pipefail
 
-BASE_URL="${{{ENV_PREFIX}}API_URL:-http://localhost:3000}"
-TOKEN="${{{ENV_PREFIX}}TOKEN:-}"
+BASE_URL="${CAPTHCA_LAND_API_URL:-http://localhost:3000}"
+TOKEN="${CAPTHCA_LAND_TOKEN:-}"
 
 if [ -z "$TOKEN" ]; then
-	echo "Warning: No {{ENV_PREFIX}}TOKEN set. Request will be unauthenticated."
-	echo "Set {{ENV_PREFIX}}TOKEN=your-api-token for authenticated requests."
+	echo "Warning: No CAPTHCA_LAND_TOKEN set. Request will be unauthenticated."
+	echo "Set CAPTHCA_LAND_TOKEN=your-api-token for authenticated requests."
 	echo ""
 fi
 

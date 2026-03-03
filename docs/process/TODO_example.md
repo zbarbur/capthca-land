@@ -1,4 +1,4 @@
-# TODO — {{PROJECT_NAME}}
+# TODO — CAPTHCA land
 
 > Active sprint tasks only. Backlog lives in `docs/process/KANBAN.md`.
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ============================================================================
-# {{PROJECT_NAME}} — Deploy to Production
+# CAPTHCA land — Deploy to Production
 # Usage: bin/deploy-production.sh [service]
 #
 # ALWAYS deploy to staging first. This script requires confirmation.

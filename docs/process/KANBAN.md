@@ -1,4 +1,4 @@
-# KANBAN — {{PROJECT_NAME}}
+# KANBAN — CAPTHCA land
 
 > This file is the single source of truth for the project backlog.
 > `TODO.md` contains only the active sprint's tasks.

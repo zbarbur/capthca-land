@@ -5,7 +5,7 @@ description: Report a bug with structured details. Creates a GitHub issue or app
 
 # Report Bug Skill
 
-You are reporting a bug for {{PROJECT_NAME}}. The user invoked `/report-bug $ARGUMENTS`.
+You are reporting a bug for CAPTHCA land. The user invoked `/report-bug $ARGUMENTS`.
 
 ## Step 1: Read Tracker Config
 

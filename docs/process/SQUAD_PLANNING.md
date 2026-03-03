@@ -1,4 +1,4 @@
-# Squad Planning Guide — {{PROJECT_NAME}}
+# Squad Planning Guide — CAPTHCA land
 
 ## Overview
 

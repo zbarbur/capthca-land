@@ -1,4 +1,4 @@
-# Coding Standards — {{PROJECT_NAME}}
+# Coding Standards — CAPTHCA land
 
 ## Formatting & Linting
 
