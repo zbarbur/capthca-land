@@ -10,7 +10,7 @@ This template captures 12+ sprints of hard-won engineering knowledge:
 - **Specialist agent squad** — 7 pre-defined Claude Code agent roles with clear responsibilities
 - **Context management** — Three-layer system (CLAUDE.md + MEMORY.md + PROJECT_CONTEXT.md)
 - **Task design system** — Templates with verifiable Definition of Done
-- **Engineering guides** — Error handling, security, API design, testing, deployment, data integrity, secrets, code health
+- **Engineering guides** — Error handling, security, API design, testing, deployment, data integrity, secrets, code health, documentation
 - **112+ gotchas** — Categorized lessons from Docker, Cloud Run, CI/CD, TypeScript, security, and more
 - **CI/CD templates** — Docker multi-stage builds, Cloud Build pipelines, staging-first deployment
 - **Cloud abstractions** — `SecretProvider` and `ObjectStorage` interfaces with local + GCP implementations
@@ -93,11 +93,12 @@ cat docs/process/SPRINT_START_CHECKLIST.md
 │   │   ├── DATA_INTEGRITY.md
 │   │   ├── SECRET_MANAGEMENT.md
 │   │   ├── CONTEXT_MAINTENANCE.md
-│   │   └── CODE_HEALTH.md
+│   │   ├── CODE_HEALTH.md
+│   │   └── DOCUMENTATION.md
 │   └── GOTCHAS.md               # 112+ categorized lessons
 ├── .claude/
 │   ├── agents/                  # 7 specialist agent definitions
-│   ├── skills/                  # 10 Claude Code skills (slash commands)
+│   ├── skills/                  # 11 Claude Code skills (slash commands)
 │   │   ├── deploy/              # /deploy local|staging|production|demo
 │   │   ├── rollback/            # /rollback staging|production
 │   │   ├── sprint-start/        # /sprint-start — initialize sprint
@@ -107,7 +108,8 @@ cat docs/process/SPRINT_START_CHECKLIST.md
 │   │   ├── design-api/          # /design-api — API endpoint design
 │   │   ├── test/                # /test — smart test runner & coverage
 │   │   ├── security-audit/      # /security-audit — comprehensive security audit
-│   │   └── refactor/            # /refactor — code health analysis & refactoring
+│   │   ├── refactor/            # /refactor — code health analysis & refactoring
+│   │   └── document/            # /document — create, update, audit documentation
 │   └── MEMORY.md                # Persistent memory skeleton
 ├── Dockerfile                   # Multi-stage build template
 ├── cloudbuild.yaml              # CI + staging pipeline
@@ -156,7 +158,7 @@ Create new `.md` files in `.claude/agents/` following the existing format. Refer
 
 ## Skills (Slash Commands)
 
-The template includes 10 Claude Code skills that wrap your operational workflows with intelligence. They auto-fix failures, validate inputs, and guide you through multi-step processes.
+The template includes 11 Claude Code skills that wrap your operational workflows with intelligence. They auto-fix failures, validate inputs, and guide you through multi-step processes.
 
 | Skill | Command | What it does |
 |-------|---------|-------------|
@@ -170,6 +172,7 @@ The template includes 10 Claude Code skills that wrap your operational workflows
 | Test | `/test [mode]` | Smart test runner: run all, specific, coverage analysis, generate tests |
 | Security Audit | `/security-audit [scope]` | Comprehensive audit across 6 categories with formal severity report |
 | Refactor | `/refactor [file\|--dupes\|--dead\|--fix]` | Code health analysis, duplication/dead code detection, safe refactoring |
+| Document | `/document [research\|design\|architecture\|audit\|runbook]` | Create, update, audit docs; staleness detection; external review prep |
 
 **Skills vs shell scripts:** Shell scripts are dumb (fail and exit). Skills **adapt** — if lint fails, they fix and retry. If deploy succeeds but smoke tests fail, they investigate and suggest rollback.
 
