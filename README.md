@@ -6,7 +6,7 @@ A reusable GitHub template repository for building software projects with **Clau
 
 This template captures 12+ sprints of hard-won engineering knowledge:
 
-- **11 Claude Code skills** — Slash commands for deploy, rollback, sprint management, code review, testing, security audit, refactoring, API design, and documentation
+- **12 Claude Code skills** — Slash commands for project planning, deploy, rollback, sprint management, code review, testing, security audit, refactoring, API design, and documentation
 - **7 specialist agents** — Pre-defined Claude Code agent roles with clear responsibilities
 - **10 engineering guides** — Error handling, security, API design, testing, deployment, data integrity, secrets, context maintenance, code health, documentation
 - **12 process documents** — Sprint planning, execution, closure checklists, kanban board, task templates, coding standards
@@ -38,17 +38,21 @@ bin/init-project.sh
 
 This will prompt for your project name, slug, env prefix, etc., replace all `{{PLACEHOLDER}}` values, install dependencies, and verify with `npm run ci`.
 
-### 3. Start Sprint 1
+### 3. Plan Your Project
 
 ```bash
-# Read the bootstrap guide
+# Create the Project Charter (interactive — defines mission, goals, MVP, constraints)
+/plan project
+
+# Or read the bootstrap guide for the full protocol
 cat docs/process/BOOTSTRAP.md
+```
 
-# Compose your specialist squad
-cat docs/process/SQUAD_PLANNING.md
+### 4. Start Sprint 1
 
+```bash
 # Follow the sprint start checklist
-cat docs/process/SPRINT_START_CHECKLIST.md
+/sprint-start
 ```
 
 ## Directory Overview
@@ -103,7 +107,7 @@ cat docs/process/SPRINT_START_CHECKLIST.md
 │   └── GOTCHAS.md               # 114+ categorized lessons
 ├── .claude/
 │   ├── agents/                  # 7 specialist agent definitions
-│   ├── skills/                  # 11 Claude Code skills (slash commands)
+│   ├── skills/                  # 12 Claude Code skills (slash commands)
 │   │   ├── deploy/              # /deploy local|staging|production|demo
 │   │   ├── rollback/            # /rollback staging|production
 │   │   ├── sprint-start/        # /sprint-start — initialize sprint
@@ -114,7 +118,8 @@ cat docs/process/SPRINT_START_CHECKLIST.md
 │   │   ├── test/                # /test — smart test runner & coverage
 │   │   ├── security-audit/      # /security-audit — comprehensive security audit
 │   │   ├── refactor/            # /refactor — code health analysis & refactoring
-│   │   └── document/            # /document — create, update, audit documentation
+│   │   ├── document/            # /document — create, update, audit documentation
+│   │   └── plan/                # /plan — project inception & strategic planning
 │   └── MEMORY.md                # Persistent memory skeleton
 ├── Dockerfile                   # Multi-stage build template
 ├── cloudbuild.yaml              # CI + staging pipeline
@@ -163,7 +168,7 @@ Create new `.md` files in `.claude/agents/` following the existing format. Refer
 
 ## Skills (Slash Commands)
 
-The template includes 11 Claude Code skills that wrap your operational workflows with intelligence. They auto-fix failures, validate inputs, and guide you through multi-step processes.
+The template includes 12 Claude Code skills that wrap your operational workflows with intelligence. They auto-fix failures, validate inputs, and guide you through multi-step processes.
 
 | Skill | Command | What it does |
 |-------|---------|-------------|
@@ -178,6 +183,7 @@ The template includes 11 Claude Code skills that wrap your operational workflows
 | Security Audit | `/security-audit [scope]` | Comprehensive audit across 6 categories with formal severity report |
 | Refactor | `/refactor [file\|--dupes\|--dead\|--fix]` | Code health analysis, duplication/dead code detection, safe refactoring |
 | Document | `/document [research\|design\|architecture\|audit\|runbook]` | Create, update, audit docs; staleness detection; external review prep |
+| Plan | `/plan [project\|roadmap\|sprint\|scope]` | Project charter, roadmap reviews, sprint allocation, scope analysis |
 
 **Skills vs shell scripts:** Shell scripts are dumb (fail and exit). Skills **adapt** — if lint fails, they fix and retry. If deploy succeeds but smoke tests fail, they investigate and suggest rollback.
 
