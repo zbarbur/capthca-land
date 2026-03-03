@@ -96,13 +96,16 @@ cat docs/process/SPRINT_START_CHECKLIST.md
 │   └── GOTCHAS.md               # 112+ categorized lessons
 ├── .claude/
 │   ├── agents/                  # 7 specialist agent definitions
-│   ├── skills/                  # 6 Claude Code skills (slash commands)
+│   ├── skills/                  # 9 Claude Code skills (slash commands)
 │   │   ├── deploy/              # /deploy local|staging|production|demo
 │   │   ├── rollback/            # /rollback staging|production
 │   │   ├── sprint-start/        # /sprint-start — initialize sprint
 │   │   ├── sprint-end/          # /sprint-end — close sprint
 │   │   ├── new-task/            # /new-task — create task spec
-│   │   └── review/              # /review — code review against standards
+│   │   ├── review/              # /review — code review against standards
+│   │   ├── design-api/          # /design-api — API endpoint design
+│   │   ├── test/                # /test — smart test runner & coverage
+│   │   └── security-audit/      # /security-audit — comprehensive security audit
 │   └── MEMORY.md                # Persistent memory skeleton
 ├── Dockerfile                   # Multi-stage build template
 ├── cloudbuild.yaml              # CI + staging pipeline
@@ -151,7 +154,7 @@ Create new `.md` files in `.claude/agents/` following the existing format. Refer
 
 ## Skills (Slash Commands)
 
-The template includes 6 Claude Code skills that wrap your operational workflows with intelligence. They auto-fix failures, validate inputs, and guide you through multi-step processes.
+The template includes 9 Claude Code skills that wrap your operational workflows with intelligence. They auto-fix failures, validate inputs, and guide you through multi-step processes.
 
 | Skill | Command | What it does |
 |-------|---------|-------------|
@@ -161,6 +164,9 @@ The template includes 6 Claude Code skills that wrap your operational workflows 
 | Sprint End | `/sprint-end` | Updates TODO/KANBAN, writes handover, updates context, cleans up |
 | New Task | `/new-task [description]` | Generates task spec from template, validates DoD, appends to TODO.md |
 | Review | `/review [files\|staged\|pr]` | Reviews against coding standards, security, error handling, test coverage |
+| Design API | `/design-api [description]` | Designs endpoint spec with auth, validation, rate limiting, test plan |
+| Test | `/test [mode]` | Smart test runner: run all, specific, coverage analysis, generate tests |
+| Security Audit | `/security-audit [scope]` | Comprehensive audit across 6 categories with formal severity report |
 
 **Skills vs shell scripts:** Shell scripts are dumb (fail and exit). Skills **adapt** — if lint fails, they fix and retry. If deploy succeeds but smoke tests fail, they investigate and suggest rollback.
 

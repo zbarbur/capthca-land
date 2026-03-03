@@ -27,6 +27,7 @@ Template created from 12 sprints of OpenClaw Lens development.
 - Biome v2, TypeScript strict, Node.js test runner
 - Docker multi-stage build, Cloud Build pipelines
 - 7 specialist agent definitions
+- 9 Claude Code skills (deploy, rollback, sprint-start, sprint-end, new-task, review, design-api, test, security-audit)
 - Init script with placeholder substitution
 
 **Source:** OpenClaw Lens Sprints 5-12
