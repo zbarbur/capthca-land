@@ -1,17 +1,60 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+
+declare global {
+	interface Window {
+		turnstile?: {
+			render: (
+				el: HTMLElement,
+				opts: { sitekey: string; callback: (token: string) => void },
+			) => string;
+			reset: (widgetId: string) => void;
+		};
+	}
+}
 
 type Status = "idle" | "submitting" | "success" | "error";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "";
 
 export function EmailCapture({ track }: { track: "light" | "dark" }) {
 	const [email, setEmail] = useState("");
 	const [status, setStatus] = useState<Status>("idle");
 	const [errorMsg, setErrorMsg] = useState("");
+	const [cfToken, setCfToken] = useState("");
+	const turnstileRef = useRef<HTMLDivElement>(null);
+	const widgetIdRef = useRef<string | null>(null);
 
 	const isLight = track === "light";
+
+	// Explicitly render Turnstile widget after component mounts
+	useEffect(() => {
+		if (!SITE_KEY || !turnstileRef.current) return;
+
+		const renderWidget = () => {
+			if (!window.turnstile || !turnstileRef.current || widgetIdRef.current) return;
+			widgetIdRef.current = window.turnstile.render(turnstileRef.current, {
+				sitekey: SITE_KEY,
+				callback: (token: string) => setCfToken(token),
+			});
+		};
+
+		// Script may already be loaded
+		if (window.turnstile) {
+			renderWidget();
+		} else {
+			// Wait for script to load
+			const interval = setInterval(() => {
+				if (window.turnstile) {
+					clearInterval(interval);
+					renderWidget();
+				}
+			}, 200);
+			return () => clearInterval(interval);
+		}
+	}, []);
 
 	const handleSubmit = useCallback(
 		async (e: React.FormEvent) => {
@@ -28,12 +71,8 @@ export function EmailCapture({ track }: { track: "light" | "dark" }) {
 			setErrorMsg("");
 
 			try {
-				// Read Turnstile token (auto-injected by the widget)
-				const form = e.target as HTMLFormElement;
-				const cfToken =
-					form.querySelector<HTMLInputElement>("[name='cf-turnstile-response']")?.value || "";
-
 				// Read honeypot value
+				const form = e.target as HTMLFormElement;
 				const honeypot = form.querySelector<HTMLInputElement>("[name='website']")?.value || "";
 
 				const res = await fetch("/api/subscribe", {
@@ -63,7 +102,7 @@ export function EmailCapture({ track }: { track: "light" | "dark" }) {
 				setStatus("error");
 			}
 		},
-		[email, track],
+		[email, track, cfToken],
 	);
 
 	if (status === "success") {
@@ -103,11 +142,8 @@ export function EmailCapture({ track }: { track: "light" | "dark" }) {
 				aria-hidden="true"
 				style={{ position: "absolute", left: "-9999px", opacity: 0 }}
 			/>
-			{/* Turnstile widget */}
-			<div
-				className="cf-turnstile mb-4"
-				data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
-			/>
+			{/* Turnstile widget — rendered explicitly via useEffect */}
+			<div ref={turnstileRef} className="mb-4" />
 			<div className="flex gap-3">
 				<input
 					type="email"
