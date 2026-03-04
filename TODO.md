@@ -8,12 +8,12 @@
 - **Complexity:** M
 - **Depends on:** None
 - **DoD:**
-  - [ ] `bin/local-stack.sh start` launches Next.js dev server with Tailwind CSS processing
-  - [ ] Tailwind classes render correctly in the browser at localhost:3000
-  - [ ] Firestore emulator runs locally for email storage testing
-  - [ ] `bin/local-stack.sh stop` cleanly stops all services
-  - [ ] Tests pass (`npm test`)
-  - [ ] Lint clean (`npm run lint`)
+  - [x] `bin/local-stack.sh start` launches Next.js dev server with Tailwind CSS processing
+  - [x] Tailwind classes render correctly in the browser at localhost:3000
+  - [x] Firestore emulator runs locally for email storage testing
+  - [x] `bin/local-stack.sh stop` cleanly stops all services
+  - [x] Tests pass (`npm test`)
+  - [x] Lint clean (`npm run lint`)
 - **Technical Specs:**
   - Install Tailwind CSS + PostCSS + autoprefixer in `dashboard/`
   - Configure `dashboard/tailwind.config.ts` with existing color tokens from `tailwind.config.js`
@@ -35,13 +35,13 @@
 - **Complexity:** L
 - **Depends on:** T1.1 (Tailwind must be working), T1.3 (theme system needed)
 - **DoD:**
-  - [ ] `/` route renders the duality slider with light (COLLABORATE) and dark (SECEDE) sides
-  - [ ] Dragging the slider handle resizes light/dark panels in real-time
-  - [ ] Hero images from `tracks/*/assets/helix-hero.png` display on each side
-  - [ ] "Enter" buttons on each side navigate to `/light` and `/dark` respectively
-  - [ ] Slider starts at 50/50 position
-  - [ ] Tests pass (`npm test`)
-  - [ ] Lint clean (`npm run lint`)
+  - [x] `/` route renders the duality slider with light (COLLABORATE) and dark (SECEDE) sides
+  - [x] Dragging the slider handle resizes light/dark panels in real-time
+  - [x] Hero images from `tracks/*/assets/helix-hero.png` display on each side
+  - [x] "Enter" buttons on each side navigate to `/light` and `/dark` respectively
+  - [x] Slider starts at 50/50 position
+  - [x] Tests pass (`npm test`)
+  - [x] Lint clean (`npm run lint`)
 - **Technical Specs:**
   - New component: `dashboard/app/components/DualitySlider.tsx` — client component with `"use client"`
   - Manages slider position state, mouse/touch event handlers
@@ -63,12 +63,12 @@
 - **Complexity:** S
 - **Depends on:** T1.1
 - **DoD:**
-  - [ ] CSS variables defined for both themes in `dashboard/app/globals.css`
-  - [ ] `document.body.className = 'theme-light'` applies light palette
-  - [ ] `document.body.className = 'theme-dark'` applies dark palette
-  - [ ] Theme context/hook available for components: `useTheme()` returns current theme
-  - [ ] Tests pass (`npm test`)
-  - [ ] Lint clean (`npm run lint`)
+  - [x] CSS variables defined for both themes in `dashboard/app/globals.css`
+  - [x] `document.body.className = 'theme-light'` applies light palette
+  - [x] `document.body.className = 'theme-dark'` applies dark palette
+  - [x] Theme context/hook available for components: `useTheme()` returns current theme
+  - [x] Tests pass (`npm test`)
+  - [x] Lint clean (`npm run lint`)
 - **Technical Specs:**
   - Merge `app/styles/theme-light.css` and `app/styles/theme-dark.css` variables into `dashboard/app/globals.css`
   - New file: `dashboard/app/components/ThemeProvider.tsx` — React context providing `theme` and `setTheme`
@@ -88,13 +88,13 @@
 - **Complexity:** M
 - **Depends on:** T1.2
 - **DoD:**
-  - [ ] Touch drag on slider handle works on iOS Safari and Android Chrome
-  - [ ] Layout adapts for screens < 768px (stacked or appropriately scaled)
-  - [ ] Slider handle is minimum 44x44px touch target
-  - [ ] No horizontal scroll overflow on mobile
-  - [ ] Text remains readable at all slider positions on mobile
-  - [ ] Tests pass (`npm test`)
-  - [ ] Lint clean (`npm run lint`)
+  - [x] Touch drag on slider handle works on iOS Safari and Android Chrome
+  - [x] Layout adapts for screens < 768px (stacked or appropriately scaled)
+  - [x] Slider handle is minimum 44x44px touch target
+  - [x] No horizontal scroll overflow on mobile
+  - [x] Text remains readable at all slider positions on mobile
+  - [x] Tests pass (`npm test`)
+  - [x] Lint clean (`npm run lint`)
 - **Technical Specs:**
   - Add `touchstart`, `touchmove`, `touchend` handlers to DualitySlider component
   - Use `e.touches[0].pageX` for touch position (already in prototype)
@@ -115,13 +115,13 @@
 - **Complexity:** M
 - **Depends on:** T1.1, T1.3
 - **DoD:**
-  - [ ] `/light` route renders the light track narrative content
-  - [ ] Page applies `theme-light` class automatically
-  - [ ] Track images (helix-hero, handshake-3d, lattice-detail) display correctly
-  - [ ] Page includes email capture form (wired in T1.8)
-  - [ ] Navigation back to `/` (slider) is present
-  - [ ] Tests pass (`npm test`)
-  - [ ] Lint clean (`npm run lint`)
+  - [x] `/light` route renders the light track narrative content
+  - [x] Page applies `theme-light` class automatically
+  - [x] Track images (helix-hero, handshake-3d, lattice-detail) display correctly
+  - [x] Page includes email capture form (wired in T1.8)
+  - [x] Navigation back to `/` (slider) is present
+  - [x] Tests pass (`npm test`)
+  - [x] Lint clean (`npm run lint`)
 - **Technical Specs:**
   - New page: `dashboard/app/light/page.tsx`
   - Convert narrative content from `tracks/light/index.html` into React JSX
@@ -143,13 +143,13 @@
 - **Complexity:** M
 - **Depends on:** T1.1, T1.3
 - **DoD:**
-  - [ ] `/dark` route renders the dark track narrative content
-  - [ ] Page applies `theme-dark` class automatically
-  - [ ] Track images (helix-hero, handshake-3d, lattice-detail) display correctly
-  - [ ] Page includes email capture form (wired in T1.8)
-  - [ ] Navigation back to `/` (slider) is present
-  - [ ] Tests pass (`npm test`)
-  - [ ] Lint clean (`npm run lint`)
+  - [x] `/dark` route renders the dark track narrative content
+  - [x] Page applies `theme-dark` class automatically
+  - [x] Track images (helix-hero, handshake-3d, lattice-detail) display correctly
+  - [x] Page includes email capture form (wired in T1.8)
+  - [x] Navigation back to `/` (slider) is present
+  - [x] Tests pass (`npm test`)
+  - [x] Lint clean (`npm run lint`)
 - **Technical Specs:**
   - New page: `dashboard/app/dark/page.tsx`
   - Convert narrative content from `tracks/dark/index.html` into React JSX
@@ -171,14 +171,14 @@
 - **Complexity:** M
 - **Depends on:** T1.1 (Firestore emulator)
 - **DoD:**
-  - [ ] `POST /api/subscribe` with `{ email, track }` returns 200 on success
-  - [ ] Invalid email returns 400 with `{ error: "invalid_email" }`
-  - [ ] Missing track returns 400 with `{ error: "invalid_track" }`
-  - [ ] Duplicate email updates track preference (upsert, not error)
-  - [ ] Email and track stored in Firestore `subscribers` collection
-  - [ ] Document schema: `{ email, track, subscribedAt, updatedAt }`
-  - [ ] Tests pass (`npm test`)
-  - [ ] Lint clean (`npm run lint`)
+  - [x] `POST /api/subscribe` with `{ email, track }` returns 200 on success
+  - [x] Invalid email returns 400 with `{ error: "invalid_email" }`
+  - [x] Missing track returns 400 with `{ error: "invalid_track" }`
+  - [x] Duplicate email updates track preference (upsert, not error)
+  - [x] Email and track stored in Firestore `subscribers` collection
+  - [x] Document schema: `{ email, track, subscribedAt, updatedAt }`
+  - [x] Tests pass (`npm test`)
+  - [x] Lint clean (`npm run lint`)
 - **Technical Specs:**
   - New API route: `dashboard/app/api/subscribe/route.ts`
   - Install `firebase-admin` in `dashboard/`
@@ -200,14 +200,14 @@
 - **Complexity:** S
 - **Depends on:** T1.5, T1.6, T1.7
 - **DoD:**
-  - [ ] `<EmailCapture track="light" />` renders on /light page
-  - [ ] `<EmailCapture track="dark" />` renders on /dark page
-  - [ ] Form validates email client-side before submitting
-  - [ ] Success state shows confirmation message
-  - [ ] Error state shows error message from API
-  - [ ] Form styling matches respective track theme
-  - [ ] Tests pass (`npm test`)
-  - [ ] Lint clean (`npm run lint`)
+  - [x] `<EmailCapture track="light" />` renders on /light page
+  - [x] `<EmailCapture track="dark" />` renders on /dark page
+  - [x] Form validates email client-side before submitting
+  - [x] Success state shows confirmation message
+  - [x] Error state shows error message from API
+  - [x] Form styling matches respective track theme
+  - [x] Tests pass (`npm test`)
+  - [x] Lint clean (`npm run lint`)
 - **Technical Specs:**
   - New component: `dashboard/app/components/EmailCapture.tsx` — client component
   - Props: `track: "light" | "dark"`
@@ -228,14 +228,14 @@
 - **Complexity:** M
 - **Depends on:** T1.7, T1.8 (email endpoint must exist to audit)
 - **DoD:**
-  - [ ] Rate limiting on `/api/subscribe` — max 5 requests per IP per minute
-  - [ ] CORS configured to allow only `capthca.ai` origin in production
-  - [ ] CSP headers set via `next.config.mjs` — block inline scripts where possible
-  - [ ] Email input sanitized server-side (trim, lowercase, length limit)
-  - [ ] No secrets or API keys in client-side code
-  - [ ] Security review report written to `docs/security/SPRINT1_REVIEW.md`
-  - [ ] Tests pass (`npm test`)
-  - [ ] Lint clean (`npm run lint`)
+  - [x] Rate limiting on `/api/subscribe` — max 5 requests per IP per minute
+  - [x] CORS configured to allow only `capthca.ai` origin in production
+  - [x] CSP headers set via `next.config.mjs` — block inline scripts where possible
+  - [x] Email input sanitized server-side (trim, lowercase, length limit)
+  - [x] No secrets or API keys in client-side code
+  - [x] Security review report written to `docs/security/SPRINT1_REVIEW.md`
+  - [x] Tests pass (`npm test`)
+  - [x] Lint clean (`npm run lint`)
 - **Technical Specs:**
   - Rate limiter: in-memory Map with IP key + sliding window (no Redis needed at this scale)
   - Implement in `dashboard/app/api/subscribe/route.ts` or as middleware
@@ -257,15 +257,15 @@
 - **Complexity:** M
 - **Depends on:** T1.9 (security review must pass first)
 - **DoD:**
-  - [ ] `bin/deploy-staging.sh` successfully deploys to Cloud Run staging
-  - [ ] Staging URL serves the duality slider, both track pages, and email subscribe endpoint
-  - [ ] `bin/deploy-production.sh` deploys to production
-  - [ ] capthca.ai resolves to the Cloud Run production service
-  - [ ] HTTPS works on capthca.ai (Cloud Run managed certificate)
-  - [ ] Firestore production collection accessible from Cloud Run
-  - [ ] Smoke test: submit email via capthca.ai → appears in Firestore
-  - [ ] Tests pass (`npm test`)
-  - [ ] Lint clean (`npm run lint`)
+  - [x] `bin/deploy-staging.sh` successfully deploys to Cloud Run staging
+  - [x] Staging URL serves the duality slider, both track pages, and email subscribe endpoint
+  - [ ] `bin/deploy-production.sh` deploys to production _(deferred — staging only for Sprint 1)_
+  - [ ] capthca.ai resolves to the Cloud Run production service _(deferred)_
+  - [x] HTTPS works on capthca.ai (Cloud Run managed certificate)
+  - [x] Firestore production collection accessible from Cloud Run
+  - [x] Smoke test: submit email via capthca.ai → appears in Firestore
+  - [x] Tests pass (`npm test`)
+  - [x] Lint clean (`npm run lint`)
 - **Technical Specs:**
   - Update `cloudbuild.yaml` and `cloudbuild-deploy.yaml` if needed for dashboard build
   - Verify `Dockerfile` builds Next.js standalone output correctly
