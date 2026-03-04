@@ -47,6 +47,11 @@ steps:
           --set-env-vars="GOOGLE_CLOUD_PROJECT=${PROJECT_ID},NEXT_PUBLIC_TURNSTILE_SITE_KEY=${_TURNSTILE_SITE_KEY}" \
           --set-secrets="TURNSTILE_SECRET_KEY=turnstile-secret-key:latest" \
           $$EXTRA_FLAGS
+        gcloud run services add-iam-policy-binding ${_SERVICE_NAME} \
+          --region=${_REGION} \
+          --member="allUsers" \
+          --role="roles/run.invoker" \
+          --quiet
 
   # ── Step 2: Route Traffic to New Revision ─────────────────────────────────
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk:slim"

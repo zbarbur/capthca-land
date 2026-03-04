@@ -78,6 +78,7 @@ steps:
       - "--compressed-caching=false"
       - "--snapshot-mode=redo"
       - "--log-format=text"
+      - "--build-arg=NEXT_PUBLIC_TURNSTILE_SITE_KEY=${_TURNSTILE_SITE_KEY}"
     waitFor: ["security-audit", "lint", "test"]
 
   # ── Step 6: Deploy to Staging ─────────────────────────────────────────────
@@ -107,6 +108,12 @@ steps:
           --set-env-vars="GOOGLE_CLOUD_PROJECT=${PROJECT_ID},NEXT_PUBLIC_TURNSTILE_SITE_KEY=${_TURNSTILE_SITE_KEY}" \
           --set-secrets="STAGING_AUTH_PASS=staging-auth-pass:latest,TURNSTILE_SECRET_KEY=turnstile-secret-key:latest" \
           $$EXTRA_FLAGS
+        # Ensure public access (--allow-unauthenticated may silently fail without IAM permissions)
+        gcloud run services add-iam-policy-binding ${_STAGING_SERVICE} \
+          --region=${_REGION} \
+          --member="allUsers" \
+          --role="roles/run.invoker" \
+          --quiet
     waitFor: ["build-image"]
 
   # ── Step 7: Route Staging Traffic ─────────────────────────────────────────
