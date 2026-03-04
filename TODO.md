@@ -299,7 +299,18 @@
 
 ---
 
-### B2 — Evaluate Turbopack / Vite for build tooling
+### B2 — Add favicon
+- **Goal:** Add a favicon to the site (currently returns 404)
+- **Specialist:** frontend-engineer
+- **Complexity:** S
+- **Tasks:**
+  - [ ] Design or source a favicon that fits the CAPTHCA brand
+  - [ ] Add `favicon.ico` to `dashboard/app/` (App Router convention)
+  - [ ] Optionally add `apple-touch-icon.png` and `og-image` metadata
+
+---
+
+### B3 — Evaluate Turbopack / Vite for build tooling
 - **Goal:** Improve dev and build performance by evaluating modern bundler alternatives
 - **Specialist:** infra-architect
 - **Complexity:** M
