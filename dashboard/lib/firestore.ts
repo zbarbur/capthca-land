@@ -65,4 +65,6 @@ function createFirestoreDb(): Firestore {
 	return getFirestore(app);
 }
 
-export const db: DbLike = USE_MEMORY_STORE ? createMemoryDb() : createFirestoreDb();
+export const db: DbLike = USE_MEMORY_STORE
+	? createMemoryDb()
+	: (createFirestoreDb() as unknown as DbLike);
