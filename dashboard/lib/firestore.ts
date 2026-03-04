@@ -7,7 +7,10 @@ const USE_MEMORY_STORE = process.env.USE_MEMORY_STORE === "true";
 const memoryStore = new Map<string, Map<string, Record<string, unknown>>>();
 
 export interface DocRef {
-	set(data: Record<string, unknown>, options?: { merge?: boolean }): Promise<void>;
+	set(
+		data: Record<string, unknown>,
+		options?: { merge?: boolean } & Record<string, unknown>,
+	): Promise<unknown>;
 }
 
 export interface CollectionRef {
@@ -65,6 +68,4 @@ function createFirestoreDb(): Firestore {
 	return getFirestore(app);
 }
 
-export const db: DbLike = USE_MEMORY_STORE
-	? createMemoryDb()
-	: (createFirestoreDb() as unknown as DbLike);
+export const db: DbLike = USE_MEMORY_STORE ? createMemoryDb() : createFirestoreDb();

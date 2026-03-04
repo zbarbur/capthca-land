@@ -10,7 +10,7 @@
 		"start": "npx tsx ./src/index.ts",
 		"lint": "biome check .",
 		"ci": "npm run lint && npm run typecheck && npm test",
-		"typecheck": "npx tsc --noEmit",
+		"typecheck": "npx tsc --noEmit && npx tsc --noEmit -p dashboard/tsconfig.json",
 		"format": "biome format --write .",
 		"prepare": "husky"
 	},
