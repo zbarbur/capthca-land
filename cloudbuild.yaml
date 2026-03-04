@@ -113,7 +113,7 @@ steps:
           --region=${_REGION} \
           --member="allUsers" \
           --role="roles/run.invoker" \
-          --quiet
+          --quiet || echo "WARNING: Could not set IAM policy — ensure allUsers has run.invoker manually"
     waitFor: ["build-image"]
 
   # ── Step 7: Route Staging Traffic ─────────────────────────────────────────
