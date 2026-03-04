@@ -24,6 +24,11 @@ if [ "$CONFIRM" != "yes" ]; then
 	exit 1
 fi
 
+echo "==> Running full CI checks (lint + typecheck + test + build)..."
+cd "$(dirname "$(dirname "${BASH_SOURCE[0]}")")"
+npm run ci:full
+echo "==> CI checks passed."
+
 echo "==> Submitting Cloud Build (production)..."
 gcloud builds submit --no-source \
 	--project=capthca-489205 \

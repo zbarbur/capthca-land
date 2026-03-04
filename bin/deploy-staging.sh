@@ -25,9 +25,9 @@ echo "==> Deploying '$SERVICE' to staging..."
 
 # Run CI checks unless skipped
 if [ "$SKIP_CHECKS" = false ]; then
-	echo "==> Running CI checks (lint + typecheck + test)..."
+	echo "==> Running full CI checks (lint + typecheck + test + build)..."
 	cd "$PROJECT_DIR"
-	npm run ci
+	npm run ci:full
 	echo "==> CI checks passed."
 fi
 

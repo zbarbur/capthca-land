@@ -296,3 +296,15 @@
   - [ ] Set up Cloudflare Access for staging (replaces basic auth middleware)
   - [ ] Enable Cloudflare proxy for production Cloud Run service
   - [ ] Remove basic auth middleware after Cloudflare Access is confirmed working
+
+---
+
+### B2 — Evaluate Turbopack / Vite for build tooling
+- **Goal:** Improve dev and build performance by evaluating modern bundler alternatives
+- **Specialist:** infra-architect
+- **Complexity:** M
+- **Tasks:**
+  - [ ] Try Turbopack (`next dev --turbo`) for local dev — measure startup and HMR times
+  - [ ] Evaluate Vite migration feasibility (trade-offs: lose App Router, server components, API routes)
+  - [ ] Benchmark production build times: Webpack vs Turbopack vs Vite
+  - [ ] Decide and document recommendation
