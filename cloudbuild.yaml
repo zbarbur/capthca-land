@@ -11,6 +11,7 @@ substitutions:
   _IMAGE_NAME: "capthca-land"
   _TAG: "latest"
   _STAGING_SERVICE: "capthca-land-staging"
+  _TURNSTILE_SITE_KEY: "0x4AAAAAACl986ntf-pNkY_a"
 
 steps:
   # ── Step 1: Install Dependencies ──────────────────────────────────────────
@@ -103,6 +104,8 @@ steps:
           --timeout=300 \
           --concurrency=80 \
           --port=8080 \
+          --set-env-vars="GOOGLE_CLOUD_PROJECT=${PROJECT_ID},NEXT_PUBLIC_TURNSTILE_SITE_KEY=${_TURNSTILE_SITE_KEY}" \
+          --set-secrets="STAGING_AUTH_PASS=staging-auth-pass:latest,TURNSTILE_SECRET_KEY=turnstile-secret-key:latest" \
           $$EXTRA_FLAGS
     waitFor: ["build-image"]
 

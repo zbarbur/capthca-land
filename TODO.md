@@ -279,3 +279,20 @@
   - Manual: verify capthca.ai after DNS propagation
 - **Demo Data Impact:**
   - None — deployment only
+
+---
+
+## Backlog
+
+### B1 — Migrate DNS from GoDaddy to Cloudflare
+- **Goal:** Move capthca.ai DNS management to Cloudflare for DDoS protection, CDN caching, and Cloudflare Access (staging auth replacement)
+- **Specialist:** infra-architect
+- **Complexity:** S
+- **Depends on:** T1.10
+- **Tasks:**
+  - [ ] Create free Cloudflare account and add capthca.ai
+  - [ ] Verify auto-imported DNS records are correct
+  - [ ] Update nameservers in GoDaddy to Cloudflare's
+  - [ ] Set up Cloudflare Access for staging (replaces basic auth middleware)
+  - [ ] Enable Cloudflare proxy for production Cloud Run service
+  - [ ] Remove basic auth middleware after Cloudflare Access is confirmed working

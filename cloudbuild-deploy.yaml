@@ -18,6 +18,7 @@ substitutions:
   _ARTIFACT_REPO: "capthca-land"
   _IMAGE_NAME: "capthca-land"
   _TAG: "latest"
+  _TURNSTILE_SITE_KEY: "0x4AAAAAACl986ntf-pNkY_a"
 
 steps:
   # ── Step 1: Deploy to Cloud Run (Blue/Green) ──────────────────────────────
@@ -43,6 +44,8 @@ steps:
           --timeout=300 \
           --concurrency=80 \
           --port=8080 \
+          --set-env-vars="GOOGLE_CLOUD_PROJECT=${PROJECT_ID},NEXT_PUBLIC_TURNSTILE_SITE_KEY=${_TURNSTILE_SITE_KEY}" \
+          --set-secrets="TURNSTILE_SECRET_KEY=turnstile-secret-key:latest" \
           $$EXTRA_FLAGS
 
   # ── Step 2: Route Traffic to New Revision ─────────────────────────────────

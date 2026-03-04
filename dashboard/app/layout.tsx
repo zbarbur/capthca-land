@@ -10,6 +10,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en">
+			<head>
+				<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer />
+			</head>
 			<body>{children}</body>
 		</html>
 	);

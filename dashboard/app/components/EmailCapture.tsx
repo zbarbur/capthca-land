@@ -28,10 +28,18 @@ export function EmailCapture({ track }: { track: "light" | "dark" }) {
 			setErrorMsg("");
 
 			try {
+				// Read Turnstile token (auto-injected by the widget)
+				const form = e.target as HTMLFormElement;
+				const cfToken =
+					form.querySelector<HTMLInputElement>("[name='cf-turnstile-response']")?.value || "";
+
+				// Read honeypot value
+				const honeypot = form.querySelector<HTMLInputElement>("[name='website']")?.value || "";
+
 				const res = await fetch("/api/subscribe", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify({ email: trimmed, track }),
+					body: JSON.stringify({ email: trimmed, track, cfToken, honeypot }),
 				});
 
 				if (!res.ok) {
@@ -40,6 +48,8 @@ export function EmailCapture({ track }: { track: "light" | "dark" }) {
 						setErrorMsg("Too many attempts. Please try again later.");
 					} else if (data.error === "invalid_email") {
 						setErrorMsg("Please enter a valid email address.");
+					} else if (data.error === "captcha_failed") {
+						setErrorMsg("CAPTCHA verification failed. Please try again.");
 					} else {
 						setErrorMsg("Something went wrong. Please try again.");
 					}
@@ -84,6 +94,20 @@ export function EmailCapture({ track }: { track: "light" | "dark" }) {
 			>
 				{isLight ? "Join the Symbiotic Standard" : "Initialize your Protocol"}
 			</p>
+			{/* Honeypot — hidden from humans, bots auto-fill it */}
+			<input
+				type="text"
+				name="website"
+				autoComplete="off"
+				tabIndex={-1}
+				aria-hidden="true"
+				style={{ position: "absolute", left: "-9999px", opacity: 0 }}
+			/>
+			{/* Turnstile widget */}
+			<div
+				className="cf-turnstile mb-4"
+				data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+			/>
 			<div className="flex gap-3">
 				<input
 					type="email"

@@ -23,20 +23,48 @@ function isRateLimited(ip: string): boolean {
 }
 
 export async function POST(request: Request) {
-	// Rate limiting
+	// Rate limiting — use last x-forwarded-for entry (Cloud Run appends real client IP)
 	const forwarded = request.headers.get("x-forwarded-for");
-	const ip = forwarded?.split(",")[0]?.trim() || "unknown";
+	const forwardedParts = forwarded
+		?.split(",")
+		.map((s) => s.trim())
+		.filter(Boolean);
+	const ip = forwardedParts?.at(-1) || "unknown";
 
 	if (isRateLimited(ip)) {
 		return NextResponse.json({ error: "rate_limit_exceeded" }, { status: 429 });
 	}
 
 	// Parse body
-	let body: { email?: string; track?: string };
+	let body: { email?: string; track?: string; honeypot?: string; cfToken?: string };
 	try {
 		body = await request.json();
 	} catch {
 		return NextResponse.json({ error: "invalid_json" }, { status: 400 });
+	}
+
+	// Honeypot check — bots auto-fill hidden fields
+	if (body.honeypot) {
+		return NextResponse.json({ error: "invalid_request" }, { status: 400 });
+	}
+
+	// Turnstile verification (skip if secret key not configured — local dev)
+	const turnstileSecret = process.env.TURNSTILE_SECRET_KEY;
+	if (turnstileSecret) {
+		const cfToken = body.cfToken || "";
+		const verifyRes = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+			method: "POST",
+			headers: { "Content-Type": "application/x-www-form-urlencoded" },
+			body: new URLSearchParams({
+				secret: turnstileSecret,
+				response: cfToken,
+				remoteip: ip,
+			}),
+		});
+		const verifyData = (await verifyRes.json()) as { success: boolean };
+		if (!verifyData.success) {
+			return NextResponse.json({ error: "captcha_failed" }, { status: 400 });
+		}
 	}
 
 	// Validate email

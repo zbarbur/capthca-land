@@ -60,7 +60,7 @@ function createFirestoreDb(): Firestore {
 		credential: process.env.GOOGLE_APPLICATION_CREDENTIALS
 			? cert(process.env.GOOGLE_APPLICATION_CREDENTIALS)
 			: undefined,
-		projectId: process.env.GOOGLE_CLOUD_PROJECT || "capthca-land",
+		projectId: process.env.GOOGLE_CLOUD_PROJECT || "capthca-489205",
 	});
 	return getFirestore(app);
 }
