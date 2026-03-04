@@ -36,6 +36,10 @@
 - [analytics] Analytics dashboard — track preference distribution, conversion funnel (M)
 - [ui] Animated transitions between slider positions (S)
 - [ui] Sound/ambient audio per track (experimental) (M)
+- [security] Add CAPTCHA or honeypot to subscribe form for spam prevention (S)
+- [security] Move rate limiter to Redis or Cloud Armor for multi-instance consistency (M)
+- [security] Add request logging for abuse monitoring (S)
+- [security] Tighten CSP — remove 'unsafe-inline' for scripts (S)
 
 ---
 

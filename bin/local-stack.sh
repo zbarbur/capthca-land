@@ -23,14 +23,15 @@ usage() {
 }
 
 start_firestore_emulator() {
-	if command -v gcloud &>/dev/null; then
+	# Try real Firestore emulator (requires Java 8+)
+	if command -v gcloud &>/dev/null && java -version &>/dev/null; then
 		echo "==> Starting Firestore emulator on port $FIRESTORE_EMULATOR_PORT..."
 		export FIRESTORE_EMULATOR_HOST="localhost:$FIRESTORE_EMULATOR_PORT"
 		gcloud emulators firestore start --host-port="localhost:$FIRESTORE_EMULATOR_PORT" &>/dev/null &
 		echo "Firestore emulator at $FIRESTORE_EMULATOR_HOST"
 	else
-		echo "==> gcloud not found — skipping Firestore emulator."
-		echo "    Install gcloud SDK or set FIRESTORE_EMULATOR_HOST manually."
+		echo "==> Firestore emulator unavailable (needs gcloud + Java 8+)."
+		echo "    Using in-memory store for local development."
 	fi
 }
 
