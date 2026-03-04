@@ -59,13 +59,22 @@ function createFirestoreDb(): Firestore {
 	}
 
 	// Production: use default credentials (Cloud Run service account)
-	const app = initializeApp({
-		credential: process.env.GOOGLE_APPLICATION_CREDENTIALS
-			? cert(process.env.GOOGLE_APPLICATION_CREDENTIALS)
-			: undefined,
+	const options: Record<string, unknown> = {
 		projectId: process.env.GOOGLE_CLOUD_PROJECT || "capthca-489205",
-	});
-	return getFirestore(app);
+	};
+	if (process.env.GOOGLE_APPLICATION_CREDENTIALS) {
+		options.credential = cert(process.env.GOOGLE_APPLICATION_CREDENTIALS);
+	}
+	return getFirestore(initializeApp(options));
 }
 
-export const db: DbLike = USE_MEMORY_STORE ? createMemoryDb() : createFirestoreDb();
+let _db: DbLike | null = null;
+
+export const db: DbLike = {
+	collection(name: string) {
+		if (!_db) {
+			_db = USE_MEMORY_STORE ? createMemoryDb() : createFirestoreDb();
+		}
+		return _db.collection(name);
+	},
+};
