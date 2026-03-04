@@ -16,25 +16,35 @@ _(empty — no active sprint)_
 
 ## Backlog
 
-<!-- Prioritized list of work items. Higher = more important.
-     Format: - [area] Short description (complexity: S/M/L)
-     Example: - [api] Add rate limiting to public endpoints (M)
-     Example: - [ui] Dashboard loading skeleton states (S)
-     Example: - [infra] Set up Redis for session storage (L)
--->
+### MVP (Sprint 1-2)
+- [infra] Local dev stack — Tailwind + PostCSS build, hot reload, local Firestore emulator (M)
+- [ui] Convert index.html duality slider to Next.js React component (L)
+- [ui] Build light track page at /light with narrative content from tracks/light (M)
+- [ui] Build dark track page at /dark with narrative content from tracks/dark (M)
+- [ui] Mobile-responsive slider with touch support (M)
+- [ui] Theme switching system — CSS variables + Tailwind class toggle (S)
+- [api] POST /api/subscribe endpoint — validate email, store to Firestore with track preference (M)
+- [infra] Firestore setup for email collection (S)
+- [infra] Cloud Run deployment to capthca.ai (M)
+- [infra] DNS configuration for capthca.ai → Cloud Run (S)
+- [ui] Email capture forms on both tracks with inline validation (S)
+- [analytics] Instrument slider interaction events (track choice, time spent) (M)
+- [ui] Optimize images with next/image, compress track assets (S)
+- [ui] SEO meta tags + Open Graph for social sharing (S)
+- [security] Pre-launch security review — rate limiting, input validation, CORS, CSP headers (M)
 
-_(add backlog items here)_
+### Post-MVP (Sprint 3+)
+- [email] Welcome email on signup — track-specific content (M)
+- [email] Email provider integration (Resend or SendGrid) (M)
+- [ui] Deep multi-section narrative pages for each track (L)
+- [ui] Social sharing cards with track-specific generated images (M)
+- [analytics] Analytics dashboard — track preference distribution, conversion funnel (M)
+- [ui] Animated transitions between slider positions (S)
+- [ui] Sound/ambient audio per track (experimental) (M)
 
 ---
 
 ## Tech Debt
-
-<!-- Technical debt items discovered during sprints.
-     Format: - [area] Description — discovered Sprint {N}
-     Example: - [test] Missing edge case tests for auth middleware — discovered Sprint 3
-     Example: - [refactor] Extract validation logic from route handlers — discovered Sprint 2
-     Example: - [perf] N+1 query in /api/users list endpoint — discovered Sprint 4
--->
 
 _(add tech debt items here)_
 
@@ -42,17 +52,4 @@ _(add tech debt items here)_
 
 ## Done
 
-<!-- Completed items, grouped by sprint.
-     Format: - [Sprint N] Description
-     Move items here from Doing at sprint end.
--->
-
 _(completed items will appear here)_
-
-<!--
-### Sprint 1
-- [Sprint 1] ...
-
-### Sprint 2
-- [Sprint 2] ...
--->

@@ -9,28 +9,45 @@
 
 | Field | Value |
 |-------|-------|
-| **Status** | _Planning / Active / Maintenance_ |
-| **Last Sync** | _YYYY-MM-DD_ |
-| **Current Sprint** | _Sprint N_ |
-| **Objective** | _One-sentence project objective_ |
+| **Status** | Active — Pre-Sprint 1 |
+| **Last Sync** | 2026-03-03 |
+| **Current Sprint** | Sprint 0 (Inception) |
+| **Objective** | Dual-narrative landing page at capthca.ai with email capture |
 
 ---
 
 ## Architecture Summary
 
-_Describe the high-level architecture of the project. Include:_
-- _System components and their responsibilities_
-- _How components communicate_
-- _Key technology choices and rationale_
-- _Data flow overview_
+```
+┌──────────────────────────────────────────────────┐
+│                  capthca.ai                       │
+│                                                    │
+│  ┌─────────────┐  ┌───────────┐  ┌────────────┐  │
+│  │  Duality     │  │  /light   │  │  /dark     │  │
+│  │  Slider (/)  │──│  track    │  │  track     │  │
+│  └──────┬──────┘  └─────┬─────┘  └─────┬──────┘  │
+│         │               │              │          │
+│         └───────────┬───┘──────────────┘          │
+│                     │                              │
+│              ┌──────┴──────┐                       │
+│              │ /api/subscribe│                      │
+│              └──────┬──────┘                       │
+│                     │                              │
+└─────────────────────┼──────────────────────────────┘
+                      │
+               ┌──────┴──────┐
+               │  Firestore   │
+               │  (emails +   │
+               │   track pref)│
+               └─────────────┘
+```
 
-```
-Example:
-┌─────────────┐     ┌─────────────┐     ┌─────────────┐
-│   Frontend   │────>│   API       │────>│  Database    │
-│  (Next.js)   │<────│  (Node.js)  │<────│ (Firestore)  │
-└─────────────┘     └─────────────┘     └─────────────┘
-```
+- **Frontend:** Next.js 14 (App Router) with SSR on Cloud Run
+- **Styling:** Tailwind CSS with CSS variable theme switching (`.theme-light` / `.theme-dark`)
+- **API:** Next.js API routes (single `/api/subscribe` endpoint for MVP)
+- **Database:** Firestore (email collection with track preference)
+- **Hosting:** GCP Cloud Run (auto-scaling, standalone Next.js output)
+- **CI/CD:** Cloud Build (cloudbuild.yaml → staging, cloudbuild-deploy.yaml → production)
 
 ---
 
@@ -38,11 +55,11 @@ Example:
 
 | Component | Technology | Environment | Notes |
 |-----------|-----------|-------------|-------|
-| _Frontend_ | _e.g., Next.js 14_ | _e.g., Cloud Run_ | _e.g., Standalone output_ |
-| _API_ | _e.g., Node.js_ | _e.g., Cloud Run_ | _e.g., Auto-scaling_ |
-| _Database_ | _e.g., Firestore_ | _e.g., GCP_ | _e.g., Prefix-based multi-tenancy_ |
-| _Search_ | _e.g., Typesense_ | _e.g., GCE VM_ | _e.g., Caddy reverse proxy_ |
-| _CI/CD_ | _e.g., Cloud Build_ | _e.g., GCP_ | _e.g., cloudbuild.yaml_ |
+| Frontend + API | Next.js 14 | Cloud Run | Standalone output, SSR |
+| Database | Firestore | GCP | Email + track preference storage |
+| Domain | capthca.ai | Manual DNS | A record → Cloud Run |
+| CI/CD | Cloud Build | GCP | Auto on push (staging), manual (prod) |
+| Images | next/image | Cloud Run | Optimization at serve time |
 
 ---
 
@@ -50,11 +67,11 @@ Example:
 
 | Metric | Value |
 |--------|-------|
-| **Total Tests** | _N_ |
-| **Test Runner** | _Node.js built-in (`node --test`)_ |
+| **Total Tests** | 5 |
+| **Test Runner** | Node.js built-in (`node --test`) |
 | **Test Command** | `npm test` |
 | **CI Command** | `npm run ci` |
-| **Test Files** | _list key test directories_ |
+| **Test Files** | `test/example.test.ts`, `test/infra/dependency-completeness.test.ts` |
 
 ---
 
@@ -62,26 +79,26 @@ Example:
 
 | Sprint | Theme | Status | Tests | Key Deliverables |
 |--------|-------|--------|-------|-----------------|
-| _1_ | _Project setup_ | _Completed_ | _N_ | _Initial scaffolding, CI pipeline_ |
-| _2_ | _Core features_ | _Completed_ | _N_ | _Auth, basic CRUD_ |
-| _..._ | _..._ | _..._ | _..._ | _..._ |
+| 0 | Project inception | Completed | 5 | Template init, charter, backlog |
 
 ---
 
 ## Current State
 
-_Describe what the project can do right now. What features are working? What is the user experience? What are the known limitations?_
-
 ### Working
-- _Feature 1_
-- _Feature 2_
+- Static duality slider prototype (index.html)
+- CI pipeline (lint + typecheck + test)
+- Deploy scripts (staging + production)
+- Track content and assets (light + dark)
 
 ### In Progress
-- _Feature 3 (Sprint N)_
+- Nothing yet — Sprint 1 not started
 
 ### Known Limitations
-- _Limitation 1_
-- _Limitation 2_
+- No React components yet (static HTML only)
+- No email capture backend
+- Not deployed to capthca.ai
+- No analytics instrumentation
 
 ---
 
@@ -90,10 +107,11 @@ _Describe what the project can do right now. What features are working? What is 
 | Document | Location | Purpose |
 |----------|----------|---------|
 | Project rules | `CLAUDE.md` | Auto-loaded project conventions |
-| Agent memory | `MEMORY.md` | Persistent lessons and state |
+| Project charter | `docs/PROJECT_CHARTER.md` | Goals, scope, decisions |
+| Agent memory | `.claude/MEMORY.md` | Persistent lessons and state |
 | Active sprint | `TODO.md` | Current sprint tasks and DoD |
 | Backlog | `docs/process/KANBAN.md` | Prioritized work items |
 | Sprint handovers | `docs/sprints/SPRINT{N}_HANDOVER.md` | Per-sprint knowledge transfer |
 | Process docs | `docs/process/` | Templates, checklists, standards |
-| Architecture | _docs/architecture/_ | _(if applicable)_ |
-| Research | _docs/research/_ | _(if applicable)_ |
+| Component strategy | `docs/COMPONENT_STRATEGY.md` | Shared component architecture |
+| Research | `docs/research/` | Storyboards, manifestos, visual research |

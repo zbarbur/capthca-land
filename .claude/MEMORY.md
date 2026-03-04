@@ -1,8 +1,7 @@
 # CAPTHCA land — Project Memory
 
 ## Project Purpose
-<!-- One sentence: what does this project do and why? -->
-A landing page for the CAPTHCA protocol intiative
+Dual-narrative landing page for the CAPTHCA identity protocol at capthca.ai. Visitors choose between Light (Symbiotic) and Dark (Post-Biological) tracks via an interactive slider, then sign up with email.
 
 ## Project Tools — ALWAYS USE THESE
 **STOP and check here before running ANY infrastructure/dev command.**
@@ -20,17 +19,28 @@ A landing page for the CAPTHCA protocol intiative
 - npm script: `npm test`
 
 ## Key Project Patterns
-<!-- Add patterns as they emerge: auth approach, data model, env vars, etc. -->
+- **Theme switching:** CSS variables + body class (`theme-light` / `theme-dark`)
+- **Shared components:** Same logic, different skins per track (see `docs/COMPONENT_STRATEGY.md`)
+- **Domain:** capthca.ai (DNS manually managed, oclens.capthca.ai is a separate project)
+- **Email storage:** Firestore — email + track preference (light/dark)
+- **North star metric:** Visitor → email signup conversion rate, segmented by track
+
+## Key Decisions
+- Next.js on Cloud Run (not static export) — need SSR for SEO + API routes
+- Firestore for email (not Sheets/Supabase) — simplest GCP-native option
+- Ship MVP ASAP — prototype already works, real data > more planning
+- Biome excludes `app/styles/**/*.css` (Tailwind @apply syntax)
+- init-project.sh: file type check uses `grep -qiE "text|json|csv|yaml|xml"` (macOS fix)
 
 ## Environments
-<!-- Fill in when staging/production are set up -->
-| Environment | Dashboard URL | Service Name | Prefix |
-|---|---|---|---|
-| Staging | TBD | TBD | `stg_` |
-| Production | TBD | TBD | `prd_` |
+| Environment | URL | Service Name |
+|---|---|---|
+| Production | capthca.ai | capthca-land-prod |
+| Staging | TBD | capthca-land-staging |
 
 ## Sprint Status
-- Sprint 1: PLANNING
+- Sprint 0 (Inception): COMPLETE — charter, backlog, context populated
+- Sprint 1: NOT STARTED
 
 ## Lessons Learned
-<!-- Add after each sprint — synthesize from sprint handover docs -->
+- macOS `file` command classifies .json as "JSON data" not "text" — broke init script placeholder replacement
