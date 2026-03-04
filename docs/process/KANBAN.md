@@ -6,32 +6,27 @@
 
 ---
 
-## Sprint {N} — Doing
+## Sprint 1 — Doing
 
-<!-- Move items here from Backlog when sprint starts. Clear this section at sprint end. -->
-
-_(empty — no active sprint)_
+- [infra] Local dev stack — Tailwind + PostCSS build, hot reload, local Firestore emulator (M)
+- [ui] Convert index.html duality slider to Next.js React component (L)
+- [ui] Theme switching system — CSS variables + Tailwind class toggle (S)
+- [ui] Mobile-responsive slider with touch support (M)
+- [ui] Build light track page at /light with narrative content from tracks/light (M)
+- [ui] Build dark track page at /dark with narrative content from tracks/dark (M)
+- [api] POST /api/subscribe endpoint — validate email, store to Firestore with track preference (M)
+- [ui] Email capture forms on both tracks with inline validation (S)
+- [security] Pre-launch security review — rate limiting, input validation, CORS, CSP headers (M)
+- [infra] Cloud Run deployment to capthca.ai + DNS configuration (M)
 
 ---
 
 ## Backlog
 
-### MVP (Sprint 1-2)
-- [infra] Local dev stack — Tailwind + PostCSS build, hot reload, local Firestore emulator (M)
-- [ui] Convert index.html duality slider to Next.js React component (L)
-- [ui] Build light track page at /light with narrative content from tracks/light (M)
-- [ui] Build dark track page at /dark with narrative content from tracks/dark (M)
-- [ui] Mobile-responsive slider with touch support (M)
-- [ui] Theme switching system — CSS variables + Tailwind class toggle (S)
-- [api] POST /api/subscribe endpoint — validate email, store to Firestore with track preference (M)
-- [infra] Firestore setup for email collection (S)
-- [infra] Cloud Run deployment to capthca.ai (M)
-- [infra] DNS configuration for capthca.ai → Cloud Run (S)
-- [ui] Email capture forms on both tracks with inline validation (S)
+### MVP (Sprint 2)
 - [analytics] Instrument slider interaction events (track choice, time spent) (M)
 - [ui] Optimize images with next/image, compress track assets (S)
 - [ui] SEO meta tags + Open Graph for social sharing (S)
-- [security] Pre-launch security review — rate limiting, input validation, CORS, CSP headers (M)
 
 ### Post-MVP (Sprint 3+)
 - [email] Welcome email on signup — track-specific content (M)
@@ -46,7 +41,7 @@ _(empty — no active sprint)_
 
 ## Tech Debt
 
-_(add tech debt items here)_
+_(none yet)_
 
 ---
 
