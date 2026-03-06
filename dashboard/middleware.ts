@@ -1,8 +1,8 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-const STAGING_USER = process.env.STAGING_AUTH_USER || "capthca";
-const STAGING_AUTH_PASS = process.env.STAGING_AUTH_PASS || "";
+const STAGING_USER = process.env.CAPTHCA_LAND_STAGING_AUTH_USER || "capthca";
+const STAGING_AUTH_PASS = process.env.CAPTHCA_LAND_STAGING_AUTH_PASS || "";
 
 function isBasicAuthValid(header: string | null): boolean {
 	if (!header?.startsWith("Basic ")) return false;

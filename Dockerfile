@@ -35,7 +35,8 @@ ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
 # Runtime secrets (injected by Secret Manager, NOT baked into image):
-#   CAPTHCA_LAND_AUTH_SECRET  -> env var (session signing key)
+#   CAPTHCA_LAND_TURNSTILE_SECRET_KEY  -> Turnstile CAPTCHA verification
+#   CAPTHCA_LAND_STAGING_AUTH_PASS     -> staging basic auth (staging only)
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
