@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/firestore";
+import { createSecretProvider } from "@/lib/secrets";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const VALID_TRACKS = ["light", "dark"] as const;
@@ -48,8 +49,13 @@ export async function POST(request: Request) {
 		return NextResponse.json({ error: "invalid_request" }, { status: 400 });
 	}
 
-	// Turnstile verification (skip if secret key not configured — local dev)
-	const turnstileSecret = process.env.TURNSTILE_SECRET_KEY;
+	// Turnstile verification (skip if secret not configured — local dev)
+	let turnstileSecret: string | undefined;
+	try {
+		turnstileSecret = await createSecretProvider().getSecret("turnstile-secret-key");
+	} catch {
+		// Secret not configured — skip Turnstile verification (local dev)
+	}
 	if (turnstileSecret) {
 		const cfToken = body.cfToken || "";
 		const verifyRes = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
