@@ -6,23 +6,6 @@
 
 ---
 
-## Doing (Sprint 2)
-
-- [infra] Wire SecretProvider into dashboard — CAPTHCA_LAND_ prefix, update Cloud Build (S) → T2.1
-- [ui] Add favicon (currently 404) (S) → T2.2
-- [ui] SEO meta tags + Open Graph for social sharing (S) → T2.3
-- [security] Add HSTS header — Strict-Transport-Security in next.config.mjs (S) → T2.4
-- [security] Input validation hardening — body size limit (413) on subscribe route (S) → T2.5
-- [security] No input reflection in errors — audit + add non-regression test (S) → T2.6
-- [infra] Firestore collection prefix (stg_/prd_) — prevent cross-env data pollution (S) → T2.7
-- [testing] Security non-regression tests — source-level checks for HSTS, CSP, no input reflection (S) → T2.8
-- [ui] Dark track design — Matrix rain background, CRT scanlines, glitch typography (M) → T2.9
-- [ui] Dark track copy update — body text verbatim from content/dark/01-04.md (M) → T2.10
-- [ui] Light track design — glassmorphism, gradient orbs, organic motion (M) → T2.11
-- [ui] Light track copy update — body text verbatim from content/light/01-04.md (M) → T2.12
-
----
-
 ## Backlog
 
 ### High Priority
@@ -30,6 +13,11 @@
 - [infra] Migrate DNS from GoDaddy to Cloudflare — DDoS, CDN, Cloudflare Access (S)
 
 ### MVP (Sprint 3)
+- [ui] Rebuild home page (DualitySlider) from content spec — each half previews track world (glassmorphism vs Matrix rain), gradient collision zone, cinematic entrance animation, hover expansion, mobile vertical stack, CTAs from content/home/duality-slider.md (L)
+- [observability] Structured JSON logging — Cloud Logging compatible, replace console.log/error (M)
+- [observability] Health endpoint /api/health — check Firestore connectivity (S)
+- [observability] Custom metrics for subscribe API — counters for signups, errors, rate limits (M)
+- [security] Add request logging for abuse monitoring (S)
 - [analytics] Instrument slider interaction events (track choice, time spent) (M)
 - [tooling] Subscriber management scripts — pull, export CSV, list by track, delete (S)
 - [analytics] Subscriber profiling enrichment — timezone, locale, screen size, geo (IP lookup), device type (S)
@@ -45,14 +33,10 @@
 - [ui] Animated transitions between slider positions (S)
 - [ui] Sound/ambient audio per track (experimental) (M)
 - [security] Move rate limiter to Redis or Cloud Armor for multi-instance consistency (M)
-- [security] Add request logging for abuse monitoring (S)
 - [security] Tighten CSP — remove 'unsafe-inline' for scripts (S)
 - [infra] Evaluate Turbopack / Vite for build tooling (M)
 
 ### Battle-Tested Patterns (from OpenClaw Lens review)
-- [observability] Structured JSON logging — Cloud Logging compatible (M)
-- [observability] Health endpoint /api/health — check Firestore connectivity (S)
-- [observability] Custom metrics for subscribe API — counters for signups, errors, rate limits (M)
 - [observability] OpenTelemetry foundation — Edge-Runtime-safe Next.js setup (L)
 - [infra] Blue-green deploys for staging — --no-traffic + traffic shift (S)
 - [infra] npm audit in CI pipeline — non-blocking dependency vulnerability check (S)
@@ -64,6 +48,25 @@
 
 - [infra] Turnstile console warnings on track pages (non-blocking, cosmetic)
 - [infra] `NEXT_PUBLIC_*` vars require Docker build args — document pattern for future public env vars
+
+---
+
+## Done (Sprint 2)
+
+- [infra] Wire SecretProvider into dashboard — CAPTHCA_LAND_ prefix, update Cloud Build (S)
+- [ui] Add favicon — gold C on black SVG (S)
+- [ui] SEO meta tags + Open Graph for social sharing (S)
+- [security] Add HSTS header — Strict-Transport-Security in next.config.mjs (S)
+- [security] Input validation hardening — body size limit (4096) on subscribe route (S)
+- [security] No input reflection in errors — audit + non-regression test (S)
+- [infra] Firestore collection prefix (stg_/prd_/local_) — prevent cross-env data pollution (S)
+- [testing] Security non-regression tests — HSTS, CSP, no input reflection, body size, Firestore prefix (S)
+- [ui] Dark track design — Matrix rain, CRT scanlines, glitch typography, alert pulse, HUD brackets (M)
+- [ui] Dark track copy — content implemented on page (M)
+- [ui] Light track design — glassmorphism, gradient orbs, smooth scroll reveal, pull quotes (M)
+- [ui] Light track copy — content implemented on page (M)
+- [fix] Body size limit bumped 1024→4096 for Turnstile tokens
+- [feat] Subscriber data enriched with IP, user agent, referer, accept-language
 
 ---
 
