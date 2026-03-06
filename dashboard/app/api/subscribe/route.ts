@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/firestore";
+import { logger } from "@/lib/logger";
 import { createSecretProvider } from "@/lib/secrets";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -116,7 +117,9 @@ export async function POST(request: Request) {
 
 		return NextResponse.json({ success: true });
 	} catch (err) {
-		console.error("Firestore write error:", err);
+		logger.error("Firestore write error", {
+			error: err instanceof Error ? err.message : String(err),
+		});
 		return NextResponse.json({ error: "server_error" }, { status: 500 });
 	}
 }

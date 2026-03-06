@@ -179,6 +179,116 @@
 	transform: scale(1);
 }
 
+/* ── Duality Slider: Entrance Animations ─────────────────── */
+
+/* Slider line fades in first (300ms delay) */
+.duality-entrance-slider {
+	opacity: 0;
+}
+.duality-entrance-slider.duality-entered {
+	animation: duality-fade-in 600ms ease 300ms forwards;
+}
+
+/* Dark half fades in from right (600ms delay) */
+.duality-entrance-dark {
+	opacity: 0;
+}
+.duality-entrance-dark.duality-entered {
+	animation: duality-fade-in 800ms ease 600ms forwards;
+}
+
+/* Light half fades in from left (800ms delay) */
+.duality-entrance-light {
+	opacity: 0;
+}
+.duality-entrance-light.duality-entered {
+	animation: duality-fade-in 800ms ease 800ms forwards;
+}
+
+/* Hero text fades up */
+.duality-entrance-hero {
+	opacity: 0;
+	transform: translateY(20px);
+}
+.duality-entrance-hero.duality-entered {
+	animation: duality-hero-in 600ms ease forwards;
+	/* animationDelay set inline */
+}
+
+/* Subtitles and CTAs */
+.duality-entrance-sub {
+	opacity: 0;
+	transform: translateY(12px);
+}
+.duality-entrance-sub.duality-entered {
+	animation: duality-sub-in 400ms ease forwards;
+	/* animationDelay set inline */
+}
+
+/* Hint text */
+.duality-entrance-hint {
+	opacity: 0;
+}
+.duality-entrance-hint.duality-entered {
+	animation: duality-fade-in 300ms ease forwards;
+	/* animationDelay set inline */
+}
+
+/* Mobile entrance — both halves fade simultaneously */
+.duality-entrance-mobile {
+	opacity: 0;
+}
+.duality-entrance-mobile.duality-entered {
+	animation: duality-fade-in 800ms ease forwards;
+}
+
+@keyframes duality-fade-in {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+@keyframes duality-hero-in {
+	from { opacity: 0; transform: translateY(20px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes duality-sub-in {
+	from { opacity: 0; transform: translateY(12px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Duality Slider: Light Motes ─────────────────────────── */
+.mote-rise {
+	animation: mote-float-up 15s ease-in infinite;
+}
+
+@keyframes mote-float-up {
+	0% { transform: translateY(0) scale(1); opacity: 0; }
+	10% { opacity: 1; }
+	90% { opacity: 0.8; }
+	100% { transform: translateY(-110vh) scale(0.5); opacity: 0; }
+}
+
+/* ── Duality Slider: Scan Beam ───────────────────────────── */
+.scan-beam-move {
+	animation: scan-beam-sweep 4s linear infinite;
+}
+
+@keyframes scan-beam-sweep {
+	0% { top: 0; }
+	100% { top: 100%; }
+}
+
+/* ── Duality Slider: Handle Glow Pulse ───────────────────── */
+.slider-handle-glow {
+	animation: handle-pulse 3s ease-in-out infinite;
+}
+
+@keyframes handle-pulse {
+	0%, 100% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.8); }
+	50% { box-shadow: 0 0 35px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 215, 0, 0.3); }
+}
+
 /* ── Reduced Motion ──────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
 	.glitch-text::before,
@@ -191,5 +301,15 @@
 	.orb-drift { animation: none; }
 	.hero-float { animation: none; }
 	.pull-quote-reveal { opacity: 1; transform: none; transition: none; }
+	.duality-entrance-slider,
+	.duality-entrance-dark,
+	.duality-entrance-light,
+	.duality-entrance-hero,
+	.duality-entrance-sub,
+	.duality-entrance-hint,
+	.duality-entrance-mobile { opacity: 1; transform: none; animation: none; }
+	.mote-rise { animation: none; }
+	.scan-beam-move { animation: none; }
+	.slider-handle-glow { animation: none; }
 }
 
