@@ -40,3 +40,156 @@
 	}
 }
 
+/* ── Dark Track: Glitch Text ─────────────────────────────── */
+.glitch-text {
+	position: relative;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+	content: attr(data-text);
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+.glitch-text::before {
+	color: #ff003c;
+	clip-path: inset(0 0 60% 0);
+	animation: glitch-shift-1 4s steps(2) infinite;
+}
+
+.glitch-text::after {
+	color: #39FF14;
+	clip-path: inset(40% 0 0 0);
+	animation: glitch-shift-2 4s steps(2) infinite;
+}
+
+@keyframes glitch-shift-1 {
+	0%, 90% { transform: translateX(0); }
+	92% { transform: translateX(-3px); }
+	94% { transform: translateX(3px); }
+	96% { transform: translateX(-2px); }
+	100% { transform: translateX(0); }
+}
+
+@keyframes glitch-shift-2 {
+	0%, 88% { transform: translateX(0); }
+	90% { transform: translateX(3px); }
+	93% { transform: translateX(-3px); }
+	96% { transform: translateX(2px); }
+	100% { transform: translateX(0); }
+}
+
+/* ── Dark Track: Alert Pulse ─────────────────────────────── */
+.alert-pulse {
+	animation: alert-glow 3s ease-in-out infinite;
+}
+
+@keyframes alert-glow {
+	0%, 100% { box-shadow: 0 0 0 rgba(255, 0, 60, 0); }
+	50% { box-shadow: 0 0 20px rgba(255, 0, 60, 0.2); }
+}
+
+/* ── Dark Track: CRT Flicker ─────────────────────────────── */
+.crt-flicker {
+	animation: crt-flicker 8s linear infinite;
+}
+
+@keyframes crt-flicker {
+	0%, 100% { opacity: 1; }
+	50% { opacity: 0.97; }
+}
+
+/* ── Dark Track: Scroll Reveal ───────────────────────────── */
+.scroll-reveal {
+	opacity: 0;
+	transform: translateY(20px);
+	transition: opacity 0.6s steps(4), transform 0.6s steps(4);
+}
+
+.scroll-reveal--visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+/* ── Dark Track: Image Scan Line ─────────────────────────── */
+.scan-line::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 2px;
+	background: rgba(57, 255, 20, 0.4);
+	animation: scan-sweep 4s linear infinite;
+}
+
+@keyframes scan-sweep {
+	0% { top: 0; }
+	100% { top: 100%; }
+}
+
+/* ── Light Track: Smooth Scroll Reveal ────────────────────── */
+.scroll-reveal-smooth {
+	opacity: 0;
+	transform: translateY(30px);
+	transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.scroll-reveal-smooth.scroll-reveal--visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+/* ── Light Track: Gradient Orb Drift ─────────────────────── */
+.orb-drift {
+	animation: orb-float 65s ease-in-out infinite;
+}
+
+@keyframes orb-float {
+	0%, 100% { transform: translate(0, 0) scale(1); }
+	25% { transform: translate(5vw, -3vh) scale(1.05); }
+	50% { transform: translate(-3vw, 5vh) scale(0.95); }
+	75% { transform: translate(4vw, 2vh) scale(1.03); }
+}
+
+/* ── Light Track: Hero Float ─────────────────────────────── */
+.hero-float {
+	animation: gentle-float 6s ease-in-out infinite;
+}
+
+@keyframes gentle-float {
+	0%, 100% { transform: translateY(0); }
+	50% { transform: translateY(-8px); }
+}
+
+/* ── Light Track: Pull Quote Scale ───────────────────────── */
+.pull-quote-reveal {
+	opacity: 0;
+	transform: scale(0.96);
+	transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.pull-quote-reveal.scroll-reveal--visible {
+	opacity: 1;
+	transform: scale(1);
+}
+
+/* ── Reduced Motion ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+	.glitch-text::before,
+	.glitch-text::after { animation: none; }
+	.alert-pulse { animation: none; }
+	.crt-flicker { animation: none; }
+	.scroll-reveal { opacity: 1; transform: none; transition: none; }
+	.scroll-reveal-smooth { opacity: 1; transform: none; transition: none; }
+	.scan-line::after { animation: none; }
+	.orb-drift { animation: none; }
+	.hero-float { animation: none; }
+	.pull-quote-reveal { opacity: 1; transform: none; transition: none; }
+}
+
