@@ -24,6 +24,12 @@ function isRateLimited(ip: string): boolean {
 }
 
 export async function POST(request: Request) {
+	// Body size limit — reject oversized payloads before parsing
+	const contentLength = request.headers.get("content-length");
+	if (contentLength && Number.parseInt(contentLength, 10) > 1024) {
+		return NextResponse.json({ error: "payload_too_large" }, { status: 413 });
+	}
+
 	// Rate limiting — use last x-forwarded-for entry (Cloud Run appends real client IP)
 	const forwarded = request.headers.get("x-forwarded-for");
 	const forwardedParts = forwarded
