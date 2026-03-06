@@ -32,6 +32,7 @@
 ### MVP (Sprint 3)
 - [analytics] Instrument slider interaction events (track choice, time spent) (M)
 - [tooling] Subscriber management scripts — pull, export CSV, list by track, delete (S)
+- [analytics] Subscriber profiling enrichment — timezone, locale, screen size, geo (IP lookup), device type (S)
 - [ui] Optimize images with next/image, compress track assets (S)
 - [content] Implement content system — render markdown from content/ into dashboard pages (M)
 
