@@ -178,6 +178,34 @@
 
 ---
 
+## T3.9: Align Track Pages with Content System + Wire Images
+**Goal:** Update /dark and /light pages to use verbatim copy from content/ files and integrate generated art assets
+**Specialist:** Frontend (React / Content)
+**Complexity:** Medium
+**DoD:**
+- [ ] Dark track page copy matches `content/dark/*.md` verbatim (all 4 sections + CTA)
+- [ ] Light track page copy matches `content/light/*.md` verbatim (all 4 sections + CTA)
+- [ ] Generated images wired into both track pages at correct placements per art-direction.md
+- [ ] Images use `next/image` for optimization (lazy loading, responsive sizing)
+- [ ] Design notes from content frontmatter (layout_hint, design_notes) followed
+- [ ] `npm run ci` passes
+**Technical Specs:**
+- Read each content file: `content/dark/{_track,01-vulnerability,02-reversal,03-protocol,04-declaration,cta}.md`
+- Read each content file: `content/light/{_track,01-origins,02-symbiosis,03-handshake,04-sovereignty,cta}.md`
+- Update `dashboard/app/dark/page.tsx` — replace hardcoded copy with content from markdown files
+- Update `dashboard/app/light/page.tsx` — replace hardcoded copy with content from markdown files
+- Wire images: dark-hero.png behind hero, section images next to/behind section content, cta-bg behind CTA
+- Wire images: light-hero.png behind hero, section images, cta-bg behind CTA
+- Use `next/image` with appropriate sizes, priority for hero images
+- Follow `design_notes` and `layout_hint` from each content file's YAML frontmatter
+- Content markers (`{highlight}`, `{table}`, `{alert}`, `{quote}`) → map to appropriate styled elements
+**Test Plan:**
+- Manual: verify each section's copy matches content files word-for-word
+- Manual: verify images display correctly at correct positions
+- CI: `npm run ci` passes
+
+---
+
 ## T3.8: Deploy Production to capthca.ai
 **Goal:** Deploy production Cloud Run service and configure DNS for capthca.ai
 **Specialist:** Infrastructure / DevOps
