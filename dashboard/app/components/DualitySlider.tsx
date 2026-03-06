@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { analytics } from "../../lib/analytics";
 import { GlitchText } from "./GlitchText";
 import { GradientOrbs } from "./GradientOrbs";
 import { MatrixRain } from "./MatrixRain";
@@ -74,6 +75,8 @@ export function DualitySlider() {
 	const hasInteracted = useRef(false);
 	const reducedMotion = useRef(false);
 
+	const hasDragged = useRef(false);
+
 	/* ── Entrance animation ────────────────────────────────── */
 	useEffect(() => {
 		const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -89,6 +92,8 @@ export function DualitySlider() {
 			// Trigger entrance after a tick so initial state is "hidden"
 			requestAnimationFrame(() => setEntered(true));
 		}
+
+		analytics.track("slider.view");
 
 		return () => window.removeEventListener("resize", onResize);
 	}, []);
@@ -137,6 +142,10 @@ export function DualitySlider() {
 
 	const onStart = useCallback(() => {
 		isDragging.current = true;
+		if (!hasDragged.current) {
+			hasDragged.current = true;
+			analytics.track("slider.drag");
+		}
 	}, []);
 
 	/* ── Hover expansion (desktop only) ────────────────────── */
@@ -155,6 +164,7 @@ export function DualitySlider() {
 				{/* Light half */}
 				<Link
 					href="/light"
+					onClick={() => analytics.track("slider.choose", { track: "light" })}
 					className={`duality-entrance-mobile relative flex flex-1 flex-col items-center justify-center overflow-hidden ${entered ? "duality-entered" : ""}`}
 					style={{
 						background: "#FFFDF7",
@@ -209,6 +219,7 @@ export function DualitySlider() {
 				{/* Dark half */}
 				<Link
 					href="/dark"
+					onClick={() => analytics.track("slider.choose", { track: "dark" })}
 					className={`duality-entrance-mobile relative flex flex-1 flex-col items-center justify-center overflow-hidden ${entered ? "duality-entered" : ""}`}
 					style={{
 						background: "#050505",
@@ -271,7 +282,10 @@ export function DualitySlider() {
 				role="presentation"
 				className={`duality-entrance-dark absolute inset-0 z-[1] ${entered ? "duality-entered" : ""}`}
 				onMouseEnter={() => {
-					if (!isDragging.current) setHovered("dark");
+					if (!isDragging.current) {
+						setHovered("dark");
+						analytics.track("slider.hover", { side: "dark" });
+					}
 				}}
 				style={{
 					background: "#050505",
@@ -316,6 +330,7 @@ export function DualitySlider() {
 						</p>
 						<Link
 							href="/dark"
+							onClick={() => analytics.track("slider.choose", { track: "dark" })}
 							className={`duality-entrance-sub group relative mt-8 rounded-full px-8 py-4 font-mono text-sm font-medium uppercase tracking-wider transition-all duration-300 ${entered ? "duality-entered" : ""}`}
 							style={{
 								border: "1px solid #00FF41",
@@ -349,7 +364,10 @@ export function DualitySlider() {
 					opacity: hovered === "dark" && !isDragging.current ? 0.92 : 1,
 				}}
 				onMouseEnter={() => {
-					if (!isDragging.current) setHovered("light");
+					if (!isDragging.current) {
+						setHovered("light");
+						analytics.track("slider.hover", { side: "light" });
+					}
 				}}
 			>
 				<GradientOrbs />
@@ -387,6 +405,7 @@ export function DualitySlider() {
 						</p>
 						<Link
 							href="/light"
+							onClick={() => analytics.track("slider.choose", { track: "light" })}
 							className={`duality-entrance-sub group mt-8 rounded-full px-8 py-4 font-sans text-sm font-semibold uppercase tracking-wider transition-all duration-300 ${entered ? "duality-entered" : ""}`}
 							style={{
 								background: "rgba(255,255,255,0.5)",
