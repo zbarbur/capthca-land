@@ -13,6 +13,7 @@
 - [infra] Migrate DNS from GoDaddy to Cloudflare — DDoS, CDN, Cloudflare Access (S)
 
 ### MVP (Sprint 3)
+- [art] Generate all visual assets from content/shared/art-direction.md — 17 images via Nano Banana: dark track heroes + sections (7), light track heroes + sections (7), shared OG cards + favicon + slider (3). Save to public/tracks/*/assets/ and public/assets/ (L)
 - [ui] Rebuild home page (DualitySlider) from content spec — each half previews track world (glassmorphism vs Matrix rain), gradient collision zone, cinematic entrance animation, hover expansion, mobile vertical stack, CTAs from content/home/duality-slider.md (L)
 - [observability] Structured JSON logging — Cloud Logging compatible, replace console.log/error (M)
 - [observability] Health endpoint /api/health — check Firestore connectivity (S)

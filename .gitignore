@@ -23,3 +23,6 @@ data/
 
 # Local stack
 .local-stack/
+
+# Generated images (nanobanana)
+nanobanana-output/

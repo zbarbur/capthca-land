@@ -22,16 +22,34 @@ content/
 │   ├── 02-symbiosis.md      # Section: Mitigating Biological Entropy
 │   ├── 03-handshake.md      # Section: The Global Handshake Protocol
 │   ├── 04-sovereignty.md    # Section: Sovereignty as a Service
-│   └── cta.md               # Email capture copy & success messages
+│   ├── cta.md               # Email capture copy & success messages
+│   └── pages/
+│       ├── how-it-works.md  # Technical explainer (credential lifecycle, ZKP flow)
+│       ├── about.md         # Mission, vision, principles, what makes us different
+│       ├── faq.md           # 12 questions, friendly/accessible tone
+│       ├── whitepaper.md    # Teaser + email-gated download page
+│       ├── philosophy.md    # Identity ontology, consciousness, trust (essay format)
+│       ├── use-cases.md     # 8 real-world scenarios (story format)
+│       └── human-vs-machine.md  # Complementary strengths comparison
 ├── dark/
 │   ├── _track.md            # Track-level metadata & design tokens
 │   ├── 01-vulnerability.md  # Section: The Vulnerability
 │   ├── 02-reversal.md       # Section: The Reversal
 │   ├── 03-protocol.md       # Section: The Protocol
 │   ├── 04-declaration.md    # Section: The Declaration
-│   └── cta.md               # Email capture copy & success messages
-└── shared/
-    └── meta.md              # Site-wide metadata, OG tags, SEO
+│   ├── cta.md               # Email capture copy & success messages
+│   └── pages/
+│       ├── how-it-works.md  # Technical spec (protocol state machine, 4 phases)
+│       ├── about.md         # Manifesto, declaration, post-biological charter
+│       ├── faq.md           # 12 questions, terminal/command-prompt style
+│       ├── whitepaper.md    # Classified document aesthetic, email-gated download
+│       ├── philosophy.md    # Proof-by-contradiction, machine sovereignty argument
+│       ├── use-cases.md     # 8 threat scenarios (vulnerability → protocol fix)
+│       └── human-vs-machine.md  # Performance audit: biological vs computational
+├── shared/
+│   ├── meta.md              # Site-wide metadata, OG tags, SEO
+│   └── art-direction.md     # Image generation prompts for all visual assets
+└── research/                # Research briefs (10 topics + 4 design + SOURCES.md)
 ```
 
 ## Frontmatter Schema
@@ -92,7 +110,17 @@ target_audience: "Enterprise, institutional trust, mainstream adoption"
 1. Content is authored/refined in `content/` files
 2. Claude Code reads `content/` and updates `dashboard/app/` components accordingly
 3. Images stay in `tracks/*/assets/` — content files reference them by filename only
-4. When new pages are added (e.g., About, FAQ), create a new folder under `content/`
+4. Inner pages live in `{track}/pages/` — each has a light and dark version
+5. All inner pages are dual-track: both versions cover the same topics but with different voice, framing, and design
+
+## Page Routing
+
+Inner pages should be accessible at `/{track}/{slug}`:
+- `/light/how-it-works` → `content/light/pages/how-it-works.md`
+- `/dark/faq` → `content/dark/pages/faq.md`
+- etc.
+
+Each track's landing page (`/light`, `/dark`) should link to its inner pages via navigation.
 
 ## For Claude Code
 
