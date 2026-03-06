@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/firestore";
+import { createSecretProvider } from "@/lib/secrets";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const VALID_TRACKS = ["light", "dark"] as const;
@@ -23,6 +24,12 @@ function isRateLimited(ip: string): boolean {
 }
 
 export async function POST(request: Request) {
+	// Body size limit — reject oversized payloads before parsing
+	const contentLength = request.headers.get("content-length");
+	if (contentLength && Number.parseInt(contentLength, 10) > 4096) {
+		return NextResponse.json({ error: "payload_too_large" }, { status: 413 });
+	}
+
 	// Rate limiting — use last x-forwarded-for entry (Cloud Run appends real client IP)
 	const forwarded = request.headers.get("x-forwarded-for");
 	const forwardedParts = forwarded
@@ -48,8 +55,13 @@ export async function POST(request: Request) {
 		return NextResponse.json({ error: "invalid_request" }, { status: 400 });
 	}
 
-	// Turnstile verification (skip if secret key not configured — local dev)
-	const turnstileSecret = process.env.TURNSTILE_SECRET_KEY;
+	// Turnstile verification (skip if secret not configured — local dev)
+	let turnstileSecret: string | undefined;
+	try {
+		turnstileSecret = await createSecretProvider().getSecret("turnstile-secret-key");
+	} catch {
+		// Secret not configured — skip Turnstile verification (local dev)
+	}
 	if (turnstileSecret) {
 		const cfToken = body.cfToken || "";
 		const verifyRes = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
@@ -79,15 +91,25 @@ export async function POST(request: Request) {
 		return NextResponse.json({ error: "invalid_track" }, { status: 400 });
 	}
 
+	// Collect request metadata
+	const userAgent = request.headers.get("user-agent") || "";
+	const referer = request.headers.get("referer") || "";
+	const acceptLanguage = request.headers.get("accept-language") || "";
+
 	// Upsert to Firestore
 	try {
+		const now = new Date().toISOString();
 		const docRef = db.collection("subscribers").doc(email);
 		await docRef.set(
 			{
 				email,
 				track,
-				subscribedAt: new Date().toISOString(),
-				updatedAt: new Date().toISOString(),
+				subscribedAt: now,
+				updatedAt: now,
+				ip,
+				userAgent,
+				referer,
+				acceptLanguage,
 			},
 			{ merge: true },
 		);

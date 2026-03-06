@@ -3,6 +3,18 @@ import { type Firestore, getFirestore } from "firebase-admin/firestore";
 
 const USE_MEMORY_STORE = process.env.USE_MEMORY_STORE === "true";
 
+export function getCollectionPrefix(): string {
+	const env = process.env.CAPTHCA_LAND_ENV || "local";
+	switch (env) {
+		case "prd":
+			return "prd_";
+		case "stg":
+			return "stg_";
+		default:
+			return "local_";
+	}
+}
+
 // In-memory store for local dev without Java/emulator
 const memoryStore = new Map<string, Map<string, Record<string, unknown>>>();
 
@@ -75,6 +87,6 @@ export const db: DbLike = {
 		if (!_db) {
 			_db = USE_MEMORY_STORE ? createMemoryDb() : createFirestoreDb();
 		}
-		return _db.collection(name);
+		return _db.collection(`${getCollectionPrefix()}${name}`);
 	},
 };
