@@ -16,6 +16,10 @@
 - [security] No input reflection in errors — audit + add non-regression test (S) → T2.6
 - [infra] Firestore collection prefix (stg_/prd_) — prevent cross-env data pollution (S) → T2.7
 - [testing] Security non-regression tests — source-level checks for HSTS, CSP, no input reflection (S) → T2.8
+- [ui] Dark track design — Matrix rain background, CRT scanlines, glitch typography (M) → T2.9
+- [ui] Dark track copy update — body text verbatim from content/dark/01-04.md (M) → T2.10
+- [ui] Light track design — glassmorphism, gradient orbs, organic motion (M) → T2.11
+- [ui] Light track copy update — body text verbatim from content/light/01-04.md (M) → T2.12
 
 ---
 
