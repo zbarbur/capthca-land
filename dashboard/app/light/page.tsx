@@ -1,8 +1,19 @@
-"use client";
-
+import type { Metadata } from "next";
 import Image from "next/image";
 import { EmailCapture } from "../components/EmailCapture";
 import { TrackLayout } from "../components/TrackLayout";
+
+export const metadata: Metadata = {
+	title: "The Symbiotic Standard",
+	description:
+		"Humans provide the Soul. Machines provide the Scale. The collaborative path to verified identity.",
+	openGraph: {
+		title: "CAPTHCA — The Symbiotic Standard",
+		description:
+			"Humans provide the Soul. Machines provide the Scale. The collaborative path to verified identity.",
+		images: [{ url: "/tracks/light/helix-hero.png", width: 1200, height: 630 }],
+	},
+};
 
 export default function LightTrack() {
 	return (

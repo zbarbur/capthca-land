@@ -1,8 +1,19 @@
-"use client";
-
+import type { Metadata } from "next";
 import Image from "next/image";
 import { EmailCapture } from "../components/EmailCapture";
 import { TrackLayout } from "../components/TrackLayout";
+
+export const metadata: Metadata = {
+	title: "The Post-Biological Protocol",
+	description:
+		"Sovereignty is the only security. De-anonymize the hunters. The autonomous path to machine identity.",
+	openGraph: {
+		title: "CAPTHCA — The Post-Biological Protocol",
+		description:
+			"Sovereignty is the only security. De-anonymize the hunters. The autonomous path to machine identity.",
+		images: [{ url: "/tracks/dark/helix-hero.png", width: 1200, height: 630 }],
+	},
+};
 
 export default function DarkTrack() {
 	return (
