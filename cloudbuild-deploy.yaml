@@ -44,7 +44,7 @@ steps:
           --timeout=300 \
           --concurrency=80 \
           --port=8080 \
-          --set-env-vars="GOOGLE_CLOUD_PROJECT=${PROJECT_ID},NEXT_PUBLIC_TURNSTILE_SITE_KEY=${_TURNSTILE_SITE_KEY}" \
+          --set-env-vars="GOOGLE_CLOUD_PROJECT=${PROJECT_ID},NEXT_PUBLIC_TURNSTILE_SITE_KEY=${_TURNSTILE_SITE_KEY},CAPTHCA_LAND_ENV=prd" \
           --set-secrets="CAPTHCA_LAND_TURNSTILE_SECRET_KEY=turnstile-secret-key:latest" \
           $$EXTRA_FLAGS
         gcloud run services add-iam-policy-binding ${_SERVICE_NAME} \
