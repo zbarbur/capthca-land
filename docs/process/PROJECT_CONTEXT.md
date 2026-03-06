@@ -9,9 +9,9 @@
 
 | Field | Value |
 |-------|-------|
-| **Status** | Active — Sprint 2 Planning |
-| **Last Sync** | 2026-03-04 |
-| **Current Sprint** | Sprint 1 Complete |
+| **Status** | Active — Sprint 1 Closed, Sprint 2 Planning |
+| **Last Sync** | 2026-03-06 |
+| **Current Sprint** | Sprint 1 Closed |
 | **Objective** | Dual-narrative landing page at capthca.ai with email capture |
 
 ---
@@ -101,17 +101,24 @@
 - Staging deployment at staging.capthca.ai (basic auth protected)
 - Theme switching system (CSS variables)
 - Deploy scripts (staging + production)
+- Content system (`content/`) with markdown + YAML frontmatter for all page copy
+- Research briefs (10 topics) supporting landing page narrative
 
 ### Not Yet Done
 - Production deploy (capthca.ai DNS not configured)
 - Cloudflare DNS migration
 - Favicon
 - Analytics instrumentation
+- SecretProvider wiring (plan + branch ready, pending Sprint 2)
+- Content system rendering (markdown → dashboard pages)
 
 ### Known Limitations
 - Rate limiter is in-memory (resets on container restart, not shared across instances)
 - Turnstile console warnings on track pages (cosmetic)
 - No favicon (404)
+- No HSTS header (identified in battle-tested patterns review)
+- No health endpoint (Cloud Run uses default TCP probe)
+- No structured logging (stdout only)
 
 ---
 
@@ -128,4 +135,9 @@
 | Security review | `docs/security/SPRINT1_REVIEW.md` | Sprint 1 security audit |
 | Process docs | `docs/process/` | Templates, checklists, standards |
 | Component strategy | `docs/COMPONENT_STRATEGY.md` | Shared component architecture |
-| Research | `docs/research/` | Storyboards, manifestos, visual research |
+| Content system | `content/CONTENT_SYSTEM.md` | How page copy is structured and rendered |
+| Content (light) | `content/light/` | Light track section-by-section copy |
+| Content (dark) | `content/dark/` | Dark track section-by-section copy |
+| Research briefs | `content/research/` | Research supporting landing page narrative |
+| Implementation plans | `docs/plans/` | Feature implementation plans |
+| Research (legacy) | `docs/research/` | Storyboards, manifestos, visual research |

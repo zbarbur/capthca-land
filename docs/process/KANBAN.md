@@ -18,11 +18,13 @@ _(empty — between sprints)_
 - [infra] Deploy production to capthca.ai — production Cloud Run service + DNS (S)
 - [infra] Migrate DNS from GoDaddy to Cloudflare — DDoS, CDN, Cloudflare Access (S)
 - [ui] Add favicon (currently 404) (S)
+- [infra] Wire SecretProvider into dashboard — CAPTHCA_LAND_ prefix, update Cloud Build (S) _(plan ready: docs/plans/2026-03-06-secret-provider-wiring.md, branch: feat/secret-provider-wiring)_
 
 ### MVP (Sprint 2)
 - [analytics] Instrument slider interaction events (track choice, time spent) (M)
 - [ui] Optimize images with next/image, compress track assets (S)
 - [ui] SEO meta tags + Open Graph for social sharing (S)
+- [content] Implement content system — render markdown from content/ into dashboard pages (M)
 
 ### Post-MVP (Sprint 3+)
 - [email] Welcome email on signup — track-specific content (M)
@@ -36,6 +38,20 @@ _(empty — between sprints)_
 - [security] Add request logging for abuse monitoring (S)
 - [security] Tighten CSP — remove 'unsafe-inline' for scripts (S)
 - [infra] Evaluate Turbopack / Vite for build tooling (M)
+
+### Battle-Tested Patterns (from OpenClaw Lens review)
+- [security] Add HSTS header — Strict-Transport-Security in next.config.mjs (S)
+- [security] Input validation hardening — body size limit (413) on subscribe route (S)
+- [security] No input reflection in errors — audit + add non-regression test (S)
+- [observability] Structured JSON logging — Cloud Logging compatible (M)
+- [observability] Health endpoint /api/health — check Firestore connectivity (S)
+- [observability] Custom metrics for subscribe API — counters for signups, errors, rate limits (M)
+- [observability] OpenTelemetry foundation — Edge-Runtime-safe Next.js setup (L)
+- [infra] Blue-green deploys for staging — --no-traffic + traffic shift (S)
+- [infra] npm audit in CI pipeline — non-blocking dependency vulnerability check (S)
+- [infra] Firestore collection prefix (stg_/prd_) — prevent cross-env data pollution (S)
+- [testing] Security non-regression tests — source-level checks for HSTS, CSP, no input reflection (S)
+- [testing] API route coverage check — ensure every route.ts has test coverage (S)
 
 ---
 

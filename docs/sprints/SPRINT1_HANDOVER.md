@@ -81,10 +81,19 @@
 
 ---
 
+## Late Sprint 1 Additions
+
+- **Content system** (`content/`): Markdown-based content with YAML frontmatter for all landing page copy. Research briefs (10 topics) support the copy. See `content/CONTENT_SYSTEM.md` and `CLAUDE.md` Content System section.
+- **Battle-tested patterns review**: Cross-referenced `BATTLE_TESTED_PATTERNS.md` (from OpenClaw Lens project) against CAPTHCA — identified 12 new backlog items for security, observability, deployment, and testing. Added to KANBAN.md.
+- **SecretProvider plan**: Implementation plan ready at `docs/plans/2026-03-06-secret-provider-wiring.md` with code on `feat/secret-provider-wiring` branch (7 commits, tested).
+
 ## Recommendations for Sprint 2
 
-1. **Deploy production** — scripts are ready, just need DNS configuration
-2. **Cloudflare DNS migration** (B1) — enables CDN, DDoS protection, Cloudflare Access for staging
-3. **Add favicon** (B2) — quick win, currently 404
-4. **Analytics instrumentation** — track slider interactions, email conversions
-5. **SEO meta tags** — Open Graph for social sharing
+1. **Wire SecretProvider** — plan + branch ready, merge into Sprint 2
+2. **Content system rendering** — implement content/ markdown into dashboard pages
+3. **Deploy production** — scripts are ready, just need DNS configuration
+4. **Cloudflare DNS migration** (B1) — enables CDN, DDoS protection, Cloudflare Access for staging
+5. **Add favicon** (B2) — quick win, currently 404
+6. **Security quick wins** — HSTS header, body size limit, health endpoint (all S-sized)
+7. **Analytics instrumentation** — track slider interactions, email conversions
+8. **SEO meta tags** — Open Graph for social sharing
