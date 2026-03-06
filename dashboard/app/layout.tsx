@@ -2,13 +2,17 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-	title: "CAPTHCA land",
-	description: "A landing page for the CAPTHCA protocol intiative",
+	title: "CAPTHCA — Identity is a Choice",
+	description:
+		"A dual-narrative identity protocol. Choose your path: Symbiotic Standard or Post-Biological Protocol.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en">
+			<head>
+				<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer />
+			</head>
 			<body>{children}</body>
 		</html>
 	);

@@ -6,53 +6,71 @@
 
 ---
 
-## Sprint {N} — Doing
+## Doing
 
-<!-- Move items here from Backlog when sprint starts. Clear this section at sprint end. -->
-
-_(empty — no active sprint)_
+_(empty — between sprints)_
 
 ---
 
 ## Backlog
 
-<!-- Prioritized list of work items. Higher = more important.
-     Format: - [area] Short description (complexity: S/M/L)
-     Example: - [api] Add rate limiting to public endpoints (M)
-     Example: - [ui] Dashboard loading skeleton states (S)
-     Example: - [infra] Set up Redis for session storage (L)
--->
+### High Priority
+- [infra] Deploy production to capthca.ai — production Cloud Run service + DNS (S)
+- [infra] Migrate DNS from GoDaddy to Cloudflare — DDoS, CDN, Cloudflare Access (S)
+- [ui] Add favicon (currently 404) (S)
+- [infra] Wire SecretProvider into dashboard — CAPTHCA_LAND_ prefix, update Cloud Build (S) _(plan ready: docs/plans/2026-03-06-secret-provider-wiring.md, branch: feat/secret-provider-wiring)_
 
-_(add backlog items here)_
+### MVP (Sprint 2)
+- [analytics] Instrument slider interaction events (track choice, time spent) (M)
+- [ui] Optimize images with next/image, compress track assets (S)
+- [ui] SEO meta tags + Open Graph for social sharing (S)
+- [content] Implement content system — render markdown from content/ into dashboard pages (M)
+
+### Post-MVP (Sprint 3+)
+- [email] Welcome email on signup — track-specific content (M)
+- [email] Email provider integration (Resend or SendGrid) (M)
+- [ui] Deep multi-section narrative pages for each track (L)
+- [ui] Social sharing cards with track-specific generated images (M)
+- [analytics] Analytics dashboard — track preference distribution, conversion funnel (M)
+- [ui] Animated transitions between slider positions (S)
+- [ui] Sound/ambient audio per track (experimental) (M)
+- [security] Move rate limiter to Redis or Cloud Armor for multi-instance consistency (M)
+- [security] Add request logging for abuse monitoring (S)
+- [security] Tighten CSP — remove 'unsafe-inline' for scripts (S)
+- [infra] Evaluate Turbopack / Vite for build tooling (M)
+
+### Battle-Tested Patterns (from OpenClaw Lens review)
+- [security] Add HSTS header — Strict-Transport-Security in next.config.mjs (S)
+- [security] Input validation hardening — body size limit (413) on subscribe route (S)
+- [security] No input reflection in errors — audit + add non-regression test (S)
+- [observability] Structured JSON logging — Cloud Logging compatible (M)
+- [observability] Health endpoint /api/health — check Firestore connectivity (S)
+- [observability] Custom metrics for subscribe API — counters for signups, errors, rate limits (M)
+- [observability] OpenTelemetry foundation — Edge-Runtime-safe Next.js setup (L)
+- [infra] Blue-green deploys for staging — --no-traffic + traffic shift (S)
+- [infra] npm audit in CI pipeline — non-blocking dependency vulnerability check (S)
+- [infra] Firestore collection prefix (stg_/prd_) — prevent cross-env data pollution (S)
+- [testing] Security non-regression tests — source-level checks for HSTS, CSP, no input reflection (S)
+- [testing] API route coverage check — ensure every route.ts has test coverage (S)
 
 ---
 
 ## Tech Debt
 
-<!-- Technical debt items discovered during sprints.
-     Format: - [area] Description — discovered Sprint {N}
-     Example: - [test] Missing edge case tests for auth middleware — discovered Sprint 3
-     Example: - [refactor] Extract validation logic from route handlers — discovered Sprint 2
-     Example: - [perf] N+1 query in /api/users list endpoint — discovered Sprint 4
--->
-
-_(add tech debt items here)_
+- [infra] Turnstile console warnings on track pages (non-blocking, cosmetic)
+- [infra] `NEXT_PUBLIC_*` vars require Docker build args — document pattern for future public env vars
 
 ---
 
-## Done
+## Done (Sprint 1)
 
-<!-- Completed items, grouped by sprint.
-     Format: - [Sprint N] Description
-     Move items here from Doing at sprint end.
--->
-
-_(completed items will appear here)_
-
-<!--
-### Sprint 1
-- [Sprint 1] ...
-
-### Sprint 2
-- [Sprint 2] ...
--->
+- [infra] Local dev stack — Tailwind + PostCSS build, hot reload, local Firestore emulator (M)
+- [ui] Convert index.html duality slider to Next.js React component (L)
+- [ui] Theme switching system — CSS variables + Tailwind class toggle (S)
+- [ui] Mobile-responsive slider with touch support (M)
+- [ui] Build light track page at /light with narrative content from tracks/light (M)
+- [ui] Build dark track page at /dark with narrative content from tracks/dark (M)
+- [api] POST /api/subscribe endpoint — validate email, store to Firestore with track preference (M)
+- [ui] Email capture forms on both tracks with inline validation + Turnstile CAPTCHA (S)
+- [security] Pre-launch security review — rate limiting, input validation, CORS, CSP, Turnstile, honeypot (M)
+- [infra] Cloud Run staging deployment + DNS (staging.capthca.ai) (M)

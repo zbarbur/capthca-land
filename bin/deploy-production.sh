@@ -24,8 +24,13 @@ if [ "$CONFIRM" != "yes" ]; then
 	exit 1
 fi
 
-echo ""
-echo "==> TODO: Configure your production deploy command here."
-echo "    Example: gcloud builds submit --no-source --config=cloudbuild-deploy.yaml"
-echo ""
-echo "    See docs/guides/DEPLOYMENT.md for patterns."
+echo "==> Running full CI checks (lint + typecheck + test + build)..."
+cd "$(dirname "$(dirname "${BASH_SOURCE[0]}")")"
+npm run ci:full
+echo "==> CI checks passed."
+
+echo "==> Submitting Cloud Build (production)..."
+gcloud builds submit --no-source \
+	--project=capthca-489205 \
+	--config=cloudbuild-deploy.yaml \
+	--region=us-central1

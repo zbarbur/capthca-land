@@ -9,28 +9,50 @@
 
 | Field | Value |
 |-------|-------|
-| **Status** | _Planning / Active / Maintenance_ |
-| **Last Sync** | _YYYY-MM-DD_ |
-| **Current Sprint** | _Sprint N_ |
-| **Objective** | _One-sentence project objective_ |
+| **Status** | Active — Sprint 1 Closed, Sprint 2 Planning |
+| **Last Sync** | 2026-03-06 |
+| **Current Sprint** | Sprint 1 Closed |
+| **Objective** | Dual-narrative landing page at capthca.ai with email capture |
 
 ---
 
 ## Architecture Summary
 
-_Describe the high-level architecture of the project. Include:_
-- _System components and their responsibilities_
-- _How components communicate_
-- _Key technology choices and rationale_
-- _Data flow overview_
+```
+┌──────────────────────────────────────────────────┐
+│              staging.capthca.ai                   │
+│           (basic auth protected)                  │
+│                                                    │
+│  ┌─────────────┐  ┌───────────┐  ┌────────────┐  │
+│  │  Duality     │  │  /light   │  │  /dark     │  │
+│  │  Slider (/)  │──│  track    │  │  track     │  │
+│  └──────┬──────┘  └─────┬─────┘  └─────┬──────┘  │
+│         │               │              │          │
+│         └───────────┬───┘──────────────┘          │
+│                     │                              │
+│              ┌──────┴──────┐                       │
+│              │ /api/subscribe│                      │
+│              │ + Turnstile  │                       │
+│              │ + honeypot   │                       │
+│              │ + rate limit │                       │
+│              └──────┬──────┘                       │
+│                     │                              │
+└─────────────────────┼──────────────────────────────┘
+                      │
+               ┌──────┴──────┐
+               │  Firestore   │
+               │  (emails +   │
+               │   track pref)│
+               └─────────────┘
+```
 
-```
-Example:
-┌─────────────┐     ┌─────────────┐     ┌─────────────┐
-│   Frontend   │────>│   API       │────>│  Database    │
-│  (Next.js)   │<────│  (Node.js)  │<────│ (Firestore)  │
-└─────────────┘     └─────────────┘     └─────────────┘
-```
+- **Frontend:** Next.js 14 (App Router) with SSR on Cloud Run
+- **Styling:** Tailwind CSS with CSS variable theme switching (`.theme-light` / `.theme-dark`)
+- **API:** Next.js API routes (single `/api/subscribe` endpoint for MVP)
+- **Database:** Firestore (email collection with track preference)
+- **Hosting:** GCP Cloud Run (auto-scaling, standalone Next.js output)
+- **CI/CD:** Cloud Build (cloudbuild.yaml → staging, cloudbuild-deploy.yaml → production)
+- **Security:** Turnstile CAPTCHA, honeypot, rate limiter, CSP headers, staging basic auth
 
 ---
 
@@ -38,11 +60,13 @@ Example:
 
 | Component | Technology | Environment | Notes |
 |-----------|-----------|-------------|-------|
-| _Frontend_ | _e.g., Next.js 14_ | _e.g., Cloud Run_ | _e.g., Standalone output_ |
-| _API_ | _e.g., Node.js_ | _e.g., Cloud Run_ | _e.g., Auto-scaling_ |
-| _Database_ | _e.g., Firestore_ | _e.g., GCP_ | _e.g., Prefix-based multi-tenancy_ |
-| _Search_ | _e.g., Typesense_ | _e.g., GCE VM_ | _e.g., Caddy reverse proxy_ |
-| _CI/CD_ | _e.g., Cloud Build_ | _e.g., GCP_ | _e.g., cloudbuild.yaml_ |
+| Frontend + API | Next.js 14 | Cloud Run | Standalone output, SSR |
+| Database | Firestore | GCP (`capthca-489205`) | Email + track preference storage |
+| Domain | staging.capthca.ai | Cloud Run CNAME | Managed SSL cert |
+| CI/CD | Cloud Build | GCP | Auto on push (staging), manual (prod) |
+| Secrets | Secret Manager | GCP | `turnstile-secret-key`, `staging-auth-pass` |
+| CAPTCHA | Cloudflare Turnstile | Cloudflare | Invisible mode |
+| Images | next/image | Cloud Run | Optimization at serve time |
 
 ---
 
@@ -50,11 +74,11 @@ Example:
 
 | Metric | Value |
 |--------|-------|
-| **Total Tests** | _N_ |
-| **Test Runner** | _Node.js built-in (`node --test`)_ |
+| **Total Tests** | 13 |
+| **Test Runner** | Node.js built-in (`node --test`) |
 | **Test Command** | `npm test` |
-| **CI Command** | `npm run ci` |
-| **Test Files** | _list key test directories_ |
+| **CI Command** | `npm run ci` (lint + typecheck + test) |
+| **CI Full Command** | `npm run ci:full` (ci + next build) |
 
 ---
 
@@ -62,26 +86,39 @@ Example:
 
 | Sprint | Theme | Status | Tests | Key Deliverables |
 |--------|-------|--------|-------|-----------------|
-| _1_ | _Project setup_ | _Completed_ | _N_ | _Initial scaffolding, CI pipeline_ |
-| _2_ | _Core features_ | _Completed_ | _N_ | _Auth, basic CRUD_ |
-| _..._ | _..._ | _..._ | _..._ | _..._ |
+| 0 | Project inception | Completed | 5 | Template init, charter, backlog |
+| 1 | Dual-narrative MVP | Completed | 13 | Slider, track pages, email capture, Turnstile, staging deploy |
 
 ---
 
 ## Current State
 
-_Describe what the project can do right now. What features are working? What is the user experience? What are the known limitations?_
-
 ### Working
-- _Feature 1_
-- _Feature 2_
+- Duality slider React component with mouse/touch support
+- Light and dark track pages with themed content
+- Email capture with Turnstile CAPTCHA + honeypot + rate limiting
+- CI pipeline (lint + typecheck + test + build)
+- Staging deployment at staging.capthca.ai (basic auth protected)
+- Theme switching system (CSS variables)
+- Deploy scripts (staging + production)
+- Content system (`content/`) with markdown + YAML frontmatter for all page copy
+- Research briefs (10 topics) supporting landing page narrative
 
-### In Progress
-- _Feature 3 (Sprint N)_
+### Not Yet Done
+- Production deploy (capthca.ai DNS not configured)
+- Cloudflare DNS migration
+- Favicon
+- Analytics instrumentation
+- SecretProvider wiring (plan + branch ready, pending Sprint 2)
+- Content system rendering (markdown → dashboard pages)
 
 ### Known Limitations
-- _Limitation 1_
-- _Limitation 2_
+- Rate limiter is in-memory (resets on container restart, not shared across instances)
+- Turnstile console warnings on track pages (cosmetic)
+- No favicon (404)
+- No HSTS header (identified in battle-tested patterns review)
+- No health endpoint (Cloud Run uses default TCP probe)
+- No structured logging (stdout only)
 
 ---
 
@@ -90,10 +127,17 @@ _Describe what the project can do right now. What features are working? What is 
 | Document | Location | Purpose |
 |----------|----------|---------|
 | Project rules | `CLAUDE.md` | Auto-loaded project conventions |
-| Agent memory | `MEMORY.md` | Persistent lessons and state |
+| Project charter | `docs/PROJECT_CHARTER.md` | Goals, scope, decisions |
+| Agent memory | `.claude/MEMORY.md` | Persistent lessons and state |
 | Active sprint | `TODO.md` | Current sprint tasks and DoD |
 | Backlog | `docs/process/KANBAN.md` | Prioritized work items |
 | Sprint handovers | `docs/sprints/SPRINT{N}_HANDOVER.md` | Per-sprint knowledge transfer |
+| Security review | `docs/security/SPRINT1_REVIEW.md` | Sprint 1 security audit |
 | Process docs | `docs/process/` | Templates, checklists, standards |
-| Architecture | _docs/architecture/_ | _(if applicable)_ |
-| Research | _docs/research/_ | _(if applicable)_ |
+| Component strategy | `docs/COMPONENT_STRATEGY.md` | Shared component architecture |
+| Content system | `content/CONTENT_SYSTEM.md` | How page copy is structured and rendered |
+| Content (light) | `content/light/` | Light track section-by-section copy |
+| Content (dark) | `content/dark/` | Dark track section-by-section copy |
+| Research briefs | `content/research/` | Research supporting landing page narrative |
+| Implementation plans | `docs/plans/` | Feature implementation plans |
+| Research (legacy) | `docs/research/` | Storyboards, manifestos, visual research |

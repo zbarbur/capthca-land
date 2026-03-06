@@ -25,14 +25,15 @@ echo "==> Deploying '$SERVICE' to staging..."
 
 # Run CI checks unless skipped
 if [ "$SKIP_CHECKS" = false ]; then
-	echo "==> Running CI checks (lint + typecheck + test)..."
+	echo "==> Running full CI checks (lint + typecheck + test + build)..."
 	cd "$PROJECT_DIR"
-	npm run ci
+	npm run ci:full
 	echo "==> CI checks passed."
 fi
 
-echo ""
-echo "==> TODO: Configure your staging deploy command here."
-echo "    Example: gcloud builds submit --config=cloudbuild.yaml"
-echo ""
-echo "    See docs/guides/DEPLOYMENT.md for patterns."
+echo "==> Submitting Cloud Build (staging)..."
+cd "$PROJECT_DIR"
+gcloud builds submit \
+	--project=capthca-489205 \
+	--config=cloudbuild.yaml \
+	--region=us-central1
