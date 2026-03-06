@@ -91,15 +91,25 @@ export async function POST(request: Request) {
 		return NextResponse.json({ error: "invalid_track" }, { status: 400 });
 	}
 
+	// Collect request metadata
+	const userAgent = request.headers.get("user-agent") || "";
+	const referer = request.headers.get("referer") || "";
+	const acceptLanguage = request.headers.get("accept-language") || "";
+
 	// Upsert to Firestore
 	try {
+		const now = new Date().toISOString();
 		const docRef = db.collection("subscribers").doc(email);
 		await docRef.set(
 			{
 				email,
 				track,
-				subscribedAt: new Date().toISOString(),
-				updatedAt: new Date().toISOString(),
+				subscribedAt: now,
+				updatedAt: now,
+				ip,
+				userAgent,
+				referer,
+				acceptLanguage,
 			},
 			{ merge: true },
 		);
