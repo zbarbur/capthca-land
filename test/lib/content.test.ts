@@ -39,4 +39,20 @@ describe("content loader", () => {
 		assert.ok(Array.isArray(page.frontmatter.sources));
 		assert.ok(page.frontmatter.sources.length > 0);
 	});
+
+	it("renders {highlight} markers as content-highlight divs", async () => {
+		const page = await getPageContent("light", "about");
+		assert.ok(page.html.includes('class="content-highlight"'));
+	});
+
+	it("renders {alert} markers as content-alert divs", async () => {
+		const page = await getPageContent("dark", "faq");
+		assert.ok(page.html.includes('class="content-alert"'));
+	});
+
+	it("renders standard markdown elements (headings, paragraphs, links)", async () => {
+		const page = await getPageContent("light", "how-it-works");
+		assert.ok(page.html.includes("<h2"));
+		assert.ok(page.html.includes("<p"));
+	});
 });
