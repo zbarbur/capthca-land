@@ -1,114 +1,75 @@
 "use client";
 
 /**
- * DNA Helix side animations for the light track.
- * Two double-helix strands flank the content area — gold + blue sinusoidal
- * waves with crossover nodes. Equivalent to Matrix rain on the dark track.
- *
- * Hidden on mobile (<768px) — not enough visible space.
+ * Floating helix particles for the light track borders.
+ * Small gold + blue circles of random sizes drift upward along the left
+ * and right edges, filling the space between viewport edge and content.
+ * Hidden on mobile (<768px).
  */
 
-const WAVELENGTH = 120;
-const AMPLITUDE = 18;
-const NODE_RADIUS = 3;
-const STRAND_HEIGHT = 2000;
+const PARTICLE_COUNT = 30; // per side
 
-function buildHelixPath(
-	phase: number,
-	height: number,
-	amplitude: number,
-	wavelength: number,
-): string {
-	const points: string[] = [];
-	const steps = Math.ceil(height / 2);
-	for (let i = 0; i <= steps; i++) {
-		const y = (i / steps) * height;
-		const x = amplitude * Math.sin((2 * Math.PI * y) / wavelength + phase);
-		points.push(i === 0 ? `M ${x + amplitude},${y}` : `L ${x + amplitude},${y}`);
-	}
-	return points.join(" ");
+interface Particle {
+	id: number;
+	left: string;
+	size: number;
+	opacity: number;
+	delay: string;
+	duration: string;
+	color: string;
 }
 
-function getCrossoverNodes(height: number, wavelength: number): { x: number; y: number }[] {
-	const nodes: { x: number; y: number }[] = [];
-	const interval = wavelength / 2;
-	for (let y = interval; y < height; y += interval) {
-		nodes.push({ x: AMPLITUDE, y });
+function generateParticles(side: "left" | "right"): Particle[] {
+	const particles: Particle[] = [];
+	for (let i = 0; i < PARTICLE_COUNT; i++) {
+		const isGold = i % 3 !== 0;
+		particles.push({
+			id: i,
+			left: `${Math.random() * 100}%`,
+			size: Math.random() * 6 + 2, // 2–8px
+			opacity: Math.random() * 0.2 + 0.08, // 0.08–0.28
+			delay: `${Math.random() * 15}s`,
+			duration: `${Math.random() * 12 + 10}s`, // 10–22s
+			color: isGold
+				? `rgba(255, 215, 0, ${Math.random() * 0.25 + 0.1})`
+				: `rgba(2, 136, 209, ${Math.random() * 0.2 + 0.08})`,
+		});
 	}
-	return nodes;
+	return particles;
 }
 
-function HelixStrand({ side }: { side: "left" | "right" }) {
-	const mirror = side === "right";
-	const nodes = getCrossoverNodes(STRAND_HEIGHT, WAVELENGTH);
+const leftParticles = generateParticles("left");
+const rightParticles = generateParticles("right");
+
+function ParticleBorder({ side }: { side: "left" | "right" }) {
+	const particles = side === "left" ? leftParticles : rightParticles;
 
 	return (
 		<div
-			className="helix-drift pointer-events-none absolute top-0 bottom-0 hidden md:block"
+			className="pointer-events-none fixed top-0 bottom-0 hidden md:block"
 			style={{
-				[side]: "40px",
-				width: `${AMPLITUDE * 2 + 8}px`,
+				[side]: 0,
+				width: "80px",
 				zIndex: 0,
 				overflow: "hidden",
 			}}
 		>
-			<svg
-				width={AMPLITUDE * 2 + 8}
-				height={STRAND_HEIGHT}
-				viewBox={`0 0 ${AMPLITUDE * 2 + 8} ${STRAND_HEIGHT}`}
-				style={{
-					transform: mirror ? "scaleX(-1)" : undefined,
-				}}
-				aria-hidden="true"
-				tabIndex={-1}
-			>
-				{/* Glow layer — gold strand */}
-				<path
-					d={buildHelixPath(0, STRAND_HEIGHT, AMPLITUDE, WAVELENGTH)}
-					fill="none"
-					stroke="rgba(255, 215, 0, 0.08)"
-					strokeWidth={4}
-					filter="url(#helix-blur)"
+			{particles.map((p) => (
+				<div
+					key={p.id}
+					className="helix-particle absolute rounded-full"
+					style={{
+						left: p.left,
+						bottom: `${-10 + Math.random() * 110}%`,
+						width: p.size,
+						height: p.size,
+						background: p.color,
+						boxShadow: `0 0 ${p.size * 2}px ${p.color}`,
+						animationDelay: p.delay,
+						animationDuration: p.duration,
+					}}
 				/>
-				{/* Gold strand */}
-				<path
-					d={buildHelixPath(0, STRAND_HEIGHT, AMPLITUDE, WAVELENGTH)}
-					fill="none"
-					stroke="rgba(255, 215, 0, 0.12)"
-					strokeWidth={1.5}
-				/>
-				{/* Glow layer — blue strand */}
-				<path
-					d={buildHelixPath(Math.PI, STRAND_HEIGHT, AMPLITUDE, WAVELENGTH)}
-					fill="none"
-					stroke="rgba(2, 136, 209, 0.06)"
-					strokeWidth={4}
-					filter="url(#helix-blur)"
-				/>
-				{/* Blue strand (offset by half wavelength) */}
-				<path
-					d={buildHelixPath(Math.PI, STRAND_HEIGHT, AMPLITUDE, WAVELENGTH)}
-					fill="none"
-					stroke="rgba(2, 136, 209, 0.10)"
-					strokeWidth={1.5}
-				/>
-				{/* Crossover nodes */}
-				{nodes.map((node, i) => (
-					<circle
-						key={`node-${node.y}`}
-						cx={node.x}
-						cy={node.y}
-						r={NODE_RADIUS}
-						fill={i % 2 === 0 ? "rgba(255, 215, 0, 0.18)" : "rgba(2, 136, 209, 0.15)"}
-						className="helix-node-pulse"
-					/>
-				))}
-				<defs>
-					<filter id="helix-blur">
-						<feGaussianBlur stdDeviation="2" />
-					</filter>
-				</defs>
-			</svg>
+			))}
 		</div>
 	);
 }
@@ -116,8 +77,8 @@ function HelixStrand({ side }: { side: "left" | "right" }) {
 export function DNAHelix() {
 	return (
 		<>
-			<HelixStrand side="left" />
-			<HelixStrand side="right" />
+			<ParticleBorder side="left" />
+			<ParticleBorder side="right" />
 		</>
 	);
 }
