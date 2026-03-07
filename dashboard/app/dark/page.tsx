@@ -22,6 +22,11 @@ export const metadata: Metadata = {
 			},
 		],
 	},
+	twitter: {
+		card: "summary_large_image",
+		title: "CAPTHCA — The Post-Biological Protocol",
+		images: ["/tracks/dark/assets/dark-hero.png"],
+	},
 };
 
 export default function DarkTrack() {

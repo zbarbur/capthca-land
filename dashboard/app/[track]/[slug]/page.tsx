@@ -31,9 +31,26 @@ export async function generateMetadata({
 	if (!isValidTrack(params.track)) return {};
 	try {
 		const page = await getPageContent(params.track, params.slug);
+		const description = `${page.frontmatter.title} — CAPTHCA ${params.track === "dark" ? "Post-Biological Protocol" : "Symbiotic Standard"}`;
 		return {
 			title: page.frontmatter.title,
-			description: `${page.frontmatter.title} — CAPTHCA ${params.track === "dark" ? "Post-Biological Protocol" : "Symbiotic Standard"}`,
+			description,
+			openGraph: {
+				title: page.frontmatter.title,
+				description,
+				images: [
+					{
+						url: `/tracks/${params.track}/assets/${params.track}-hero.png`,
+						width: 1200,
+						height: 630,
+					},
+				],
+			},
+			twitter: {
+				card: "summary_large_image",
+				title: page.frontmatter.title,
+				images: [`/tracks/${params.track}/assets/${params.track}-hero.png`],
+			},
 		};
 	} catch {
 		return {};
