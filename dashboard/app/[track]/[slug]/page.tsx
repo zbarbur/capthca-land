@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ContentRenderer } from "../../../components/ContentRenderer";
 import { getPageContent, getPageSlugs } from "../../../lib/content";
+import { DNAHelix } from "../../components/DNAHelix";
+import { GradientOrbs } from "../../components/GradientOrbs";
+import { MatrixRain } from "../../components/MatrixRain";
 import { TrackLayout } from "../../components/TrackLayout";
 
 const VALID_TRACKS = ["light", "dark"] as const;
@@ -62,7 +65,33 @@ export default async function InnerPage({ params }: { params: { track: string; s
 		const page = await getPageContent(params.track, params.slug);
 		return (
 			<TrackLayout theme={params.track}>
-				<ContentRenderer html={page.html} frontmatter={page.frontmatter} />
+				{params.track === "dark" && (
+					<>
+						<MatrixRain />
+						<div
+							className="pointer-events-none fixed inset-0 z-[2] crt-flicker"
+							style={{
+								background: `linear-gradient(rgba(18,16,16,0) 50%, rgba(0,0,0,0.1) 50%),
+									linear-gradient(90deg, rgba(255,0,0,0.03), rgba(0,255,0,0.01), rgba(0,0,255,0.03))`,
+								backgroundSize: "100% 4px, 3px 100%",
+							}}
+						/>
+					</>
+				)}
+				{params.track === "light" && (
+					<>
+						<GradientOrbs
+							withBackground
+							variant={
+								Math.abs([...params.slug].reduce((h, c) => (h * 31 + c.charCodeAt(0)) | 0, 0)) % 7
+							}
+						/>
+						<DNAHelix />
+					</>
+				)}
+				<div className="relative z-[1]">
+					<ContentRenderer html={page.html} frontmatter={page.frontmatter} slug={params.slug} />
+				</div>
 			</TrackLayout>
 		);
 	} catch {

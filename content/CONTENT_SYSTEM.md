@@ -48,7 +48,10 @@ content/
 │       └── human-vs-machine.md  # Performance audit: biological vs computational
 ├── shared/
 │   ├── meta.md              # Site-wide metadata, OG tags, SEO
-│   └── art-direction.md     # Image generation prompts for all visual assets
+│   ├── art-direction.md     # Image generation prompts for all visual assets
+│   ├── image-placement.md   # Where images go on each page
+│   ├── academic-paper.md    # Landing page for the academic paper (neutral, not track-specific)
+│   └── academic-paper-body.md  # Full academic paper content (~35 pages, for PDF generation)
 └── research/                # Research briefs (10 topics + 4 design + SOURCES.md)
 ```
 
@@ -103,7 +106,8 @@ target_audience: "Enterprise, institutional trust, mainstream adoption"
 3. **`{table}...{/table}`** marks a data table (use standard Markdown tables inside).
 4. **`{alert}...{/alert}`** marks an alert/warning box (dark track).
 5. **`{quote}...{/quote}`** marks a pull quote.
-6. **Design notes stay in frontmatter** — they're instructions for Claude Code, not displayed content.
+6. **`{diagram:diagramName}`** marks where a diagram/chart should be rendered inline. Diagram specs are in `content/shared/whitepaper-diagrams.md`. Each diagram has light/dark variants — render the appropriate version based on track. Use Recharts for charts, custom React components for flow diagrams and timelines.
+7. **Design notes stay in frontmatter** — they're instructions for Claude Code, not displayed content.
 
 ## Workflow
 
@@ -130,3 +134,8 @@ When implementing content from these files:
 - Follow `layout_hint` and `design_notes` for component choices
 - Preserve the existing theme system (`globals.css` CSS variables + `theme-light`/`theme-dark` classes)
 - Keep image references pointing to `/tracks/{track}/` in the `public/` directory
+- Render `{diagram:*}` markers as interactive React components using specs from `content/shared/whitepaper-diagrams.md`
+- Charts use Recharts; flow diagrams and timelines are custom React/SVG components
+- Each diagram has dual-track color specs (light palette vs dark palette) — render based on current track
+- Stats dashboard numbers should use CountUp animation on scroll-into-view
+- Diagrams should be responsive (horizontal → vertical on mobile where noted)

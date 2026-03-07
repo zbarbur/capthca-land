@@ -18,6 +18,8 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY dashboard/ .
+# Content files needed by generateStaticParams at build time
+COPY content/ ./content/
 ENV NEXT_TELEMETRY_DISABLED=1
 
 # Build-time variables (NEXT_PUBLIC_* must be ARGs, not runtime ENV)

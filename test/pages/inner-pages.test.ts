@@ -12,6 +12,7 @@ const EXPECTED_SLUGS = [
 	"whitepaper",
 	"use-cases",
 	"human-vs-machine",
+	"academic-paper",
 ];
 
 describe("inner pages", () => {
@@ -20,14 +21,14 @@ describe("inner pages", () => {
 		assert.ok(fs.existsSync(routePath), "Dynamic route file should exist");
 	});
 
-	it("all 7 content files exist for light track", async () => {
+	it("all 8 content files exist for light track", async () => {
 		const slugs = await getPageSlugs("light");
 		for (const expected of EXPECTED_SLUGS) {
 			assert.ok(slugs.includes(expected), `Missing light/${expected}`);
 		}
 	});
 
-	it("all 7 content files exist for dark track", async () => {
+	it("all 8 content files exist for dark track", async () => {
 		const slugs = await getPageSlugs("dark");
 		for (const expected of EXPECTED_SLUGS) {
 			assert.ok(slugs.includes(expected), `Missing dark/${expected}`);

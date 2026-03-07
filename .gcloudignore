@@ -20,8 +20,9 @@ dist/
 # Environment files
 .env*
 
-# Markdown docs (not needed at runtime)
+# Markdown docs (not needed at runtime — except content/ which tests read)
 *.md
+!content/**/*.md
 
 # Git
 .git/

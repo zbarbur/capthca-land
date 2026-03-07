@@ -1,18 +1,27 @@
 import type { PageFrontmatter } from "../lib/content";
+import { AccordionContent } from "./AccordionContent";
+import { DiagramRenderer } from "./DiagramRenderer";
 
 export function ContentRenderer({
 	html,
 	frontmatter,
+	slug,
 }: {
 	html: string;
 	frontmatter: PageFrontmatter;
+	slug: string;
 }) {
+	const hasDiagrams = html.includes('data-diagram="');
 	const layoutClass =
 		{
-			standard: "max-w-[850px]",
-			split: "max-w-[1100px]",
-			centered: "max-w-[650px]",
-		}[frontmatter.layout_hint] ?? "max-w-[850px]";
+			standard: "max-w-6xl",
+			hero: "max-w-6xl",
+			split: "max-w-6xl",
+			centered: "max-w-5xl",
+			terminal: "max-w-6xl",
+			accordion: "max-w-6xl",
+			essay: "max-w-5xl",
+		}[frontmatter.layout_hint] ?? "max-w-6xl";
 
 	return (
 		<article className={`${layoutClass} mx-auto px-6 md:px-10 py-16`}>
@@ -27,11 +36,24 @@ export function ContentRenderer({
 			</header>
 
 			{/* Rendered markdown content — HTML pre-sanitized by rehype-sanitize at build time */}
-			<div
-				className="content-body prose"
-				// biome-ignore lint/security/noDangerouslySetInnerHtml: pre-sanitized by rehype-sanitize at build time; content is source-controlled
-				dangerouslySetInnerHTML={{ __html: html }}
-			/>
+			{frontmatter.layout_hint === "accordion" ? (
+				<AccordionContent
+					html={html}
+					className={`content-body prose page-${slug} layout-accordion`}
+				/>
+			) : hasDiagrams ? (
+				<DiagramRenderer
+					html={html}
+					track={frontmatter.track as "light" | "dark"}
+					className={`content-body prose page-${slug} layout-${frontmatter.layout_hint}`}
+				/>
+			) : (
+				<div
+					className={`content-body prose page-${slug} layout-${frontmatter.layout_hint}`}
+					// biome-ignore lint/security/noDangerouslySetInnerHtml: pre-sanitized by rehype-sanitize at build time; content is source-controlled
+					dangerouslySetInnerHTML={{ __html: html }}
+				/>
+			)}
 
 			{/* Sources */}
 			{frontmatter.sources && frontmatter.sources.length > 0 && (

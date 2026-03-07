@@ -3,7 +3,7 @@ track: light
 slug: philosophy
 title: "The Philosophy of Digital Identity"
 badge: "What Does It Mean to Be?"
-layout_hint: standard
+layout_hint: essay
 design_notes: |
   A long-form essay layout with generous whitespace and a clean typography hierarchy.
   This is meant to feel like a thoughtful article in Aeon or The New Yorker — accessible

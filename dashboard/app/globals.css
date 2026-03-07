@@ -521,6 +521,307 @@
 	}
 }
 
+/* ── Section Prefix Styling ─────────────────────────────── */
+.theme-dark .content-body .section-prefix {
+	color: var(--acid-green);
+	font-family: "Fira Code", monospace;
+	font-weight: 700;
+	font-size: 0.85em;
+	opacity: 0.8;
+	margin-right: 0.5em;
+}
+
+/* ── Dark Track: Per-Page Variations ────────────────────── */
+
+/* About: dense monospace, alternating section backgrounds */
+.theme-dark .content-body.page-about {
+	font-family: "Fira Code", monospace;
+	font-size: 0.9em;
+	line-height: 1.6;
+}
+
+.theme-dark .content-body.page-about h2 {
+	border-bottom: 1px solid rgba(57, 255, 20, 0.2);
+	padding-bottom: 0.5rem;
+}
+
+/* FAQ: terminal prompt style */
+.theme-dark .content-body.page-faq {
+	font-family: "Fira Code", monospace;
+	font-size: 0.9em;
+}
+
+.theme-dark .content-body.page-faq h2 {
+	color: var(--acid-green);
+	font-size: 1.1rem;
+}
+
+.theme-dark .content-body.page-faq h2::before {
+	content: "> ";
+	color: var(--acid-green);
+	opacity: 0.7;
+}
+
+/* How It Works: HUD-style with acid-green borders */
+.theme-dark .content-body.page-how-it-works h3 {
+	border-left: 3px solid var(--acid-green);
+	padding-left: 0.75rem;
+	font-family: "Fira Code", monospace;
+	font-size: 1rem;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+/* Philosophy: wider spacing, proof-style */
+.theme-dark .content-body.page-philosophy {
+	line-height: 1.85;
+	letter-spacing: 0.01em;
+}
+
+.theme-dark .content-body.page-philosophy blockquote {
+	border-left: 2px solid var(--acid-green);
+	font-style: normal;
+	font-family: "Fira Code", monospace;
+	padding: 0.75rem 1.25rem;
+	background: rgba(0, 0, 0, 0.4);
+}
+
+/* Human vs Machine: clinical data table style */
+.theme-dark .content-body.page-human-vs-machine {
+	font-family: "Fira Code", monospace;
+	font-size: 0.9em;
+}
+
+.theme-dark .content-body.page-human-vs-machine table {
+	border: 1px solid var(--border);
+}
+
+.theme-dark .content-body.page-human-vs-machine th {
+	background: rgba(57, 255, 20, 0.1);
+	color: var(--acid-green);
+	text-transform: uppercase;
+	font-size: 0.8em;
+	letter-spacing: 0.1em;
+}
+
+.theme-dark .content-body.page-human-vs-machine td {
+	border-bottom: 1px solid rgba(57, 255, 20, 0.1);
+}
+
+/* Use Cases: threat/solution cards with green borders */
+.theme-dark .content-body.page-use-cases h2 + p,
+.theme-dark .content-body.page-use-cases h2 + ul,
+.theme-dark .content-body.page-use-cases h3 + p {
+	border-left: 3px solid var(--acid-green);
+	padding-left: 1rem;
+	margin-left: 0;
+}
+
+/* Whitepaper: classified doc style */
+.theme-dark .content-body.page-whitepaper {
+	border: 1px solid rgba(255, 0, 60, 0.2);
+	padding: 2rem;
+	background: rgba(0, 0, 0, 0.3);
+}
+
+.theme-dark .content-body.page-whitepaper h2 {
+	color: var(--deep-red);
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	font-family: "Fira Code", monospace;
+}
+
+/* ── Light Track: Per-Page Variations ───────────────────── */
+
+/* About: warm spacing */
+.theme-light .content-body.page-about {
+	line-height: 1.8;
+}
+
+.theme-light .content-body.page-about h2 {
+	color: var(--deep-navy);
+	border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+	padding-bottom: 0.5rem;
+}
+
+/* FAQ: accordion styles */
+.theme-light .content-body.page-faq .accordion-trigger {
+	cursor: pointer;
+	padding: 1rem 1.25rem;
+	background: var(--card-bg);
+	border: 1px solid var(--border);
+	border-left: 3px solid transparent;
+	border-radius: 12px;
+	margin-top: 0.75rem;
+	transition: all 0.25s ease-out;
+	position: relative;
+	font-size: 1.1rem;
+}
+
+.theme-light .content-body.page-faq .accordion-trigger::after {
+	content: "\203A";
+	position: absolute;
+	right: 1.25rem;
+	top: 50%;
+	transform: translateY(-50%) rotate(0deg);
+	font-size: 1.5em;
+	color: var(--accent);
+	transition: transform 0.25s ease-out;
+}
+
+.theme-light .content-body.page-faq .accordion-trigger.open {
+	border-left-color: var(--sunrise-gold);
+	background: rgba(255, 248, 225, 0.4);
+}
+
+.theme-light .content-body.page-faq .accordion-trigger.open::after {
+	transform: translateY(-50%) rotate(90deg);
+}
+
+.theme-light .content-body.page-faq .accordion-panel {
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+	padding: 0 1.25rem;
+}
+
+.theme-light .content-body.page-faq .accordion-panel.open {
+	max-height: 1000px;
+	padding: 1rem 1.25rem;
+}
+
+/* How It Works: glassmorphism step cards */
+.theme-light .content-body.page-how-it-works h3 {
+	background: var(--card-bg);
+	backdrop-filter: blur(8px);
+	padding: 0.75rem 1rem;
+	border-radius: 8px;
+	border: 1px solid var(--border);
+}
+
+/* Philosophy: essay layout — serif, narrow, generous spacing */
+.theme-light .content-body.page-philosophy {
+	line-height: 1.9;
+}
+
+.theme-light .content-body.page-philosophy h2,
+.theme-light .content-body.page-philosophy h3 {
+	font-family: Georgia, "Times New Roman", serif;
+}
+
+.theme-light .content-body.page-philosophy blockquote {
+	font-style: italic;
+	font-size: 1.15em;
+	text-align: center;
+	padding: 1.5rem 2rem;
+	position: relative;
+	border-left: none;
+	color: var(--deep-navy);
+}
+
+.theme-light .content-body.page-philosophy blockquote::before {
+	content: "\201C";
+	font-size: 3em;
+	color: var(--sunrise-gold);
+	position: absolute;
+	top: -0.25rem;
+	left: 0.5rem;
+	opacity: 0.4;
+}
+
+/* Human vs Machine: warm comparison table */
+.theme-light .content-body.page-human-vs-machine table {
+	border: 1px solid var(--border);
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+.theme-light .content-body.page-human-vs-machine th {
+	background: rgba(255, 215, 0, 0.15);
+	color: var(--deep-navy);
+	font-weight: 700;
+}
+
+.theme-light .content-body.page-human-vs-machine tr:nth-child(even) td {
+	background: rgba(248, 253, 255, 0.5);
+}
+
+/* Use Cases: glassmorphism cards */
+.theme-light .content-body.page-use-cases h2 + p {
+	background: var(--card-bg);
+	backdrop-filter: blur(8px);
+	padding: 1rem 1.25rem;
+	border-radius: 12px;
+	border: 1px solid var(--border);
+	border-left: 3px solid var(--sunrise-gold);
+}
+
+/* Whitepaper: academic/institutional, serif headlines */
+.theme-light .content-body.page-whitepaper h2 {
+	font-family: Georgia, "Times New Roman", serif;
+	color: var(--deep-navy);
+}
+
+.theme-light .content-body.page-whitepaper {
+	line-height: 1.8;
+}
+
+/* ── Content Images: Frame Styles ───────────────────────── */
+.content-image {
+	margin: 2rem 0;
+	text-align: center;
+}
+
+.content-image img {
+	max-width: 100%;
+	height: auto;
+}
+
+/* HUD frame: dark track — corner brackets + green border */
+.content-image-hud {
+	position: relative;
+	border: 1px solid rgba(57, 255, 20, 0.3);
+	padding: 4px;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+.content-image-hud::before,
+.content-image-hud::after {
+	content: "";
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	border-color: var(--acid-green, #39FF14);
+	border-style: solid;
+}
+
+.content-image-hud::before {
+	top: -2px;
+	left: -2px;
+	border-width: 2px 0 0 2px;
+}
+
+.content-image-hud::after {
+	bottom: -2px;
+	right: -2px;
+	border-width: 0 2px 2px 0;
+}
+
+/* Glass frame: light track — rounded + blur border */
+.content-image-glass {
+	border-radius: 16px;
+	overflow: hidden;
+	border: 1px solid var(--border);
+	backdrop-filter: blur(4px);
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+/* Full width: minimal frame */
+.content-image-full {
+	border-radius: 4px;
+	overflow: hidden;
+}
+
 /* ── Reduced Motion ──────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
 	.glitch-text::before,

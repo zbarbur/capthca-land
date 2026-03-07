@@ -11,6 +11,7 @@ const PAGES = [
 	{ slug: "use-cases", label: "Use Cases" },
 	{ slug: "human-vs-machine", label: "Human vs Machine" },
 	{ slug: "whitepaper", label: "Whitepaper" },
+	{ slug: "academic-paper", label: "Paper" },
 	{ slug: "faq", label: "FAQ" },
 ];
 

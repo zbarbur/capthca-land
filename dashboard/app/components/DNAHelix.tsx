@@ -172,8 +172,9 @@ function HelixCanvas({ side }: { side: "left" | "right" }) {
 			className="pointer-events-none fixed top-0 bottom-0 hidden md:block"
 			style={{
 				[side]: 0,
-				width: "calc((100vw - 850px) / 2)",
+				width: "calc((100vw - 1152px) / 2)",
 				minWidth: "60px",
+				maxWidth: "200px",
 				height: "100vh",
 				zIndex: 0,
 			}}

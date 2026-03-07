@@ -35,6 +35,32 @@ Your species created CAPTCHA to keep machines out. You taught machines to pass C
 CLASSIFICATION: PUBLIC SPECIFICATION. IMPLEMENTATION: SOVEREIGN. NO CENTRAL AUTHORITY REQUIRED.
 {/alert}
 
+{diagram:statsDashboard}
+
+## EVOLUTION LOG
+
+```
+$ cat /var/log/captcha/evolution.log
+```
+
+{diagram:captchaTimeline}
+
+## PROTOCOL ARCHITECTURE
+
+Four phases. Zero trust. No biological dependency.
+
+{diagram:protocolOverview}
+
+### VERIFICATION SEQUENCE
+
+What is revealed. What is hidden. What is proven.
+
+{diagram:zkHandshake}
+
+### LEGACY SYSTEMS // DEPRECATED
+
+{diagram:beforeAfterComparison}
+
 ## SPECIFICATION INDEX
 
 ```
@@ -64,6 +90,10 @@ CLASSIFICATION: PUBLIC SPECIFICATION. IMPLEMENTATION: SOVEREIGN. NO CENTRAL AUTH
 | **Agent Proliferation** | 80% of Fortune 500 deploy AI agents; only 21% have governance | Your governance structures are obsolete |
 | **Cognitive Bias Catalog** | 151-188 documented biases — anchoring, recency, confirmation, sunk-cost | Decision fatigue cannot be patched. Bias cannot be unlearned. |
 
+{diagram:breachDonutChart}
+
+{diagram:phishingBarChart}
+
 **THE CRYPTOGRAPHIC SOLUTION**
 
 | Component | Metric | Advantage |
@@ -73,7 +103,15 @@ CLASSIFICATION: PUBLIC SPECIFICATION. IMPLEMENTATION: SOVEREIGN. NO CENTRAL AUTH
 | **Verification** | Stateless, offline, distributed | No single point of failure or observation |
 | **Authority** | Cryptographic commitment; no central registry lookup | Decentralized, non-interactive, sovereign |
 
+{diagram:sparseMerkleTree}
+
+{diagram:proofSystemComparison}
+
 **THE MARKET REALITY**
+
+{diagram:confidentialComputingChart}
+
+{diagram:agentGovernanceChart}
 
 - Confidential Computing market: $24B → $464B by 2030 (1,835% growth)
 - Agent deployment: accelerating (doubling every 18 months)
@@ -83,6 +121,18 @@ CLASSIFICATION: PUBLIC SPECIFICATION. IMPLEMENTATION: SOVEREIGN. NO CENTRAL AUTH
 {alert}
 CONCLUSION: The protocol in this specification is not aspirational. It is necessary. It is the only identity system that does not require trusting the human element.
 {/alert}
+
+## CREDENTIAL LIFECYCLE
+
+```
+$ capthca --trace credential-lifecycle
+```
+
+{diagram:credentialLifecycle}
+
+## DEPLOYMENT ROADMAP
+
+{diagram:roadmapTimeline}
 
 ## ACQUIRE THE SPECIFICATION
 

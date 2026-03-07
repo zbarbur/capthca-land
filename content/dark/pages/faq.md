@@ -4,7 +4,7 @@ slug: faq
 title: "PROTOCOL FAQ"
 badge: null
 section_prefix: "Q"
-layout_hint: standard
+layout_hint: terminal
 design_notes: |
   FAQ formatted as terminal-style command prompts. Each question prefixed with ">" (command prompt).
   Answers appear as monospaced data readouts below each prompt. Black background with acid-green text.
