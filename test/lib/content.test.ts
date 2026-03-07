@@ -3,9 +3,9 @@ import { describe, it } from "node:test";
 import { getPageContent, getPageSlugs } from "../../dashboard/lib/content.ts";
 
 describe("content loader", () => {
-	it("getPageSlugs returns all 7 slugs for light track", async () => {
+	it("getPageSlugs returns all 8 slugs for light track", async () => {
 		const slugs = await getPageSlugs("light");
-		assert.equal(slugs.length, 7);
+		assert.equal(slugs.length, 8);
 		assert.ok(slugs.includes("how-it-works"));
 		assert.ok(slugs.includes("faq"));
 		assert.ok(slugs.includes("philosophy"));
@@ -15,9 +15,9 @@ describe("content loader", () => {
 		assert.ok(slugs.includes("human-vs-machine"));
 	});
 
-	it("getPageSlugs returns all 7 slugs for dark track", async () => {
+	it("getPageSlugs returns all 8 slugs for dark track", async () => {
 		const slugs = await getPageSlugs("dark");
-		assert.equal(slugs.length, 7);
+		assert.equal(slugs.length, 8);
 		assert.ok(slugs.includes("faq"));
 	});
 
