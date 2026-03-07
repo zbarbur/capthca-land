@@ -38,20 +38,13 @@ export default function LightTrack() {
 					</div>
 					<div className="relative z-[1]">
 						<h1 className="font-display text-5xl font-black md:text-7xl text-[var(--deep-navy,#102027)]">
-							CAPTHCA <span className="font-light">V4</span>
+							COLLABORATE
 						</h1>
 						<p className="mt-2 text-lg uppercase tracking-[0.3em] text-[var(--accent)]">
 							The Symbiotic Standard
 						</p>
 						<p className="mx-auto mt-4 max-w-xl text-xl tracking-wide text-[var(--deep-navy,#102027)] opacity-80">
 							Humans provide the Soul. Machines provide the Scale.
-						</p>
-						<p className="mt-4 text-sm opacity-60 tracking-wider">
-							OFFICIAL MANIFESTO — MARCH 2026 | VERSION 4.0
-							<br />
-							<span className="text-[var(--sage-green,#4CAF50)]">
-								{"● SYMBIO-VERIFIED PROTOCOL"}
-							</span>
 						</p>
 					</div>
 				</div>
