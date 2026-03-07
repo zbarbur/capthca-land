@@ -13,12 +13,14 @@ describe("content loader", () => {
 		assert.ok(slugs.includes("whitepaper"));
 		assert.ok(slugs.includes("use-cases"));
 		assert.ok(slugs.includes("human-vs-machine"));
+		assert.ok(slugs.includes("academic-paper"));
 	});
 
 	it("getPageSlugs returns all 8 slugs for dark track", async () => {
 		const slugs = await getPageSlugs("dark");
 		assert.equal(slugs.length, 8);
 		assert.ok(slugs.includes("faq"));
+		assert.ok(slugs.includes("academic-paper"));
 	});
 
 	it("getPageContent returns frontmatter and html for a valid page", async () => {
