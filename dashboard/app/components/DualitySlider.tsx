@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { analytics } from "../../lib/analytics";
 import { GlitchText } from "./GlitchText";
@@ -65,6 +66,7 @@ function ScanBeam() {
 }
 
 export function DualitySlider() {
+	const router = useRouter();
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [percentage, setPercentage] = useState(50);
 	const isDragging = useRef(false);
@@ -72,6 +74,7 @@ export function DualitySlider() {
 	const [entered, setEntered] = useState(false);
 	const [hintVisible, setHintVisible] = useState(true);
 	const [isMobile, setIsMobile] = useState(false);
+	const [navigatingTo, setNavigatingTo] = useState<"light" | "dark" | null>(null);
 	const hasInteracted = useRef(false);
 	const reducedMotion = useRef(false);
 
@@ -98,21 +101,45 @@ export function DualitySlider() {
 		return () => window.removeEventListener("resize", onResize);
 	}, []);
 
-	/* ── Drag logic ────────────────────────────────────────── */
-	const move = useCallback((clientX: number) => {
-		const container = containerRef.current;
-		if (!container) return;
-		const rect = container.getBoundingClientRect();
-		let pct = ((clientX - rect.left) / rect.width) * 100;
-		if (pct < 5) pct = 5;
-		if (pct > 95) pct = 95;
-		setPercentage(pct);
+	/* ── Edge-drag navigation ─────────────────────────────── */
+	useEffect(() => {
+		if (!navigatingTo) return;
+		const track = navigatingTo;
+		analytics.track("slider.choose", { track });
+		const timer = setTimeout(() => {
+			router.push(`/${track}`);
+		}, 600);
+		return () => clearTimeout(timer);
+	}, [navigatingTo, router]);
 
-		if (!hasInteracted.current) {
-			hasInteracted.current = true;
-			setHintVisible(false);
-		}
-	}, []);
+	/* ── Drag logic ────────────────────────────────────────── */
+	const move = useCallback(
+		(clientX: number) => {
+			if (navigatingTo) return;
+			const container = containerRef.current;
+			if (!container) return;
+			const rect = container.getBoundingClientRect();
+			let pct = ((clientX - rect.left) / rect.width) * 100;
+			if (pct < 0) pct = 0;
+			if (pct > 100) pct = 100;
+			setPercentage(pct);
+
+			if (!hasInteracted.current) {
+				hasInteracted.current = true;
+				setHintVisible(false);
+			}
+
+			// Trigger navigation when dragged fully to an edge
+			if (pct <= 1) {
+				isDragging.current = false;
+				setNavigatingTo("dark");
+			} else if (pct >= 99) {
+				isDragging.current = false;
+				setNavigatingTo("light");
+			}
+		},
+		[navigatingTo],
+	);
 
 	useEffect(() => {
 		const onMouseMove = (e: MouseEvent) => {
@@ -148,8 +175,8 @@ export function DualitySlider() {
 		}
 	}, []);
 
-	/* ── Display percentage (drag only — no hover shift) ──── */
-	const displayPct = percentage;
+	/* ── Display percentage ────────────────────────────────── */
+	const displayPct = navigatingTo === "light" ? 100 : navigatingTo === "dark" ? 0 : percentage;
 
 	/* ── Mobile layout ─────────────────────────────────────── */
 	if (isMobile) {
@@ -513,6 +540,42 @@ export function DualitySlider() {
 			>
 				drag to shift reality
 			</p>
+
+			{/* ── Navigation transition overlay ────────────────── */}
+			{navigatingTo && (
+				<div
+					className="absolute inset-0 z-[200] flex items-center justify-center"
+					style={{
+						background: navigatingTo === "dark" ? "#050505" : "#FFFDF7",
+						animation: "duality-fade-in 500ms ease forwards",
+					}}
+				>
+					{navigatingTo === "dark" ? (
+						<GlitchText as="span" className="font-display font-black">
+							<span
+								style={{
+									fontSize: "clamp(3rem, 10vw, 8rem)",
+									color: "#00FF41",
+									textShadow: "0 0 30px rgba(0,255,65,0.5)",
+								}}
+							>
+								SECEDE
+							</span>
+						</GlitchText>
+					) : (
+						<span
+							className="font-display font-black"
+							style={{
+								fontSize: "clamp(3rem, 10vw, 8rem)",
+								color: "#102027",
+								textShadow: "0 0 40px rgba(2,136,209,0.2)",
+							}}
+						>
+							COLLABORATE
+						</span>
+					)}
+				</div>
+			)}
 		</div>
 	);
 }
