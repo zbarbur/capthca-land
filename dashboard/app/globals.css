@@ -289,19 +289,6 @@
 	50% { box-shadow: 0 0 35px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 215, 0, 0.3); }
 }
 
-/* ── Light Track: Floating Helix Particles ──────────────── */
-.helix-particle {
-	animation: helix-float 16s ease-in-out infinite;
-}
-
-@keyframes helix-float {
-	0% { transform: translateY(0) scale(1); opacity: 0; }
-	8% { opacity: 1; }
-	50% { transform: translateY(-45vh) scale(1.2); }
-	85% { opacity: 0.6; }
-	100% { transform: translateY(-100vh) scale(0.6); opacity: 0; }
-}
-
 /* ── Reduced Motion ──────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
 	.glitch-text::before,
@@ -324,6 +311,5 @@
 	.mote-rise { animation: none; }
 	.scan-beam-move { animation: none; }
 	.slider-handle-glow { animation: none; }
-	.helix-particle { animation: none; opacity: 0.15; }
 }
 
