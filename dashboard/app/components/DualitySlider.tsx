@@ -130,11 +130,11 @@ export function DualitySlider() {
 				setHintVisible(false);
 			}
 
-			// Trigger navigation when dragged fully to an edge
-			if (pct <= 1) {
+			// Trigger navigation when dragged near an edge
+			if (pct <= 5) {
 				isDragging.current = false;
 				setNavigatingTo("dark");
-			} else if (pct >= 99) {
+			} else if (pct >= 95) {
 				isDragging.current = false;
 				setNavigatingTo("light");
 			}
@@ -151,12 +151,29 @@ export function DualitySlider() {
 			if (!isDragging.current) return;
 			move(e.touches[0].clientX);
 		};
-		const onEnd = () => {
-			if (isDragging.current && !reducedMotion.current) {
+		const onEnd = (e: MouseEvent | TouchEvent) => {
+			if (!isDragging.current) return;
+			if (!reducedMotion.current) {
 				setShowGlow(true);
 				setTimeout(() => setShowGlow(false), 500);
 			}
 			isDragging.current = false;
+			// Check edge on release — last move event may not have reached the edge
+			const container = containerRef.current;
+			if (container) {
+				const clientX = "changedTouches" in e ? e.changedTouches[0].clientX : e.clientX;
+				const rect = container.getBoundingClientRect();
+				let pct = ((clientX - rect.left) / rect.width) * 100;
+				if (pct < 0) pct = 0;
+				if (pct > 100) pct = 100;
+				if (pct <= 8 && !navigatingTo) {
+					setPercentage(0);
+					setNavigatingTo("dark");
+				} else if (pct >= 92 && !navigatingTo) {
+					setPercentage(100);
+					setNavigatingTo("light");
+				}
+			}
 		};
 
 		window.addEventListener("mousemove", onMouseMove);
@@ -170,7 +187,7 @@ export function DualitySlider() {
 			window.removeEventListener("touchmove", onTouchMove);
 			window.removeEventListener("touchend", onEnd);
 		};
-	}, [move]);
+	}, [move, navigatingTo]);
 
 	const onStart = useCallback(() => {
 		isDragging.current = true;
