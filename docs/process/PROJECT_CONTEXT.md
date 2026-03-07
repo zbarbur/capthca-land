@@ -129,6 +129,7 @@
 - SVG favicon + full SEO metadata + Open Graph tags
 
 ### Not Yet Done
+- Mobile slider / mobile home page experience
 - Whitepaper diagram visual polish (spacing, mobile, animations)
 - Cloudflare DNS migration (DDoS, CDN)
 - Welcome emails for subscribers

@@ -95,4 +95,4 @@ New test files:
 2. **Local Cloud Build testing** — Create `bin/test-cloud-build.sh` to simulate build steps locally.
 3. **Content system regression tests** — Add tests that verify the full render pipeline (markdown → HTML → diagrams) works end-to-end.
 4. **Next.js upgrade** — Current version has 9 npm audit vulnerabilities (8 low, 1 high). Consider upgrading.
-5. **Production deploy** — Sprint 5 changes need production deployment.
+5. **Mobile home page** — No slider experience on mobile; needs a mobile-specific home page or slider alternative.

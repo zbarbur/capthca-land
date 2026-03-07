@@ -15,6 +15,7 @@
 ## Backlog
 
 ### Post-MVP
+- [ui] Mobile slider / mobile home page experience — no slider on mobile currently (M)
 - [email] Welcome email on signup — track-specific content (M)
 - [email] Email provider integration (Resend or SendGrid) (M)
 - [analytics] Analytics dashboard — track preference distribution, conversion funnel (M)
