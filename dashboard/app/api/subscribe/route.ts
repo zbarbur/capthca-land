@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/firestore";
+import { logger } from "@/lib/logger";
+import { metrics } from "@/lib/metrics";
 import { createSecretProvider } from "@/lib/secrets";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -39,6 +41,7 @@ export async function POST(request: Request) {
 	const ip = forwardedParts?.at(-1) || "unknown";
 
 	if (isRateLimited(ip)) {
+		metrics.increment("subscribe.rate_limited");
 		return NextResponse.json({ error: "rate_limit_exceeded" }, { status: 429 });
 	}
 
@@ -47,6 +50,7 @@ export async function POST(request: Request) {
 	try {
 		body = await request.json();
 	} catch {
+		metrics.increment("subscribe.invalid_input");
 		return NextResponse.json({ error: "invalid_json" }, { status: 400 });
 	}
 
@@ -75,6 +79,7 @@ export async function POST(request: Request) {
 		});
 		const verifyData = (await verifyRes.json()) as { success: boolean };
 		if (!verifyData.success) {
+			metrics.increment("subscribe.turnstile_failed");
 			return NextResponse.json({ error: "captcha_failed" }, { status: 400 });
 		}
 	}
@@ -82,12 +87,14 @@ export async function POST(request: Request) {
 	// Validate email
 	const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
 	if (!email || email.length > 254 || !EMAIL_REGEX.test(email)) {
+		metrics.increment("subscribe.invalid_input");
 		return NextResponse.json({ error: "invalid_email" }, { status: 400 });
 	}
 
 	// Validate track
 	const track = body.track as string;
 	if (!VALID_TRACKS.includes(track as (typeof VALID_TRACKS)[number])) {
+		metrics.increment("subscribe.invalid_input");
 		return NextResponse.json({ error: "invalid_track" }, { status: 400 });
 	}
 
@@ -114,9 +121,13 @@ export async function POST(request: Request) {
 			{ merge: true },
 		);
 
+		metrics.increment("subscribe.success", { track });
 		return NextResponse.json({ success: true });
 	} catch (err) {
-		console.error("Firestore write error:", err);
+		logger.error("Firestore write error", {
+			error: err instanceof Error ? err.message : String(err),
+		});
+		metrics.increment("subscribe.error");
 		return NextResponse.json({ error: "server_error" }, { status: 500 });
 	}
 }

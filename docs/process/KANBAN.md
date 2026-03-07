@@ -6,20 +6,25 @@
 
 ---
 
+## Doing (Sprint 3)
+
+- [art] T3.1 — Generate all visual assets from art-direction.md (L)
+- [ui] T3.2 — Rebuild home page (DualitySlider) from content spec (L)
+- [observability] T3.3 — Structured JSON logging (M)
+- [observability] T3.4 — Health endpoint /api/health (S)
+- [observability] T3.5 — Custom metrics for subscribe API (M)
+- [security] T3.6 — Request logging for abuse monitoring (S)
+- [analytics] T3.7 — Instrument slider interaction events (M)
+- [infra] T3.8 — Deploy production to capthca.ai (S)
+
+---
+
 ## Backlog
 
 ### High Priority
-- [infra] Deploy production to capthca.ai — production Cloud Run service + DNS (S)
 - [infra] Migrate DNS from GoDaddy to Cloudflare — DDoS, CDN, Cloudflare Access (S)
 
-### MVP (Sprint 3)
-- [art] Generate all visual assets from content/shared/art-direction.md — 17 images via Nano Banana: dark track heroes + sections (7), light track heroes + sections (7), shared OG cards + favicon + slider (3). Save to public/tracks/*/assets/ and public/assets/ (L)
-- [ui] Rebuild home page (DualitySlider) from content spec — each half previews track world (glassmorphism vs Matrix rain), gradient collision zone, cinematic entrance animation, hover expansion, mobile vertical stack, CTAs from content/home/duality-slider.md (L)
-- [observability] Structured JSON logging — Cloud Logging compatible, replace console.log/error (M)
-- [observability] Health endpoint /api/health — check Firestore connectivity (S)
-- [observability] Custom metrics for subscribe API — counters for signups, errors, rate limits (M)
-- [security] Add request logging for abuse monitoring (S)
-- [analytics] Instrument slider interaction events (track choice, time spent) (M)
+### MVP (Sprint 3+)
 - [tooling] Subscriber management scripts — pull, export CSV, list by track, delete (S)
 - [analytics] Subscriber profiling enrichment — timezone, locale, screen size, geo (IP lookup), device type (S)
 - [ui] Optimize images with next/image, compress track assets (S)

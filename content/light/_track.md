@@ -48,7 +48,8 @@ design_notes: |
   ## Glassmorphism Cards & Containers
   - Main content container: rgba(255, 255, 255, 0.45) background
   - backdrop-filter: blur(12px) — frosted glass effect
-  - Border: 1px solid rgba(255, 255, 255, 0.6) (light edge catch)
+  - Border-left and border-right: 1px solid rgba(2, 136, 209, 0.15) — subtle
+    blue side borders matching the dark track's green side borders for consistency
   - Subtle box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04) — elevation, not darkness
   - Rounded corners: 16px (cards), 24px (hero sections)
   - Highlight boxes: faint gold tint background + gold left border
@@ -83,6 +84,50 @@ design_notes: |
     text fading from transparent to rgba(16, 32, 39, 0.8)
   - Drop-shadow filter on floating images: drop-shadow(0 30px 50px rgba(0,0,0,0.12))
 
+  ## Side Animations — DNA Helix Strands
+  Equivalent to the dark track's Matrix rain flanking the content area.
+  Two translucent double-helix strands run along the left and right edges
+  of the page, outside the glass content container.
+
+  **Visual design:**
+  - Two helical strands per side (double helix) — one gold (#FFD700 at 12%),
+    one sky blue (#0288D1 at 10%)
+  - Strands rendered as SVG paths or Canvas curves — sinusoidal waves offset
+    by half a wavelength to create the classic DNA twist
+  - Thin lines (1.5-2px stroke) with soft glow (filter: blur(2px) on a
+    duplicated slightly brighter copy behind)
+  - Small circular nodes at crossover points (4-6px, same colors at 15-20%
+    opacity) — these represent the "connection points" of symbiosis
+  - Vertical orientation: strands run from top to bottom of the viewport
+
+  **Animation:**
+  - Slow continuous upward drift (translateY, 30s loop, ease linear)
+  - The strands feel like they're growing/ascending — life, evolution, DNA
+  - Nodes at crossover points pulse very gently (opacity 0.15↔0.25, 3s cycle)
+  - Parallax: strands drift upward slightly slower than scroll for depth
+  - On scroll, the helixes subtly compress/expand (wavelength shifts ±5%)
+    to create a breathing, living feel
+
+  **Positioning:**
+  - Left helix: positioned ~40-80px from left edge of viewport
+  - Right helix: positioned ~40-80px from right edge of viewport
+  - Both behind the glass content container (z-index below container)
+  - Visible in the gap between viewport edge and content container
+  - On mobile (<768px): hide completely — not enough visible space
+
+  **Implementation:**
+  - SVG preferred (sharper, lighter) — two <path> elements per side with
+    sinusoidal d attributes, animated via CSS transform
+  - Alternative: Canvas with requestAnimationFrame, 30fps cap
+  - Total footprint: < 5KB gzipped for SVG version
+  - prefers-reduced-motion: show static helix shapes, no animation
+
+  **Thematic connection:**
+  The DNA helix represents the symbiotic partnership between human and
+  machine — two strands intertwined, neither complete alone. This mirrors
+  the dark track's Matrix rain (machine code) with something organic
+  and collaborative.
+
   ## Animations & Motion
   All motion should feel organic, spring-based, never mechanical:
 
@@ -90,6 +135,7 @@ design_notes: |
     over 600ms, staggered 100ms between siblings
   - Hero image: very subtle float effect (translateY ±8px, 6s ease-in-out loop)
   - Gradient orbs: slow drift animation (transform: translate, 60s+ loop)
+  - DNA helix side strands: continuous upward drift, 30s loop (see above)
   - Particle effect (nice-to-have): soft glowing orbs / light motes floating
     gently upward, very low density (~30-50 particles), warm gold + white
     colors, 3-5px size, 0.1-0.3 opacity. Use tsParticles with FPS limiter.

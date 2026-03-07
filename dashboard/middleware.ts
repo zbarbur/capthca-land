@@ -15,11 +15,36 @@ function isBasicAuthValid(header: string | null): boolean {
 	return user === STAGING_USER && pass === STAGING_AUTH_PASS;
 }
 
+function logApiRequest(request: NextRequest): void {
+	const { method, pathname } = { method: request.method, pathname: request.nextUrl.pathname };
+	if (!pathname.startsWith("/api/")) return;
+
+	const ip =
+		request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || request.ip || "unknown";
+	const userAgent = request.headers.get("user-agent") || "unknown";
+
+	console.log(
+		JSON.stringify({
+			severity: "INFO",
+			type: "request",
+			method,
+			path: pathname,
+			ip,
+			userAgent,
+			timestamp: new Date().toISOString(),
+		}),
+	);
+}
+
 export function middleware(request: NextRequest) {
 	// Only gate staging — skip if no password is configured
-	if (!STAGING_AUTH_PASS) return NextResponse.next();
+	if (!STAGING_AUTH_PASS) {
+		logApiRequest(request);
+		return NextResponse.next();
+	}
 
 	if (isBasicAuthValid(request.headers.get("authorization"))) {
+		logApiRequest(request);
 		return NextResponse.next();
 	}
 
