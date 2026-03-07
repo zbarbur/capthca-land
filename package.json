@@ -9,7 +9,7 @@
 		"test:infra": "node --test --import tsx test/infra/*.test.ts",
 		"start": "npx tsx ./src/index.ts",
 		"lint": "biome check .",
-		"ci": "npm run lint && npm run typecheck && npm test",
+		"ci": "npm run lint && npm run typecheck && npm test && (cd dashboard && npm audit --audit-level=critical || echo 'npm audit: warnings present (non-blocking)')",
 		"ci:full": "npm run ci && cd dashboard && USE_MEMORY_STORE=true npm run build",
 		"typecheck": "npx tsc --noEmit && npx tsc --noEmit -p dashboard/tsconfig.json",
 		"format": "biome format --write .",
