@@ -78,7 +78,16 @@ export function EmailCapture({ track }: { track: "light" | "dark" }) {
 				const res = await fetch("/api/subscribe", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify({ email: trimmed, track, cfToken, honeypot }),
+					body: JSON.stringify({
+						email: trimmed,
+						track,
+						cfToken,
+						honeypot,
+						timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+						locale: navigator.language,
+						screenWidth: screen.width,
+						screenHeight: screen.height,
+					}),
 				});
 
 				if (!res.ok) {
