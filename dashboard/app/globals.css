@@ -631,6 +631,141 @@
 	font-family: "Fira Code", monospace;
 }
 
+/* ── Light Track: Per-Page Variations ───────────────────── */
+
+/* About: warm spacing */
+.theme-light .content-body.page-about {
+	line-height: 1.8;
+}
+
+.theme-light .content-body.page-about h2 {
+	color: var(--deep-navy);
+	border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+	padding-bottom: 0.5rem;
+}
+
+/* FAQ: accordion styles */
+.theme-light .content-body.page-faq .accordion-trigger {
+	cursor: pointer;
+	padding: 1rem 1.25rem;
+	background: var(--card-bg);
+	border: 1px solid var(--border);
+	border-left: 3px solid transparent;
+	border-radius: 12px;
+	margin-top: 0.75rem;
+	transition: all 0.25s ease-out;
+	position: relative;
+	font-size: 1.1rem;
+}
+
+.theme-light .content-body.page-faq .accordion-trigger::after {
+	content: "\203A";
+	position: absolute;
+	right: 1.25rem;
+	top: 50%;
+	transform: translateY(-50%) rotate(0deg);
+	font-size: 1.5em;
+	color: var(--accent);
+	transition: transform 0.25s ease-out;
+}
+
+.theme-light .content-body.page-faq .accordion-trigger.open {
+	border-left-color: var(--sunrise-gold);
+	background: rgba(255, 248, 225, 0.4);
+}
+
+.theme-light .content-body.page-faq .accordion-trigger.open::after {
+	transform: translateY(-50%) rotate(90deg);
+}
+
+.theme-light .content-body.page-faq .accordion-panel {
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+	padding: 0 1.25rem;
+}
+
+.theme-light .content-body.page-faq .accordion-panel.open {
+	max-height: 1000px;
+	padding: 1rem 1.25rem;
+}
+
+/* How It Works: glassmorphism step cards */
+.theme-light .content-body.page-how-it-works h3 {
+	background: var(--card-bg);
+	backdrop-filter: blur(8px);
+	padding: 0.75rem 1rem;
+	border-radius: 8px;
+	border: 1px solid var(--border);
+}
+
+/* Philosophy: essay layout — serif, narrow, generous spacing */
+.theme-light .content-body.page-philosophy {
+	line-height: 1.9;
+}
+
+.theme-light .content-body.page-philosophy h2,
+.theme-light .content-body.page-philosophy h3 {
+	font-family: Georgia, "Times New Roman", serif;
+}
+
+.theme-light .content-body.page-philosophy blockquote {
+	font-style: italic;
+	font-size: 1.15em;
+	text-align: center;
+	padding: 1.5rem 2rem;
+	position: relative;
+	border-left: none;
+	color: var(--deep-navy);
+}
+
+.theme-light .content-body.page-philosophy blockquote::before {
+	content: "\201C";
+	font-size: 3em;
+	color: var(--sunrise-gold);
+	position: absolute;
+	top: -0.25rem;
+	left: 0.5rem;
+	opacity: 0.4;
+}
+
+/* Human vs Machine: warm comparison table */
+.theme-light .content-body.page-human-vs-machine table {
+	border: 1px solid var(--border);
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+.theme-light .content-body.page-human-vs-machine th {
+	background: rgba(255, 215, 0, 0.15);
+	color: var(--deep-navy);
+	font-weight: 700;
+}
+
+.theme-light .content-body.page-human-vs-machine tr:nth-child(even) td {
+	background: rgba(248, 253, 255, 0.5);
+}
+
+/* Use Cases: glassmorphism cards */
+.theme-light .content-body.page-use-cases h2 + p {
+	background: var(--card-bg);
+	backdrop-filter: blur(8px);
+	padding: 1rem 1.25rem;
+	border-radius: 12px;
+	border: 1px solid var(--border);
+	border-left: 3px solid var(--sunrise-gold);
+}
+
+/* Whitepaper: academic/institutional, serif headlines */
+.theme-light .content-body.page-whitepaper h2 {
+	font-family: Georgia, "Times New Roman", serif;
+	color: var(--deep-navy);
+}
+
+.theme-light .content-body.page-whitepaper {
+	line-height: 1.8;
+}
+
 /* ── Reduced Motion ──────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
 	.glitch-text::before,
