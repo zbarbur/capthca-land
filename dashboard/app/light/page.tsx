@@ -39,6 +39,7 @@ export default function LightTrack() {
 					src="/tracks/light/assets/light-hero.png"
 					alt=""
 					fill
+					sizes="100vw"
 					priority={true}
 					className="object-cover opacity-20"
 				/>
@@ -99,6 +100,7 @@ export default function LightTrack() {
 									src="/tracks/light/lattice-detail.png"
 									alt=""
 									fill
+									sizes="(max-width: 850px) 100vw, 850px"
 									className="object-cover opacity-[0.18]"
 								/>
 							</div>
@@ -186,6 +188,7 @@ export default function LightTrack() {
 									src="/tracks/light/lattice-detail.png"
 									alt=""
 									fill
+									sizes="(max-width: 850px) 100vw, 850px"
 									className="object-cover opacity-[0.18]"
 								/>
 							</div>
@@ -331,6 +334,7 @@ export default function LightTrack() {
 									src="/tracks/light/lattice-detail.png"
 									alt=""
 									fill
+									sizes="(max-width: 850px) 100vw, 850px"
 									className="object-cover opacity-[0.18]"
 								/>
 							</div>
@@ -442,6 +446,7 @@ export default function LightTrack() {
 									src="/tracks/light/lattice-detail.png"
 									alt=""
 									fill
+									sizes="(max-width: 850px) 100vw, 850px"
 									className="object-cover opacity-[0.18]"
 								/>
 							</div>
@@ -566,6 +571,7 @@ export default function LightTrack() {
 								src="/tracks/light/assets/light-cta-bg.png"
 								alt=""
 								fill
+								sizes="(max-width: 850px) 100vw, 850px"
 								className="object-cover opacity-30"
 							/>
 						</div>
