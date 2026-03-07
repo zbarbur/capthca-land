@@ -504,7 +504,8 @@ export function DualitySlider() {
 				className={`duality-entrance-hint absolute bottom-6 left-1/2 z-[100] -translate-x-1/2 font-sans text-xs uppercase pointer-events-none ${entered ? "duality-entered" : ""}`}
 				style={{
 					letterSpacing: "0.25em",
-					color: "rgba(255,255,255,0.35)",
+					color: "rgba(180,160,100,0.7)",
+					textShadow: "0 0 8px rgba(0,0,0,0.4)",
 					opacity: hintVisible ? undefined : 0,
 					transition: "opacity 500ms ease",
 					animationDelay: "2.4s",
