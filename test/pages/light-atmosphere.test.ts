@@ -8,9 +8,9 @@ describe("light atmosphere", () => {
 		assert.ok(route.includes("GradientOrbs"), "Should import GradientOrbs");
 	});
 
-	it("inner page route has reduced opacity for GradientOrbs", () => {
+	it("inner page route renders GradientOrbs directly (component has built-in opacity)", () => {
 		const route = fs.readFileSync("dashboard/app/[track]/[slug]/page.tsx", "utf-8");
-		assert.ok(route.includes("opacity-40"), "GradientOrbs should be at 40% opacity");
+		assert.ok(route.includes("<GradientOrbs"), "GradientOrbs should render directly");
 	});
 
 	it("per-page CSS classes exist for all light slugs", () => {

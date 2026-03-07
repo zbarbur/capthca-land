@@ -13,9 +13,9 @@ describe("dark atmosphere", () => {
 		assert.ok(route.includes("crt-flicker"), "Should have CRT overlay");
 	});
 
-	it("inner page route has reduced opacity for backgrounds", () => {
+	it("inner page route renders MatrixRain directly (component has built-in opacity)", () => {
 		const route = fs.readFileSync("dashboard/app/[track]/[slug]/page.tsx", "utf-8");
-		assert.ok(route.includes("opacity-30"), "MatrixRain should be at reduced opacity");
+		assert.ok(route.includes("<MatrixRain"), "MatrixRain should render directly");
 	});
 
 	it("per-page CSS classes exist for all dark slugs", () => {
