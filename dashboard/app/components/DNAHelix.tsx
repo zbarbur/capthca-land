@@ -3,10 +3,9 @@
 import { useEffect, useRef } from "react";
 
 /**
- * DNA Helix side animations for the light track.
- * Canvas-based double helixes filling both border areas (viewport edge
- * to content container). Equivalent to MatrixRain on the dark track.
- * Hidden on mobile (<768px).
+ * DNA Helix border animation for the light track.
+ * Many small double-helix units float upward across the border areas,
+ * like Matrix rain columns but with organic DNA twists.
  */
 
 const COLORS = {
@@ -14,13 +13,90 @@ const COLORS = {
 	blue: { r: 2, g: 136, b: 209 },
 };
 
-interface HelixConfig {
-	side: "left" | "right";
+interface HelixUnit {
+	x: number; // horizontal position (0-1)
+	y: number; // current vertical position
+	speed: number; // px per frame upward
+	scale: number; // size multiplier
+	alpha: number; // base opacity
+	wavelength: number;
+	amplitude: number;
+	twists: number; // how many full twists (1-3)
 }
 
-function HelixCanvas({ side }: HelixConfig) {
+function spawnUnit(width: number, height: number): HelixUnit {
+	return {
+		x: Math.random(),
+		y: height + Math.random() * 200,
+		speed: 0.3 + Math.random() * 0.8,
+		scale: 0.5 + Math.random() * 0.7,
+		alpha: 0.08 + Math.random() * 0.14,
+		wavelength: 30 + Math.random() * 20,
+		amplitude: 6 + Math.random() * 8,
+		twists: 1 + Math.floor(Math.random() * 2.5),
+	};
+}
+
+function drawUnit(ctx: CanvasRenderingContext2D, unit: HelixUnit, width: number) {
+	const cx = unit.x * width;
+	const unitHeight = unit.wavelength * unit.twists * unit.scale;
+	const amp = unit.amplitude * unit.scale;
+
+	// Two strands: gold and blue, offset by PI
+	const strands = [
+		{ color: COLORS.gold, phase: 0 },
+		{ color: COLORS.blue, phase: Math.PI },
+	];
+
+	for (const strand of strands) {
+		// Main line
+		ctx.beginPath();
+		ctx.strokeStyle = `rgba(${strand.color.r}, ${strand.color.g}, ${strand.color.b}, ${unit.alpha})`;
+		ctx.lineWidth = 1.2 * unit.scale;
+
+		for (let i = 0; i <= unitHeight; i += 1.5) {
+			const x =
+				cx + amp * Math.sin((2 * Math.PI * i) / (unit.wavelength * unit.scale) + strand.phase);
+			const y = unit.y - i;
+			if (i === 0) ctx.moveTo(x, y);
+			else ctx.lineTo(x, y);
+		}
+		ctx.stroke();
+
+		// Glow
+		ctx.beginPath();
+		ctx.strokeStyle = `rgba(${strand.color.r}, ${strand.color.g}, ${strand.color.b}, ${unit.alpha * 0.25})`;
+		ctx.lineWidth = 4 * unit.scale;
+		for (let i = 0; i <= unitHeight; i += 3) {
+			const x =
+				cx + amp * Math.sin((2 * Math.PI * i) / (unit.wavelength * unit.scale) + strand.phase);
+			const y = unit.y - i;
+			if (i === 0) ctx.moveTo(x, y);
+			else ctx.lineTo(x, y);
+		}
+		ctx.stroke();
+	}
+
+	// Nodes at crossover points
+	const nodeInterval = (unit.wavelength * unit.scale) / 2;
+	for (let i = nodeInterval; i < unitHeight; i += nodeInterval) {
+		const x = cx + amp * Math.sin((2 * Math.PI * i) / (unit.wavelength * unit.scale));
+		const y = unit.y - i;
+		const isGold = Math.round(i / nodeInterval) % 2 === 0;
+		const c = isGold ? COLORS.gold : COLORS.blue;
+		const r = 2.5 * unit.scale;
+
+		ctx.beginPath();
+		ctx.arc(x, y, r, 0, Math.PI * 2);
+		ctx.fillStyle = `rgba(${c.r}, ${c.g}, ${c.b}, ${unit.alpha * 1.2})`;
+		ctx.fill();
+	}
+}
+
+function HelixCanvas({ side }: { side: "left" | "right" }) {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 	const animRef = useRef<number>(0);
+	const unitsRef = useRef<HelixUnit[]>([]);
 
 	useEffect(() => {
 		const canvas = canvasRef.current;
@@ -32,8 +108,6 @@ function HelixCanvas({ side }: HelixConfig) {
 
 		let width = 0;
 		let height = 0;
-		let scrollY = 0;
-		let time = 0;
 
 		const resize = () => {
 			const dpr = window.devicePixelRatio || 1;
@@ -45,101 +119,42 @@ function HelixCanvas({ side }: HelixConfig) {
 			ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 		};
 
-		const onScroll = () => {
-			scrollY = window.scrollY;
-		};
-
 		resize();
 		window.addEventListener("resize", resize);
-		window.addEventListener("scroll", onScroll, { passive: true });
 
-		const WAVELENGTH = 200;
-		const NODE_SIZE = 4;
+		// Spawn initial units spread across the viewport
+		const UNIT_COUNT = 25;
+		const units: HelixUnit[] = [];
+		for (let i = 0; i < UNIT_COUNT; i++) {
+			const u = spawnUnit(width || 100, height || 800);
+			u.y = Math.random() * (height + 200); // spread across viewport initially
+			units.push(u);
+		}
+		unitsRef.current = units;
+
 		const FPS = 30;
 		const FRAME_MS = 1000 / FPS;
 		let lastFrame = 0;
 
 		const draw = (timestamp: number) => {
 			animRef.current = requestAnimationFrame(draw);
-
 			if (timestamp - lastFrame < FRAME_MS) return;
 			lastFrame = timestamp;
 
-			if (!prefersReduced) {
-				time += 0.003;
-			}
-
 			ctx.clearRect(0, 0, width, height);
 
-			// Parallax offset — helixes drift slower than scroll
-			const parallax = scrollY * 0.15;
+			for (const unit of units) {
+				drawUnit(ctx, unit, width);
 
-			// Draw multiple helix pairs to fill height
-			const totalHeight = height + WAVELENGTH * 2;
-			const amplitude = width * 0.35;
-			const centerX = width / 2;
-
-			// Two strands per helix: gold (phase 0) and blue (phase PI)
-			const strands = [
-				{ color: COLORS.gold, phase: 0, alpha: 0.18 },
-				{ color: COLORS.blue, phase: Math.PI, alpha: 0.14 },
-			];
-
-			for (const strand of strands) {
-				ctx.beginPath();
-				ctx.strokeStyle = `rgba(${strand.color.r}, ${strand.color.g}, ${strand.color.b}, ${strand.alpha})`;
-				ctx.lineWidth = 1.8;
-
-				for (let y = -WAVELENGTH; y <= totalHeight; y += 2) {
-					const adjustedY = y + parallax + time * 300;
-					const x =
-						centerX + amplitude * Math.sin((2 * Math.PI * adjustedY) / WAVELENGTH + strand.phase);
-					if (y === -WAVELENGTH) {
-						ctx.moveTo(x, y);
-					} else {
-						ctx.lineTo(x, y);
-					}
+				if (!prefersReduced) {
+					unit.y -= unit.speed;
 				}
-				ctx.stroke();
 
-				// Glow pass
-				ctx.beginPath();
-				ctx.strokeStyle = `rgba(${strand.color.r}, ${strand.color.g}, ${strand.color.b}, ${strand.alpha * 0.3})`;
-				ctx.lineWidth = 6;
-				for (let y = -WAVELENGTH; y <= totalHeight; y += 4) {
-					const adjustedY = y + parallax + time * 300;
-					const x =
-						centerX + amplitude * Math.sin((2 * Math.PI * adjustedY) / WAVELENGTH + strand.phase);
-					if (y === -WAVELENGTH) {
-						ctx.moveTo(x, y);
-					} else {
-						ctx.lineTo(x, y);
-					}
+				// Respawn when fully off top
+				const unitHeight = unit.wavelength * unit.twists * unit.scale;
+				if (unit.y + unitHeight < 0) {
+					Object.assign(unit, spawnUnit(width, height));
 				}
-				ctx.stroke();
-			}
-
-			// Crossover nodes — where the two strands meet
-			for (let y = -WAVELENGTH; y <= totalHeight; y += WAVELENGTH / 2) {
-				const adjustedY = y + parallax + time * 300;
-				const x = centerX + amplitude * Math.sin((2 * Math.PI * adjustedY) / WAVELENGTH);
-
-				// Pulse opacity
-				const pulse = prefersReduced ? 0.2 : 0.12 + 0.1 * Math.sin(time * 8 + y * 0.01);
-
-				const isGold = Math.round(y / (WAVELENGTH / 2)) % 2 === 0;
-				const c = isGold ? COLORS.gold : COLORS.blue;
-
-				ctx.beginPath();
-				ctx.arc(x, y, NODE_SIZE, 0, Math.PI * 2);
-				ctx.fillStyle = `rgba(${c.r}, ${c.g}, ${c.b}, ${pulse})`;
-				ctx.fill();
-
-				// Node glow
-				ctx.beginPath();
-				ctx.arc(x, y, NODE_SIZE * 2.5, 0, Math.PI * 2);
-				ctx.fillStyle = `rgba(${c.r}, ${c.g}, ${c.b}, ${pulse * 0.3})`;
-				ctx.fill();
 			}
 		};
 
@@ -148,7 +163,6 @@ function HelixCanvas({ side }: HelixConfig) {
 		return () => {
 			cancelAnimationFrame(animRef.current);
 			window.removeEventListener("resize", resize);
-			window.removeEventListener("scroll", onScroll);
 		};
 	}, []);
 
