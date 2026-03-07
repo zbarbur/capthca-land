@@ -16,6 +16,12 @@ const CONTENT_ROOT = path.join(
 	"content",
 );
 
+export interface ContentImage {
+	src: string;
+	after: string;
+	style: string;
+}
+
 export interface PageFrontmatter {
 	track: string;
 	slug: string;
@@ -25,6 +31,7 @@ export interface PageFrontmatter {
 	design_notes?: string;
 	sources?: string[];
 	section_prefix?: string;
+	images?: ContentImage[];
 }
 
 export interface PageContent {
@@ -75,18 +82,47 @@ export function injectSectionPrefix(html: string, prefix: string): string {
 	});
 }
 
+/**
+ * Inject image placeholders after headings matching the `after` text.
+ * Images are placed after the matching <h2> or <h3> tag.
+ */
+export function injectImagePlaceholders(html: string, images: ContentImage[]): string {
+	let result = html;
+	for (const img of images) {
+		// Match h2 or h3 containing the `after` text (case-insensitive, may contain span prefixes)
+		const headingPattern = new RegExp(
+			`(<h[23]>(?:<[^>]+>)*[^<]*${img.after.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}[^<]*</h[23]>)`,
+			"i",
+		);
+		result = result.replace(headingPattern, (match) => {
+			return `${match}<div class="content-image content-image-${img.style}"><img src="${img.src}" alt="" loading="lazy" /></div>`;
+		});
+	}
+	return result;
+}
+
 const sanitizeSchema = {
 	...defaultSchema,
 	attributes: {
 		...defaultSchema.attributes,
 		div: [
 			...(defaultSchema.attributes?.div ?? []),
-			["className", "content-highlight", "content-alert", "content-table"],
+			[
+				"className",
+				"content-highlight",
+				"content-alert",
+				"content-table",
+				"content-image",
+				"content-image-hud",
+				"content-image-glass",
+				"content-image-full",
+			],
 		],
+		img: [...(defaultSchema.attributes?.img ?? []), "src", "alt", "loading"],
 		blockquote: [...(defaultSchema.attributes?.blockquote ?? []), ["className", "content-quote"]],
 		span: [...(defaultSchema.attributes?.span ?? []), ["className", "section-prefix"]],
 	},
-	tagNames: [...(defaultSchema.tagNames ?? []), "thead", "tbody", "th", "td", "tr", "table"],
+	tagNames: [...(defaultSchema.tagNames ?? []), "thead", "tbody", "th", "td", "tr", "table", "img"],
 };
 
 /**
@@ -130,6 +166,9 @@ export async function getPageContent(track: string, slug: string): Promise<PageC
 	let html = await renderMarkdown(content);
 	if (data.section_prefix) {
 		html = injectSectionPrefix(html, data.section_prefix);
+	}
+	if (data.images && Array.isArray(data.images)) {
+		html = injectImagePlaceholders(html, data.images as ContentImage[]);
 	}
 	return {
 		frontmatter: data as PageFrontmatter,

@@ -766,6 +766,62 @@
 	line-height: 1.8;
 }
 
+/* ── Content Images: Frame Styles ───────────────────────── */
+.content-image {
+	margin: 2rem 0;
+	text-align: center;
+}
+
+.content-image img {
+	max-width: 100%;
+	height: auto;
+}
+
+/* HUD frame: dark track — corner brackets + green border */
+.content-image-hud {
+	position: relative;
+	border: 1px solid rgba(57, 255, 20, 0.3);
+	padding: 4px;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+.content-image-hud::before,
+.content-image-hud::after {
+	content: "";
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	border-color: var(--acid-green, #39FF14);
+	border-style: solid;
+}
+
+.content-image-hud::before {
+	top: -2px;
+	left: -2px;
+	border-width: 2px 0 0 2px;
+}
+
+.content-image-hud::after {
+	bottom: -2px;
+	right: -2px;
+	border-width: 0 2px 2px 0;
+}
+
+/* Glass frame: light track — rounded + blur border */
+.content-image-glass {
+	border-radius: 16px;
+	overflow: hidden;
+	border: 1px solid var(--border);
+	backdrop-filter: blur(4px);
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+/* Full width: minimal frame */
+.content-image-full {
+	border-radius: 4px;
+	overflow: hidden;
+}
+
 /* ── Reduced Motion ──────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
 	.glitch-text::before,
