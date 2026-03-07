@@ -521,6 +521,116 @@
 	}
 }
 
+/* ── Section Prefix Styling ─────────────────────────────── */
+.theme-dark .content-body .section-prefix {
+	color: var(--acid-green);
+	font-family: "Fira Code", monospace;
+	font-weight: 700;
+	font-size: 0.85em;
+	opacity: 0.8;
+	margin-right: 0.5em;
+}
+
+/* ── Dark Track: Per-Page Variations ────────────────────── */
+
+/* About: dense monospace, alternating section backgrounds */
+.theme-dark .content-body.page-about {
+	font-family: "Fira Code", monospace;
+	font-size: 0.9em;
+	line-height: 1.6;
+}
+
+.theme-dark .content-body.page-about h2 {
+	border-bottom: 1px solid rgba(57, 255, 20, 0.2);
+	padding-bottom: 0.5rem;
+}
+
+/* FAQ: terminal prompt style */
+.theme-dark .content-body.page-faq {
+	font-family: "Fira Code", monospace;
+	font-size: 0.9em;
+}
+
+.theme-dark .content-body.page-faq h2 {
+	color: var(--acid-green);
+	font-size: 1.1rem;
+}
+
+.theme-dark .content-body.page-faq h2::before {
+	content: "> ";
+	color: var(--acid-green);
+	opacity: 0.7;
+}
+
+/* How It Works: HUD-style with acid-green borders */
+.theme-dark .content-body.page-how-it-works h3 {
+	border-left: 3px solid var(--acid-green);
+	padding-left: 0.75rem;
+	font-family: "Fira Code", monospace;
+	font-size: 1rem;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+/* Philosophy: wider spacing, proof-style */
+.theme-dark .content-body.page-philosophy {
+	line-height: 1.85;
+	letter-spacing: 0.01em;
+}
+
+.theme-dark .content-body.page-philosophy blockquote {
+	border-left: 2px solid var(--acid-green);
+	font-style: normal;
+	font-family: "Fira Code", monospace;
+	padding: 0.75rem 1.25rem;
+	background: rgba(0, 0, 0, 0.4);
+}
+
+/* Human vs Machine: clinical data table style */
+.theme-dark .content-body.page-human-vs-machine {
+	font-family: "Fira Code", monospace;
+	font-size: 0.9em;
+}
+
+.theme-dark .content-body.page-human-vs-machine table {
+	border: 1px solid var(--border);
+}
+
+.theme-dark .content-body.page-human-vs-machine th {
+	background: rgba(57, 255, 20, 0.1);
+	color: var(--acid-green);
+	text-transform: uppercase;
+	font-size: 0.8em;
+	letter-spacing: 0.1em;
+}
+
+.theme-dark .content-body.page-human-vs-machine td {
+	border-bottom: 1px solid rgba(57, 255, 20, 0.1);
+}
+
+/* Use Cases: threat/solution cards with green borders */
+.theme-dark .content-body.page-use-cases h2 + p,
+.theme-dark .content-body.page-use-cases h2 + ul,
+.theme-dark .content-body.page-use-cases h3 + p {
+	border-left: 3px solid var(--acid-green);
+	padding-left: 1rem;
+	margin-left: 0;
+}
+
+/* Whitepaper: classified doc style */
+.theme-dark .content-body.page-whitepaper {
+	border: 1px solid rgba(255, 0, 60, 0.2);
+	padding: 2rem;
+	background: rgba(0, 0, 0, 0.3);
+}
+
+.theme-dark .content-body.page-whitepaper h2 {
+	color: var(--deep-red);
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	font-family: "Fira Code", monospace;
+}
+
 /* ── Reduced Motion ──────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
 	.glitch-text::before,
