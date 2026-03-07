@@ -36,16 +36,53 @@ function logApiRequest(request: NextRequest): void {
 	);
 }
 
+function buildCspHeader(nonce: string): string {
+	return [
+		"default-src 'self'",
+		`script-src 'self' 'nonce-${nonce}' 'unsafe-eval' https://challenges.cloudflare.com`,
+		"style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+		"font-src 'self' https://fonts.gstatic.com",
+		"img-src 'self' data: blob:",
+		"connect-src 'self' https://challenges.cloudflare.com",
+		"frame-src https://challenges.cloudflare.com",
+		"frame-ancestors 'none'",
+	].join("; ");
+}
+
+function applySecurityHeaders(response: NextResponse, nonce: string): void {
+	response.headers.set("Content-Security-Policy", buildCspHeader(nonce));
+	response.headers.set("x-nonce", nonce);
+	response.headers.set("X-Frame-Options", "DENY");
+	response.headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+	response.headers.set("X-Content-Type-Options", "nosniff");
+	response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+	response.headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
+}
+
 export function middleware(request: NextRequest) {
+	const nonce = crypto.randomUUID();
+
 	// Only gate staging — skip if no password is configured
 	if (!STAGING_AUTH_PASS) {
 		logApiRequest(request);
-		return NextResponse.next();
+		const requestHeaders = new Headers(request.headers);
+		requestHeaders.set("x-nonce", nonce);
+		const response = NextResponse.next({
+			request: { headers: requestHeaders },
+		});
+		applySecurityHeaders(response, nonce);
+		return response;
 	}
 
 	if (isBasicAuthValid(request.headers.get("authorization"))) {
 		logApiRequest(request);
-		return NextResponse.next();
+		const requestHeaders = new Headers(request.headers);
+		requestHeaders.set("x-nonce", nonce);
+		const response = NextResponse.next({
+			request: { headers: requestHeaders },
+		});
+		applySecurityHeaders(response, nonce);
+		return response;
 	}
 
 	return new NextResponse("Authentication required", {

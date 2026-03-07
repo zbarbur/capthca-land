@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -27,11 +28,17 @@ export const metadata: Metadata = {
 	},
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+	const nonce = (await headers()).get("x-nonce") ?? "";
 	return (
 		<html lang="en">
 			<head>
-				<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer />
+				<script
+					nonce={nonce}
+					src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+					async
+					defer
+				/>
 			</head>
 			<body>{children}</body>
 		</html>
