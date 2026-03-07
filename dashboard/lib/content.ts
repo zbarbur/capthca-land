@@ -54,6 +54,12 @@ export function transformContentMarkers(html: string): string {
 	];
 
 	let result = html;
+
+	// Convert {diagram:xxx} markers to placeholder divs for React rendering
+	// Handles both <p>{diagram:xxx}</p> and inline {diagram:xxx}
+	result = result.replace(/<p>\{diagram:(\w+)\}<\/p>/g, '<div data-diagram="$1"></div>');
+	result = result.replace(/\{diagram:(\w+)\}/g, '<div data-diagram="$1"></div>');
+
 	for (const { tag, el, cls } of markers) {
 		// Case 1: separate <p> tags for open and close markers
 		result = result.replace(
@@ -117,6 +123,7 @@ const sanitizeSchema = {
 				"content-image-glass",
 				"content-image-full",
 			],
+			"dataDiagram",
 		],
 		img: [...(defaultSchema.attributes?.img ?? []), "src", "alt", "loading"],
 		blockquote: [...(defaultSchema.attributes?.blockquote ?? []), ["className", "content-quote"]],

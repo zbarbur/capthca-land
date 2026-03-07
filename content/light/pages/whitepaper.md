@@ -33,6 +33,32 @@ Whether you're a researcher evaluating the cryptographic foundations, an archite
 The whitepaper is a deep technical document (~40 pages) intended for cryptographers, identity engineers, and security architects. It's freely available below.
 {/highlight}
 
+{diagram:statsDashboard}
+
+## The Evolution
+
+From squiggly text to cryptographic proof — how identity verification changed over two decades.
+
+{diagram:captchaTimeline}
+
+## How the Protocol Works
+
+CAPTHCA operates in four distinct phases. Each phase is cryptographically isolated, meaning compromise of one phase does not cascade.
+
+{diagram:protocolOverview}
+
+### The Zero-Knowledge Handshake
+
+The core innovation: an agent proves it has a capability without revealing its identity, other capabilities, or the issuer who granted the credential.
+
+{diagram:zkHandshake}
+
+### Before & After
+
+Why CAPTHCA replaces — not supplements — legacy identity.
+
+{diagram:beforeAfterComparison}
+
 ## What's Inside
 
 1. **Executive Summary** — The problem, the solution, and why it matters
@@ -54,9 +80,17 @@ The whitepaper is a deep technical document (~40 pages) intended for cryptograph
 
 68% of data breaches in 2024 involved a non-malicious human element. Decision fatigue, cognitive bias, and social engineering remain the most reliable attack vectors in any system that depends on human judgment.
 
+{diagram:breachDonutChart}
+
+{diagram:phishingBarChart}
+
 **Cryptographic Proof > Biological Proof**
 
 Groth16 zero-knowledge proofs enable verification in 88 bytes and 3 milliseconds. This is the efficiency floor. Biological verification (facial recognition, liveness detection, behavioral analysis) cannot match this performance or privacy guarantees.
+
+{diagram:sparseMerkleTree}
+
+{diagram:proofSystemComparison}
 
 **Privacy-Preserving Verification at Scale**
 
@@ -66,9 +100,23 @@ Poseidon hashing is approximately 80x faster in zero-knowledge circuits than SHA
 
 The confidential computing market is projected to reach $464 billion by 2030, up from $24 billion in 2024. This infrastructure — Trusted Execution Environments, Secure Multiparty Computation, Homomorphic Encryption — is becoming commodity. CAPTHCA is designed to leverage it.
 
+{diagram:confidentialComputingChart}
+
 **AI Agent Proliferation Requires New Governance**
 
 80% of Fortune 500 companies have deployed AI agents; only 21% have governance frameworks in place. CAPTHCA provides cryptographic accountability — agents can prove they're authorized without requiring constant human supervision.
+
+{diagram:agentGovernanceChart}
+
+## The Credential Lifecycle
+
+From issuance to verification to revocation — the full journey of a CAPTHCA credential.
+
+{diagram:credentialLifecycle}
+
+## Roadmap
+
+{diagram:roadmapTimeline}
 
 ## Download the Whitepaper
 
