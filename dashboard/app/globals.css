@@ -289,6 +289,25 @@
 	50% { box-shadow: 0 0 35px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 215, 0, 0.3); }
 }
 
+/* ── Light Track: DNA Helix Side Animations ─────────────── */
+.helix-drift {
+	animation: helix-ascend 30s linear infinite;
+}
+
+@keyframes helix-ascend {
+	0% { transform: translateY(0); }
+	100% { transform: translateY(-120px); }
+}
+
+.helix-node-pulse {
+	animation: helix-pulse 3s ease-in-out infinite;
+}
+
+@keyframes helix-pulse {
+	0%, 100% { opacity: 0.15; }
+	50% { opacity: 0.25; }
+}
+
 /* ── Reduced Motion ──────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
 	.glitch-text::before,
@@ -311,5 +330,7 @@
 	.mote-rise { animation: none; }
 	.scan-beam-move { animation: none; }
 	.slider-handle-glow { animation: none; }
+	.helix-drift { animation: none; }
+	.helix-node-pulse { animation: none; opacity: 0.18; }
 }
 

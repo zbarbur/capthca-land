@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { DNAHelix } from "../components/DNAHelix";
 import { EmailCapture } from "../components/EmailCapture";
 import { GradientOrbs } from "../components/GradientOrbs";
 import { ScrollReveal } from "../components/ScrollReveal";
@@ -22,6 +23,9 @@ export default function LightTrack() {
 		<TrackLayout theme="light">
 			{/* Ambient gradient orbs */}
 			<GradientOrbs />
+
+			{/* DNA helix side animations — flanks content like Matrix rain on dark track */}
+			<DNAHelix />
 
 			{/* ── Hero Section ── */}
 			<ScrollReveal smooth>
@@ -57,7 +61,10 @@ export default function LightTrack() {
 					background: "rgba(255, 255, 255, 0.45)",
 					backdropFilter: "blur(12px)",
 					WebkitBackdropFilter: "blur(12px)",
-					border: "1px solid rgba(255, 255, 255, 0.6)",
+					borderTop: "1px solid rgba(255, 255, 255, 0.6)",
+					borderBottom: "1px solid rgba(255, 255, 255, 0.6)",
+					borderLeft: "1px solid rgba(2, 136, 209, 0.15)",
+					borderRight: "1px solid rgba(2, 136, 209, 0.15)",
 					boxShadow: "0 8px 32px rgba(0, 0, 0, 0.04)",
 				}}
 			>
