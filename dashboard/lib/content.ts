@@ -4,6 +4,7 @@ import matter from "gray-matter";
 import rehypeRaw from "rehype-raw";
 import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
 import rehypeStringify from "rehype-stringify";
+import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
@@ -32,20 +33,32 @@ export interface PageContent {
 }
 
 /**
- * Replace content markers like {highlight}...{/highlight} with HTML elements.
+ * Post-process rendered HTML to wrap content between marker tags with styled divs.
+ * Markers survive markdown parsing as literal text. They may appear:
+ * - As separate <p> tags: <p>{highlight}</p>...<p>{/highlight}</p>
+ * - Inline in a single <p>: <p>{highlight}\ntext\n{/highlight}</p>
  */
-export function transformContentMarkers(markdown: string): string {
-	let result = markdown;
-	result = result.replace(
-		/\{highlight\}([\s\S]*?)\{\/highlight\}/g,
-		'<div class="content-highlight">$1</div>',
-	);
-	result = result.replace(/\{alert\}([\s\S]*?)\{\/alert\}/g, '<div class="content-alert">$1</div>');
-	result = result.replace(/\{table\}([\s\S]*?)\{\/table\}/g, '<div class="content-table">$1</div>');
-	result = result.replace(
-		/\{quote\}([\s\S]*?)\{\/quote\}/g,
-		'<blockquote class="content-quote">$1</blockquote>',
-	);
+export function transformContentMarkers(html: string): string {
+	const markers = [
+		{ tag: "highlight", el: "div", cls: "content-highlight" },
+		{ tag: "alert", el: "div", cls: "content-alert" },
+		{ tag: "table", el: "div", cls: "content-table" },
+		{ tag: "quote", el: "blockquote", cls: "content-quote" },
+	];
+
+	let result = html;
+	for (const { tag, el, cls } of markers) {
+		// Case 1: separate <p> tags for open and close markers
+		result = result.replace(
+			new RegExp(`<p>\\{${tag}\\}</p>([\\s\\S]*?)<p>\\{/${tag}\\}</p>`, "g"),
+			`<${el} class="${cls}">$1</${el}>`,
+		);
+		// Case 2: inline within a single <p> (content on same line as marker)
+		result = result.replace(
+			new RegExp(`<p>\\{${tag}\\}\\n?([\\s\\S]*?)\\n?\\{/${tag}\\}</p>`, "g"),
+			`<${el} class="${cls}"><p>$1</p></${el}>`,
+		);
+	}
 	return result;
 }
 
@@ -59,21 +72,24 @@ const sanitizeSchema = {
 		],
 		blockquote: [...(defaultSchema.attributes?.blockquote ?? []), ["className", "content-quote"]],
 	},
+	tagNames: [...(defaultSchema.tagNames ?? []), "thead", "tbody", "th", "td", "tr", "table"],
 };
 
 /**
  * Render markdown string to HTML using the unified pipeline.
+ * Content markers ({highlight}, {table}, etc.) are processed AFTER markdown
+ * rendering so they don't interfere with table/bold/etc. parsing.
  */
 export async function renderMarkdown(content: string): Promise<string> {
-	const transformed = transformContentMarkers(content);
 	const result = await unified()
 		.use(remarkParse)
+		.use(remarkGfm)
 		.use(remarkRehype, { allowDangerousHtml: true })
 		.use(rehypeRaw)
 		.use(rehypeSanitize, sanitizeSchema as Parameters<typeof rehypeSanitize>[0])
 		.use(rehypeStringify)
-		.process(transformed);
-	return String(result);
+		.process(content);
+	return transformContentMarkers(String(result));
 }
 
 /**

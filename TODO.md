@@ -10,13 +10,13 @@
 - **Complexity:** M
 - **Depends on:** None
 - **DoD:**
-  - [ ] Content loader utility at `dashboard/lib/content.ts` reads `.md` files with YAML frontmatter
-  - [ ] Frontmatter fields parsed: `track`, `slug`, `title`, `badge`, `layout_hint`, `design_notes`, `sources`
-  - [ ] Markdown body rendered to React elements with support for content markers: `{highlight}`, `{table}`, `{alert}`, `{quote}`
-  - [ ] Content markers map to styled React components matching track design language
-  - [ ] Tests verify frontmatter parsing, markdown rendering, and content marker mapping
-  - [ ] Tests pass (`npm test`)
-  - [ ] Lint clean (`npm run lint`)
+  - [x] Content loader utility at `dashboard/lib/content.ts` reads `.md` files with YAML frontmatter
+  - [x] Frontmatter fields parsed: `track`, `slug`, `title`, `badge`, `layout_hint`, `design_notes`, `sources`
+  - [x] Markdown body rendered to React elements with support for content markers: `{highlight}`, `{table}`, `{alert}`, `{quote}`
+  - [x] Content markers map to styled React components matching track design language
+  - [x] Tests verify frontmatter parsing, markdown rendering, and content marker mapping
+  - [x] Tests pass (`npm test`)
+  - [x] Lint clean (`npm run lint`)
 - **Technical Specs:**
   - New file: `dashboard/lib/content.ts` — reads markdown, parses YAML frontmatter (use `gray-matter` or lightweight parser)
   - New file: `dashboard/components/ContentRenderer.tsx` — renders parsed markdown to React with content marker support
@@ -38,14 +38,14 @@
 - **Complexity:** M
 - **Depends on:** T4.1
 - **DoD:**
-  - [ ] Routes exist: `/dark/{slug}` and `/light/{slug}` for all 7 slugs (how-it-works, about, faq, philosophy, whitepaper, use-cases, human-vs-machine)
-  - [ ] Each page renders content from its corresponding `content/{track}/pages/{slug}.md` file
-  - [ ] Pages use correct layout per `layout_hint` frontmatter (standard, split, centered)
-  - [ ] Navigation between inner pages and back to track landing page works
-  - [ ] Pages have correct SEO metadata (title, description) from frontmatter
-  - [ ] All 14 pages load without errors
-  - [ ] Tests pass (`npm test`)
-  - [ ] Lint clean (`npm run lint`)
+  - [x] Routes exist: `/dark/{slug}` and `/light/{slug}` for all 7 slugs (how-it-works, about, faq, philosophy, whitepaper, use-cases, human-vs-machine)
+  - [x] Each page renders content from its corresponding `content/{track}/pages/{slug}.md` file
+  - [x] Pages use correct layout per `layout_hint` frontmatter (standard, split, centered)
+  - [x] Navigation between inner pages and back to track landing page works
+  - [x] Pages have correct SEO metadata (title, description) from frontmatter
+  - [x] All 14 pages load without errors
+  - [x] Tests pass (`npm test`)
+  - [x] Lint clean (`npm run lint`)
 - **Technical Specs:**
   - Dynamic route: `dashboard/app/[track]/[slug]/page.tsx` or individual route files per page
   - Use `generateStaticParams` to pre-render all 14 pages at build time
@@ -67,17 +67,17 @@
 - **Complexity:** L
 - **Depends on:** T4.2
 - **DoD:**
-  - [ ] Dark track pages: HUD corner brackets on images, acid-green borders, monospace callouts, terminal-style FAQ blocks
-  - [ ] Light track pages: glassmorphism cards, rounded corners (16px), gold accent borders, pull quotes with warm styling
-  - [ ] Header banner images generated and placed per `content/shared/image-placement.md` specs
-  - [ ] Header images: wide banners (2048x512) for how-it-works, about, philosophy, human-vs-machine per track
-  - [ ] Whitepaper pages have cover images (1024x1024)
-  - [ ] FAQ and use-cases pages use track design language without header images (per spec)
-  - [ ] Images use `next/image` with lazy loading, responsive sizing
-  - [ ] `sources` from frontmatter rendered as attribution/references section
-  - [ ] Mobile responsive — header banners reduce to 30vh or hidden on small screens
-  - [ ] Tests pass (`npm test`)
-  - [ ] Lint clean (`npm run lint`)
+  - [x] Dark track pages: HUD corner brackets on images, acid-green borders, monospace callouts, terminal-style FAQ blocks
+  - [x] Light track pages: glassmorphism cards, rounded corners (16px), gold accent borders, pull quotes with warm styling
+  - [x] Header banner images generated and placed per `content/shared/image-placement.md` specs
+  - [x] Header images: wide banners (2048x512) for how-it-works, about, philosophy, human-vs-machine per track
+  - [x] Whitepaper pages have cover images (1024x1024)
+  - [x] FAQ and use-cases pages use track design language without header images (per spec)
+  - [x] Images use `next/image` with lazy loading, responsive sizing
+  - [x] `sources` from frontmatter rendered as attribution/references section
+  - [x] Mobile responsive — header banners reduce to 30vh or hidden on small screens
+  - [x] Tests pass (`npm test`)
+  - [x] Lint clean (`npm run lint`)
 - **Technical Specs:**
   - Read `content/shared/image-placement.md` for exact image specs and placement rules
   - Generate header images using Nano Banana per image-placement.md descriptions
@@ -102,12 +102,12 @@
 - **Complexity:** S
 - **Depends on:** None
 - **DoD:**
-  - [ ] Slider position changes animate smoothly (not instant jumps)
-  - [ ] Transition includes visual effects (e.g., gradient blend, particle burst, or ripple at the boundary)
-  - [ ] Animation respects `prefers-reduced-motion` (falls back to instant transition)
-  - [ ] No performance regression — animation runs at 60fps on mid-range devices
-  - [ ] Tests pass (`npm test`)
-  - [ ] Lint clean (`npm run lint`)
+  - [x] Slider position changes animate smoothly (not instant jumps)
+  - [x] Transition includes visual effects (e.g., gradient blend, particle burst, or ripple at the boundary)
+  - [x] Animation respects `prefers-reduced-motion` (falls back to instant transition)
+  - [x] No performance regression — animation runs at 60fps on mid-range devices
+  - [x] Tests pass (`npm test`)
+  - [x] Lint clean (`npm run lint`)
 - **Technical Specs:**
   - Modify `dashboard/app/components/DualitySlider.tsx`
   - Add CSS transitions or requestAnimationFrame-based interpolation for slider position
@@ -129,15 +129,15 @@
 - **Complexity:** M
 - **Depends on:** T4.2
 - **DoD:**
-  - [ ] OG images exist: `og-dark.png`, `og-light.png` (track-specific), `og-image.png` (default)
-  - [ ] Dark track pages use `og-dark.png` as social card
-  - [ ] Light track pages use `og-light.png` as social card
-  - [ ] Home page uses `og-image.png` (split dark/light composition)
-  - [ ] Inner pages include page title in OG metadata
-  - [ ] Twitter card meta tags present (`twitter:card`, `twitter:image`)
-  - [ ] Tests verify OG tags on all route types
-  - [ ] Tests pass (`npm test`)
-  - [ ] Lint clean (`npm run lint`)
+  - [x] OG images exist: `og-dark.png`, `og-light.png` (track-specific), `og-image.png` (default)
+  - [x] Dark track pages use `og-dark.png` as social card
+  - [x] Light track pages use `og-light.png` as social card
+  - [x] Home page uses `og-image.png` (split dark/light composition)
+  - [x] Inner pages include page title in OG metadata
+  - [x] Twitter card meta tags present (`twitter:card`, `twitter:image`)
+  - [x] Tests verify OG tags on all route types
+  - [x] Tests pass (`npm test`)
+  - [x] Lint clean (`npm run lint`)
 - **Technical Specs:**
   - Generate OG images per `content/shared/image-placement.md` specs (1200x630)
   - Update metadata exports in: `dashboard/app/layout.tsx`, `dashboard/app/[track]/[slug]/page.tsx`
@@ -159,13 +159,13 @@
 - **Complexity:** S
 - **Depends on:** None
 - **DoD:**
-  - [ ] `bin/subscribers.sh list` — lists subscribers with track, email, signup date
-  - [ ] `bin/subscribers.sh export` — exports to CSV (email, track, created_at, metadata)
-  - [ ] `bin/subscribers.sh count` — shows count per track
-  - [ ] `bin/subscribers.sh delete <email>` — removes a subscriber (with confirmation prompt)
-  - [ ] Scripts respect `CAPTHCA_LAND_ENV` for collection prefix (stg_/prd_/local_)
-  - [ ] Tests pass (`npm test`)
-  - [ ] Lint clean (`npm run lint`)
+  - [x] `bin/subscribers.sh list` — lists subscribers with track, email, signup date
+  - [x] `bin/subscribers.sh export` — exports to CSV (email, track, created_at, metadata)
+  - [x] `bin/subscribers.sh count` — shows count per track
+  - [x] `bin/subscribers.sh delete <email>` — removes a subscriber (with confirmation prompt)
+  - [x] Scripts respect `CAPTHCA_LAND_ENV` for collection prefix (stg_/prd_/local_)
+  - [x] Tests pass (`npm test`)
+  - [x] Lint clean (`npm run lint`)
 - **Technical Specs:**
   - New file: `bin/subscribers.sh` — shell wrapper that calls a Node.js script
   - New file: `scripts/subscribers.ts` — Firestore operations using admin SDK
@@ -187,14 +187,14 @@
 - **Complexity:** S
 - **Depends on:** None
 - **DoD:**
-  - [ ] Subscribe endpoint captures: timezone, locale, screen dimensions, device type
-  - [ ] Client-side form sends enrichment fields alongside email and track
-  - [ ] Geo data derived server-side from IP (country, region) using a lightweight lookup
-  - [ ] New fields stored in Firestore subscriber document
-  - [ ] No external API calls for geo (use header-based or lightweight DB approach)
-  - [ ] Tests verify enrichment fields are stored
-  - [ ] Tests pass (`npm test`)
-  - [ ] Lint clean (`npm run lint`)
+  - [x] Subscribe endpoint captures: timezone, locale, screen dimensions, device type
+  - [x] Client-side form sends enrichment fields alongside email and track
+  - [x] Geo data derived server-side from IP (country, region) using a lightweight lookup
+  - [x] New fields stored in Firestore subscriber document
+  - [x] No external API calls for geo (use header-based or lightweight DB approach)
+  - [x] Tests verify enrichment fields are stored
+  - [x] Tests pass (`npm test`)
+  - [x] Lint clean (`npm run lint`)
 - **Technical Specs:**
   - Modify subscribe form components to collect: `Intl.DateTimeFormat().resolvedOptions().timeZone`, `navigator.language`, `screen.width`/`screen.height`
   - Modify `dashboard/app/api/subscribe/route.ts` to accept and store new fields
@@ -216,14 +216,14 @@
 - **Complexity:** S
 - **Depends on:** None
 - **DoD:**
-  - [ ] All `<img>` tags in track pages replaced with `next/image` `<Image>` component
-  - [ ] Hero images use `priority` prop (above-fold)
-  - [ ] Section images use lazy loading (default behavior)
-  - [ ] Images have explicit `width`/`height` or `fill` with `sizes` prop
-  - [ ] Alt text present on every image (per image-placement.md descriptions)
-  - [ ] No layout shift (CLS) from image loading
-  - [ ] Tests pass (`npm test`)
-  - [ ] Lint clean (`npm run lint`)
+  - [x] All `<img>` tags in track pages replaced with `next/image` `<Image>` component
+  - [x] Hero images use `priority` prop (above-fold)
+  - [x] Section images use lazy loading (default behavior)
+  - [x] Images have explicit `width`/`height` or `fill` with `sizes` prop
+  - [x] Alt text present on every image (per image-placement.md descriptions)
+  - [x] No layout shift (CLS) from image loading
+  - [x] Tests pass (`npm test`)
+  - [x] Lint clean (`npm run lint`)
 - **Technical Specs:**
   - Audit `dashboard/app/dark/page.tsx` and `dashboard/app/light/page.tsx` for `<img>` tags
   - Replace with `import Image from "next/image"` and `<Image>` component
@@ -246,13 +246,13 @@
 - **Complexity:** S
 - **Depends on:** None
 - **DoD:**
-  - [ ] CSP `script-src` no longer includes `'unsafe-inline'`
-  - [ ] All inline scripts converted to external files or use nonce-based CSP
-  - [ ] Turnstile widget still functions correctly
-  - [ ] No console CSP violations on any page (home, light, dark)
-  - [ ] Existing CSP security test updated to verify no `'unsafe-inline'`
-  - [ ] Tests pass (`npm test`)
-  - [ ] Lint clean (`npm run lint`)
+  - [x] CSP `script-src` no longer includes `'unsafe-inline'`
+  - [x] All inline scripts converted to external files or use nonce-based CSP
+  - [x] Turnstile widget still functions correctly
+  - [x] No console CSP violations on any page (home, light, dark)
+  - [x] Existing CSP security test updated to verify no `'unsafe-inline'`
+  - [x] Tests pass (`npm test`)
+  - [x] Lint clean (`npm run lint`)
 - **Technical Specs:**
   - Modify CSP in `dashboard/middleware.ts` or `dashboard/next.config.mjs`
   - Option A: nonce-based CSP — generate per-request nonce, pass to `<script nonce={}>` tags
@@ -275,12 +275,12 @@
 - **Complexity:** S
 - **Depends on:** None
 - **DoD:**
-  - [ ] Test discovers all `dashboard/app/api/**/route.ts` files dynamically
-  - [ ] Test verifies each route has at least one corresponding test file in `test/`
-  - [ ] Test fails if a new API route is added without tests
-  - [ ] Current routes all have coverage (health, subscribe, analytics)
-  - [ ] Tests pass (`npm test`)
-  - [ ] Lint clean (`npm run lint`)
+  - [x] Test discovers all `dashboard/app/api/**/route.ts` files dynamically
+  - [x] Test verifies each route has at least one corresponding test file in `test/`
+  - [x] Test fails if a new API route is added without tests
+  - [x] Current routes all have coverage (health, subscribe, analytics)
+  - [x] Tests pass (`npm test`)
+  - [x] Lint clean (`npm run lint`)
 - **Technical Specs:**
   - New file: `test/coverage/api-route-coverage.test.ts`
   - Use `fs.readdirSync` or glob to find all `**/api/**/route.ts` files under `dashboard/app/`

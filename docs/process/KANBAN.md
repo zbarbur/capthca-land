@@ -6,22 +6,18 @@
 
 ---
 
-## Doing (Sprint 4)
+## Doing
 
-- [content] T4.1 — Implement content system (markdown rendering pipeline) (M)
-- [ui] T4.2 — Scaffold all inner page routes (7 pages x 2 tracks) (M)
-- [ui] T4.3 — Per-page design polish (track-specific styling + header images) (L)
-- [ui] T4.4 — Animated transitions between slider positions (S)
-- [ui] T4.5 — Social sharing cards with track-specific images (M)
-- [tooling] T4.6 — Subscriber management scripts (S)
-- [analytics] T4.7 — Subscriber profiling enrichment (S)
-- [ui] T4.8 — Optimize images with next/image (S)
-- [security] T4.9 — Tighten CSP — remove 'unsafe-inline' for scripts (S)
-- [testing] T4.10 — API route coverage check (S)
+(empty — between sprints)
 
 ---
 
 ## Backlog
+
+### High Priority
+- [ui] Dark inner page atmosphere — MatrixRain bg, CRT overlay, HUD brackets on images, section prefix numbering, alternating section backgrounds, acid-green borders (L)
+- [ui] Light inner page atmosphere — GradientOrbs bg, glassmorphism cards, lattice texture behind headings, gold accent styling, warm typography (L)
+- [ui] Content image integration — place existing HUD/flow images (hud-registration.png, flow-disclosure.png, etc.) at positions specified in design_notes frontmatter (M)
 
 ### Post-MVP
 - [email] Welcome email on signup — track-specific content (M)
@@ -43,6 +39,24 @@
 
 - [infra] Turnstile console warnings on track pages (non-blocking, cosmetic)
 - [infra] `NEXT_PUBLIC_*` vars require Docker build args — document pattern for future public env vars
+- [infra] Turbopack (`--turbo`) fails on paths with spaces — removed from dev script, evaluate when path changes or Turbopack fixes upstream
+
+---
+
+## Done (Sprint 4)
+
+- [content] T4.1 — Implement content system (markdown rendering pipeline) (M)
+- [ui] T4.2 — Scaffold all inner page routes (7 pages x 2 tracks) (M)
+- [ui] T4.3 — Per-page design polish (track-specific styling + header images) (L)
+- [ui] T4.4 — Animated transitions between slider positions (S)
+- [ui] T4.5 — Social sharing cards with track-specific images (M)
+- [tooling] T4.6 — Subscriber management scripts (S)
+- [analytics] T4.7 — Subscriber profiling enrichment (S)
+- [ui] T4.8 — Optimize images with next/image (S)
+- [security] T4.9 — Tighten CSP — nonce-based script-src, remove 'unsafe-inline' (S)
+- [testing] T4.10 — API route coverage check (S)
+- [fix] Content pipeline: added remark-gfm for GFM tables, fixed marker post-processing
+- [fix] Nav: integrated page links into TrackLayout, reordered (About first), added separators
 
 ---
 

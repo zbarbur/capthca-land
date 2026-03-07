@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ContentRenderer } from "../../../components/ContentRenderer";
-import { InnerPageNav } from "../../../components/InnerPageNav";
 import { getPageContent, getPageSlugs } from "../../../lib/content";
 import { TrackLayout } from "../../components/TrackLayout";
 
@@ -63,7 +62,6 @@ export default async function InnerPage({ params }: { params: { track: string; s
 		const page = await getPageContent(params.track, params.slug);
 		return (
 			<TrackLayout theme={params.track}>
-				<InnerPageNav track={params.track} />
 				<ContentRenderer html={page.html} frontmatter={page.frontmatter} />
 			</TrackLayout>
 		);
