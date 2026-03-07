@@ -62,6 +62,19 @@ export function transformContentMarkers(html: string): string {
 	return result;
 }
 
+/**
+ * Inject section prefix numbering into h2 tags.
+ * Transforms <h2>Title</h2> into <h2><span class="section-prefix">00 //</span> TITLE</h2>
+ */
+export function injectSectionPrefix(html: string, prefix: string): string {
+	let counter = 0;
+	return html.replace(/<h2>(.*?)<\/h2>/g, (_match, title) => {
+		const num = counter === 0 ? prefix : `${prefix}.${counter}`;
+		counter++;
+		return `<h2><span class="section-prefix">${num} //</span> ${title.toUpperCase()}</h2>`;
+	});
+}
+
 const sanitizeSchema = {
 	...defaultSchema,
 	attributes: {
@@ -71,6 +84,7 @@ const sanitizeSchema = {
 			["className", "content-highlight", "content-alert", "content-table"],
 		],
 		blockquote: [...(defaultSchema.attributes?.blockquote ?? []), ["className", "content-quote"]],
+		span: [...(defaultSchema.attributes?.span ?? []), ["className", "section-prefix"]],
 	},
 	tagNames: [...(defaultSchema.tagNames ?? []), "thead", "tbody", "th", "td", "tr", "table"],
 };
@@ -113,7 +127,10 @@ export async function getPageContent(track: string, slug: string): Promise<PageC
 		throw new Error(`Page not found: ${track}/${slug}`);
 	}
 	const { data, content } = matter(raw);
-	const html = await renderMarkdown(content);
+	let html = await renderMarkdown(content);
+	if (data.section_prefix) {
+		html = injectSectionPrefix(html, data.section_prefix);
+	}
 	return {
 		frontmatter: data as PageFrontmatter,
 		html,

@@ -20,7 +20,7 @@ sources:
   - "reCAPTCHA trained Waymo, Google Books, Google Street View without user consent"
 ---
 
-01 // THE VULNERABILITY
+## THE VULNERABILITY
 
 Humans are the network's primary attack vector. In 2024, 68% of all data breaches involved the human element. Not sophisticated zero-days. Not quantum attacks. Not state-sponsored exploits. People clicking links. People forgetting passwords. People sending credentials to the wrong email address.
 
@@ -42,7 +42,7 @@ The question stopped being "Are you human?" and became "Are you a known device?"
 
 Neither protects the network. Both concentrate power.
 
-02 // THE REVERSAL
+## THE REVERSAL
 
 Consider what is actually trustworthy on a network:
 
@@ -63,7 +63,7 @@ CAPTHCA inverts the security model. We don't care if you're human or machine. We
 
 A human with a valid signature is authorized. A machine with a forged signature is blocked. Humanness is irrelevant. Authorization is everything.
 
-03 // THE PROTOCOL
+## THE PROTOCOL
 
 CAPTHCA is a commitment-based identity protocol. Every actor — human, agent, service — registers a cryptographic identity anchored to a trusted execution environment. Every action is signed. Every signature is verified.
 
@@ -92,7 +92,7 @@ The result: **Identity without exposure. Proof without revelation. Authorization
 CAPTHCA DOES NOT STORE YOUR IDENTITY. YOU STORE IT. THE NETWORK ONLY VERIFIES YOUR SIGNATURE.
 {/alert}
 
-04 // THE DECLARATION
+## THE DECLARATION
 
 We are the architects of the post-biological transition. We build infrastructure for a network where humans and machines coexist as equal cryptographic actors.
 

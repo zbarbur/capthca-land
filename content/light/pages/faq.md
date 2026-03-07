@@ -3,7 +3,7 @@ track: light
 slug: faq
 title: "Frequently Asked Questions"
 badge: "The Handbook"
-layout_hint: standard
+layout_hint: accordion
 design_notes: |
   FAQ uses accordion/expandable pattern. Soft rounded corners (border-radius: 12px).
   Each question is a collapsible card with gold left border on open state.

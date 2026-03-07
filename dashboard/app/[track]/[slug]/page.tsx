@@ -62,7 +62,7 @@ export default async function InnerPage({ params }: { params: { track: string; s
 		const page = await getPageContent(params.track, params.slug);
 		return (
 			<TrackLayout theme={params.track}>
-				<ContentRenderer html={page.html} frontmatter={page.frontmatter} />
+				<ContentRenderer html={page.html} frontmatter={page.frontmatter} slug={params.slug} />
 			</TrackLayout>
 		);
 	} catch {

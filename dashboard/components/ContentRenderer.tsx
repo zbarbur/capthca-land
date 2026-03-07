@@ -1,17 +1,23 @@
 import type { PageFrontmatter } from "../lib/content";
+import { AccordionContent } from "./AccordionContent";
 
 export function ContentRenderer({
 	html,
 	frontmatter,
+	slug,
 }: {
 	html: string;
 	frontmatter: PageFrontmatter;
+	slug: string;
 }) {
 	const layoutClass =
 		{
 			standard: "max-w-[850px]",
 			split: "max-w-[1100px]",
 			centered: "max-w-[650px]",
+			terminal: "max-w-[850px]",
+			accordion: "max-w-[850px]",
+			essay: "max-w-[650px]",
 		}[frontmatter.layout_hint] ?? "max-w-[850px]";
 
 	return (
@@ -27,11 +33,18 @@ export function ContentRenderer({
 			</header>
 
 			{/* Rendered markdown content — HTML pre-sanitized by rehype-sanitize at build time */}
-			<div
-				className="content-body prose"
-				// biome-ignore lint/security/noDangerouslySetInnerHtml: pre-sanitized by rehype-sanitize at build time; content is source-controlled
-				dangerouslySetInnerHTML={{ __html: html }}
-			/>
+			{frontmatter.layout_hint === "accordion" ? (
+				<AccordionContent
+					html={html}
+					className={`content-body prose page-${slug} layout-accordion`}
+				/>
+			) : (
+				<div
+					className={`content-body prose page-${slug} layout-${frontmatter.layout_hint}`}
+					// biome-ignore lint/security/noDangerouslySetInnerHtml: pre-sanitized by rehype-sanitize at build time; content is source-controlled
+					dangerouslySetInnerHTML={{ __html: html }}
+				/>
+			)}
 
 			{/* Sources */}
 			{frontmatter.sources && frontmatter.sources.length > 0 && (
