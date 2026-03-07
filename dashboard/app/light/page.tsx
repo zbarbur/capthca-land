@@ -21,6 +21,18 @@ export const metadata: Metadata = {
 export default function LightTrack() {
 	return (
 		<TrackLayout theme="light">
+			{/* Fixed warm gradient background — covers entire viewport while scrolling */}
+			<div
+				className="pointer-events-none fixed inset-0 z-0"
+				style={{
+					background: `
+						radial-gradient(ellipse at 20% 20%, rgba(224, 247, 250, 0.4) 0%, transparent 60%),
+						radial-gradient(ellipse at 80% 80%, rgba(255, 249, 196, 0.3) 0%, transparent 60%),
+						radial-gradient(ellipse at 50% 50%, rgba(255, 253, 247, 1) 0%, rgba(255, 253, 247, 1) 100%)
+					`,
+				}}
+			/>
+
 			{/* Ambient gradient orbs */}
 			<GradientOrbs />
 
