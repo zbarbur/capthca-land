@@ -9,9 +9,9 @@
 
 | Field | Value |
 |-------|-------|
-| **Status** | Active — Sprint 4 Closed, Sprint 5 Planning |
-| **Last Sync** | 2026-03-07 |
-| **Current Sprint** | Sprint 4 Closed |
+| **Status** | Active — Sprint 5 Closed, Sprint 6 Planning |
+| **Last Sync** | 2026-03-08 |
+| **Current Sprint** | Sprint 5 Closed |
 | **Objective** | Dual-narrative landing page at capthca.ai with email capture |
 
 ---
@@ -77,7 +77,7 @@
 
 | Metric | Value |
 |--------|-------|
-| **Total Tests** | 94 |
+| **Total Tests** | 113 |
 | **Test Runner** | Node.js built-in (`node --test`) |
 | **Test Command** | `npm test` |
 | **CI Command** | `npm run ci` (lint + typecheck + test) |
@@ -94,6 +94,7 @@
 | 2 | Security + Design | Completed | 30 | SecretProvider, HSTS, Firestore prefix, dark/light track designs, subscriber enrichment |
 | 3 | Visual Polish + Observability | Completed | 63 | Art assets, DualitySlider rebuild, structured logging, health endpoint, metrics, analytics, content alignment, production deploy |
 | 4 | Content Depth + Hardening | Completed | 94 | Content pipeline (remark/rehype), 14 inner pages, nonce-based CSP, subscriber scripts, enrichment, social cards, API coverage check |
+| 5 | Inner Page Atmosphere | Completed | 113 | Per-page dark/light atmosphere (MatrixRain, GradientOrbs, DNAHelix), content images via frontmatter, 13 whitepaper diagram components (Recharts), academic paper scaffold, npm audit in CI, staging deploy |
 
 ---
 
@@ -128,10 +129,11 @@
 - SVG favicon + full SEO metadata + Open Graph tags
 
 ### Not Yet Done
-- Inner page track atmosphere (backgrounds, animations for content pages)
+- Whitepaper diagram visual polish (spacing, mobile, animations)
 - Cloudflare DNS migration (DDoS, CDN)
 - Welcome emails for subscribers
-- Staging/production deploy of Sprint 4 changes
+- Local Cloud Build testing script
+- Next.js upgrade (npm audit vulnerabilities)
 
 ### Known Limitations
 - Rate limiter is in-memory (resets on container restart, not shared across instances)

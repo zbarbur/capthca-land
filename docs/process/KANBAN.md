@@ -6,15 +6,9 @@
 
 ---
 
-## Doing (Sprint 5)
+## Doing
 
-- [ui] T5.1 — Dark inner page atmosphere with per-page variations (L)
-- [ui] T5.2 — Light inner page atmosphere with per-page variations (L)
-- [ui] T5.3 — Content image integration via frontmatter (M)
-- [docs] T5.4 — Content guide for cowork (S)
-- [ui] T5.5 — Academic paper scaffold in content system (S)
-- [infra] T5.6 — npm audit in CI pipeline (S)
-- [infra] T5.7 — Deploy Sprint 4+5 to staging (S)
+(empty — between sprints)
 
 ---
 
@@ -28,11 +22,18 @@
 - [security] Move rate limiter to Redis or Cloud Armor for multi-instance consistency (M)
 - [infra] Evaluate Turbopack / Vite for build tooling (M)
 
+### Content & Diagrams
+- [ui] Whitepaper diagram polish — refine spacing, mobile layouts, animations (M)
+- [content] Content system regression tests — full render pipeline (markdown → HTML → diagrams) (S)
+
 ### Battle-Tested Patterns (from OpenClaw Lens review)
 - [observability] OpenTelemetry foundation — Edge-Runtime-safe Next.js setup (L)
 - [infra] Blue-green deploys for staging — --no-traffic + traffic shift (S)
-- [infra] npm audit in CI pipeline — non-blocking dependency vulnerability check (S)
 - [infra] Migrate DNS from GoDaddy to Cloudflare — DDoS, CDN, Cloudflare Access (S)
+
+### Infrastructure
+- [infra] Local Cloud Build testing script — simulate build steps locally (S)
+- [infra] Next.js upgrade — address 9 npm audit vulnerabilities (M)
 
 ---
 
@@ -41,6 +42,21 @@
 - [infra] Turnstile console warnings on track pages (non-blocking, cosmetic)
 - [infra] `NEXT_PUBLIC_*` vars require Docker build args — document pattern for future public env vars
 - [infra] Turbopack (`--turbo`) fails on paths with spaces — removed from dev script, evaluate when path changes or Turbopack fixes upstream
+
+---
+
+## Done (Sprint 5)
+
+- [ui] T5.1 — Dark inner page atmosphere with per-page variations (L)
+- [ui] T5.2 — Light inner page atmosphere with per-page variations (L)
+- [ui] T5.3 — Content image integration via frontmatter (M)
+- [docs] T5.4 — Content guide for cowork (S)
+- [ui] T5.5 — Academic paper scaffold in content system (S)
+- [infra] T5.6 — npm audit in CI pipeline (S)
+- [infra] T5.7 — Deploy Sprint 4+5 to staging (S)
+- [ui] Whitepaper interactive diagrams — 13 React components with Recharts
+- [fix] Visual polish — atmosphere visibility, DNA helix width, per-page orb variants
+- [fix] Cloud Build — include content/*.md, copy content/ into Docker builder
 
 ---
 
