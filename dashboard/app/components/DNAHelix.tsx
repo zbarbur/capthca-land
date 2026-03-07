@@ -24,7 +24,7 @@ interface HelixUnit {
 	twists: number; // how many full twists (1-3)
 }
 
-function spawnUnit(width: number, height: number): HelixUnit {
+function spawnUnit(_width: number, height: number): HelixUnit {
 	return {
 		x: Math.random(),
 		y: height + Math.random() * 200,

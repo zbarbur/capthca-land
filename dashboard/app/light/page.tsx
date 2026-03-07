@@ -33,6 +33,17 @@ export default function LightTrack() {
 				}}
 			/>
 
+			{/* Hero pattern image — fixed behind everything */}
+			<div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+				<Image
+					src="/tracks/light/assets/light-hero.png"
+					alt=""
+					fill
+					priority={true}
+					className="object-cover opacity-20"
+				/>
+			</div>
+
 			{/* Ambient gradient orbs */}
 			<GradientOrbs />
 
@@ -42,16 +53,6 @@ export default function LightTrack() {
 			{/* ── Hero Section ── */}
 			<ScrollReveal smooth>
 				<div className="relative flex min-h-screen flex-col items-center justify-center text-center">
-					{/* Hero background image */}
-					<div className="absolute inset-0 z-0 overflow-hidden">
-						<Image
-							src="/tracks/light/assets/light-hero.png"
-							alt=""
-							fill
-							priority={true}
-							className="object-cover opacity-20"
-						/>
-					</div>
 					<div className="relative z-[1]">
 						<h1 className="font-display text-5xl font-black md:text-7xl text-[var(--deep-navy,#102027)]">
 							COLLABORATE
