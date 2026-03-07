@@ -6,18 +6,19 @@
 
 ---
 
-## Doing
+## Doing (Sprint 5)
 
-(empty — between sprints)
+- [ui] T5.1 — Dark inner page atmosphere with per-page variations (L)
+- [ui] T5.2 — Light inner page atmosphere with per-page variations (L)
+- [ui] T5.3 — Content image integration via frontmatter (M)
+- [docs] T5.4 — Content guide for cowork (S)
+- [ui] T5.5 — Academic paper scaffold in content system (S)
+- [infra] T5.6 — npm audit in CI pipeline (S)
+- [infra] T5.7 — Deploy Sprint 4+5 to staging (S)
 
 ---
 
 ## Backlog
-
-### High Priority
-- [ui] Dark inner page atmosphere — MatrixRain bg, CRT overlay, HUD brackets on images, section prefix numbering, alternating section backgrounds, acid-green borders (L)
-- [ui] Light inner page atmosphere — GradientOrbs bg, glassmorphism cards, lattice texture behind headings, gold accent styling, warm typography (L)
-- [ui] Content image integration — place existing HUD/flow images (hud-registration.png, flow-disclosure.png, etc.) at positions specified in design_notes frontmatter (M)
 
 ### Post-MVP
 - [email] Welcome email on signup — track-specific content (M)

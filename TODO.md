@@ -1,294 +1,177 @@
-# Sprint 4: Content depth, subscriber tooling, and hardening
+# Sprint 5: Inner page atmosphere — track personality on every page
 
-> Theme: Build out the full inner-page experience from content/, add subscriber ops tooling, and tighten security.
-
----
-
-### T4.1 — Implement content system (markdown rendering pipeline)
-- **Goal:** Build a reusable pipeline that reads markdown+frontmatter from `content/` and renders it into React components, so pages are driven by content files rather than hardcoded JSX
-- **Specialist:** Frontend (React / Content)
-- **Complexity:** M
-- **Depends on:** None
-- **DoD:**
-  - [x] Content loader utility at `dashboard/lib/content.ts` reads `.md` files with YAML frontmatter
-  - [x] Frontmatter fields parsed: `track`, `slug`, `title`, `badge`, `layout_hint`, `design_notes`, `sources`
-  - [x] Markdown body rendered to React elements with support for content markers: `{highlight}`, `{table}`, `{alert}`, `{quote}`
-  - [x] Content markers map to styled React components matching track design language
-  - [x] Tests verify frontmatter parsing, markdown rendering, and content marker mapping
-  - [x] Tests pass (`npm test`)
-  - [x] Lint clean (`npm run lint`)
-- **Technical Specs:**
-  - New file: `dashboard/lib/content.ts` — reads markdown, parses YAML frontmatter (use `gray-matter` or lightweight parser)
-  - New file: `dashboard/components/ContentRenderer.tsx` — renders parsed markdown to React with content marker support
-  - Content markers: `{highlight}` → highlighted box, `{table}` → styled table, `{alert}` → alert box, `{quote}` → pull quote
-  - Track-aware styling: dark track markers get HUD/terminal treatment, light track get glassmorphism treatment
-  - Must work with Next.js App Router (server components where possible)
-  - Read `content/CONTENT_SYSTEM.md` for full spec
-- **Test Plan:**
-  - `test/lib/content.test.ts` — frontmatter parsing, markdown rendering, marker extraction
-  - Expected: ~8 tests
-- **Demo Data Impact:**
-  - None — content files already exist in `content/`
+> Theme: Bring track-specific visual language to all content pages with per-page variations, integrate images via frontmatter, and deploy to staging.
 
 ---
 
-### T4.2 — Scaffold all inner page routes (7 pages x 2 tracks)
-- **Goal:** Create Next.js routes for all 14 inner pages using the content system, so each page renders its corresponding markdown file
-- **Specialist:** Frontend (React / Routing)
-- **Complexity:** M
-- **Depends on:** T4.1
-- **DoD:**
-  - [x] Routes exist: `/dark/{slug}` and `/light/{slug}` for all 7 slugs (how-it-works, about, faq, philosophy, whitepaper, use-cases, human-vs-machine)
-  - [x] Each page renders content from its corresponding `content/{track}/pages/{slug}.md` file
-  - [x] Pages use correct layout per `layout_hint` frontmatter (standard, split, centered)
-  - [x] Navigation between inner pages and back to track landing page works
-  - [x] Pages have correct SEO metadata (title, description) from frontmatter
-  - [x] All 14 pages load without errors
-  - [x] Tests pass (`npm test`)
-  - [x] Lint clean (`npm run lint`)
-- **Technical Specs:**
-  - Dynamic route: `dashboard/app/[track]/[slug]/page.tsx` or individual route files per page
-  - Use `generateStaticParams` to pre-render all 14 pages at build time
-  - Shared layout: `dashboard/app/[track]/layout.tsx` — applies track theme class (`.theme-dark` / `.theme-light`)
-  - Each page calls content loader from T4.1, passes result to ContentRenderer
-  - Nav component: links to sibling pages within the same track + back to track landing
-  - SEO: use frontmatter `title` and first paragraph as description in metadata export
-- **Test Plan:**
-  - `test/pages/inner-pages.test.ts` — route existence, content loading, metadata presence
-  - Expected: ~6 tests
-- **Demo Data Impact:**
-  - None — pages are content-driven
-
----
-
-### T4.3 — Per-page design polish (track-specific styling + header images)
-- **Goal:** Apply full track design language to all inner pages — HUD frames and terminal aesthetics for dark, glassmorphism and warm gradients for light — plus header banner images
-- **Specialist:** Frontend (React / CSS / Art)
+### T5.1 — Dark inner page atmosphere with per-page variations
+- **Goal:** Apply dark track visual language to all 7 inner pages, with unique atmospheric variations per page so each feels distinct while cohesive
+- **Specialist:** Frontend (CSS / Animation)
 - **Complexity:** L
-- **Depends on:** T4.2
-- **DoD:**
-  - [x] Dark track pages: HUD corner brackets on images, acid-green borders, monospace callouts, terminal-style FAQ blocks
-  - [x] Light track pages: glassmorphism cards, rounded corners (16px), gold accent borders, pull quotes with warm styling
-  - [x] Header banner images generated and placed per `content/shared/image-placement.md` specs
-  - [x] Header images: wide banners (2048x512) for how-it-works, about, philosophy, human-vs-machine per track
-  - [x] Whitepaper pages have cover images (1024x1024)
-  - [x] FAQ and use-cases pages use track design language without header images (per spec)
-  - [x] Images use `next/image` with lazy loading, responsive sizing
-  - [x] `sources` from frontmatter rendered as attribution/references section
-  - [x] Mobile responsive — header banners reduce to 30vh or hidden on small screens
-  - [x] Tests pass (`npm test`)
-  - [x] Lint clean (`npm run lint`)
-- **Technical Specs:**
-  - Read `content/shared/image-placement.md` for exact image specs and placement rules
-  - Generate header images using Nano Banana per image-placement.md descriptions
-  - Dark track image framing: CSS pseudo-elements for HUD corner brackets
-  - Light track image framing: `border-radius: 16px`, faint glassmorphism border
-  - Layout variants based on `layout_hint`: `standard` (single column), `split` (text left, diagram right), `centered` (narrow column)
-  - Alert boxes: dark = red border ALL CAPS, light = gold border subtle
-  - Sources section: rendered at page bottom as numbered references
-  - Responsive: `srcSet` 1x/2x, mobile fallback for banners
-- **Test Plan:**
-  - Manual: visual review of all 14 pages across both tracks
-  - Manual: responsive check (mobile, tablet, desktop)
-  - CI: `npm run ci` passes
-- **Demo Data Impact:**
-  - None — visual layer only
-
----
-
-### T4.4 — Animated transitions between slider positions
-- **Goal:** Add smooth animated transitions when the duality slider moves between positions, enhancing the cinematic feel of the home page
-- **Specialist:** Frontend (React / Animation)
-- **Complexity:** S
 - **Depends on:** None
 - **DoD:**
-  - [x] Slider position changes animate smoothly (not instant jumps)
-  - [x] Transition includes visual effects (e.g., gradient blend, particle burst, or ripple at the boundary)
-  - [x] Animation respects `prefers-reduced-motion` (falls back to instant transition)
-  - [x] No performance regression — animation runs at 60fps on mid-range devices
-  - [x] Tests pass (`npm test`)
-  - [x] Lint clean (`npm run lint`)
+  - [ ] All 7 dark inner pages have MatrixRain background (shared, reduced opacity vs landing)
+  - [ ] CRT scanline overlay present on all dark pages
+  - [ ] Per-page variations: about (dense/minimal whitespace), faq (terminal prompt style), how-it-works (HUD split layout), philosophy (proof-by-contradiction layout), human-vs-machine (clinical/stats), use-cases (threat→solution cards), whitepaper (classified doc style)
+  - [ ] Section prefix numbering rendered (`XX // TITLE` format) using `section_prefix` frontmatter
+  - [ ] Alternating section backgrounds (`#0a0e27` / `#111`) on applicable pages
+  - [ ] `{alert}` boxes render with red border, ALL CAPS, monospaced
+  - [ ] `{quote}` blocks render with acid-green mono styling
+  - [ ] Animations respect `prefers-reduced-motion`
+  - [ ] Tests pass (`npm run ci`)
 - **Technical Specs:**
-  - Modify `dashboard/app/components/DualitySlider.tsx`
-  - Add CSS transitions or requestAnimationFrame-based interpolation for slider position
-  - Collision zone effect: gradient blend, glow pulse, or particle effect at the slider boundary during movement
-  - Use `will-change: transform` for GPU-accelerated transitions
-  - Respect `prefers-reduced-motion: reduce` media query
+  - Extend `[track]/[slug]/page.tsx` to conditionally render MatrixRain + CRT overlay for dark track
+  - Create per-page CSS classes keyed on slug (e.g., `.dark-page-faq`, `.dark-page-philosophy`)
+  - Read `section_prefix` from frontmatter, render headings as `{prefix} // {TITLE}`
+  - Alternating sections: use CSS `nth-of-type` or add class to ContentRenderer sections
+  - FAQ: style `h2` elements as terminal prompts (`> QUESTION`)
+  - Philosophy: wider spacing, proof-style logical flow
+  - Use-cases: card-based grid with acid-green left borders
+  - All variations defined in `globals.css` under `.theme-dark .content-body.page-{slug}`
 - **Test Plan:**
-  - Manual: visual verification of smooth transitions
-  - Manual: test with `prefers-reduced-motion` enabled
-  - CI: `npm run ci` passes
-- **Demo Data Impact:**
-  - None — animation only
+  - `test/pages/dark-atmosphere.test.ts` — verify slug-specific classes applied, section_prefix rendered
+  - Expected: ~5 tests
 
 ---
 
-### T4.5 — Social sharing cards with track-specific images
-- **Goal:** Generate and wire track-specific Open Graph images so shared links show the correct visual for each track and inner page
-- **Specialist:** Frontend (SEO / Design)
+### T5.2 — Light inner page atmosphere with per-page variations
+- **Goal:** Apply light track visual language to all 7 inner pages, with unique atmospheric variations per page
+- **Specialist:** Frontend (CSS / Animation)
+- **Complexity:** L
+- **Depends on:** None
+- **DoD:**
+  - [ ] All 7 light inner pages have GradientOrbs background (shared, subtle)
+  - [ ] Per-page variations: about (lattice-detail.png behind heading, trust-establishing), faq (accordion cards with gold borders), how-it-works (split layout with gold flow arrows), philosophy (essay layout, New Yorker feel), human-vs-machine (comparison table centerpiece), use-cases (glassmorphism cards), whitepaper (academic/institutional)
+  - [ ] Glassmorphism cards on applicable pages (use-cases, faq, how-it-works)
+  - [ ] `{highlight}` boxes render with gold left border and warm background
+  - [ ] `{quote}` blocks render with gold italic, centered, decorative
+  - [ ] Typography: serif headlines where specified, generous whitespace on philosophy
+  - [ ] Animations respect `prefers-reduced-motion`
+  - [ ] Tests pass (`npm run ci`)
+- **Technical Specs:**
+  - Extend `[track]/[slug]/page.tsx` to conditionally render GradientOrbs for light track
+  - Create per-page CSS classes keyed on slug (e.g., `.light-page-faq`, `.light-page-philosophy`)
+  - FAQ: collapsible accordion pattern with gold left border, 12px border-radius
+  - How-it-works: CSS grid for split layout (text left, diagram right)
+  - Philosophy: max-width narrower (~650px), generous line-height, pull-quote styling
+  - Use-cases: card grid with glassmorphism (`backdrop-filter: blur`)
+  - About: lattice-detail.png as faded background behind header area
+  - All variations defined in `globals.css` under `.theme-light .content-body.page-{slug}`
+- **Test Plan:**
+  - `test/pages/light-atmosphere.test.ts` — verify slug-specific classes applied
+  - Expected: ~5 tests
+
+---
+
+### T5.3 — Content image integration via frontmatter
+- **Goal:** Auto-place existing images at positions specified in `design_notes` frontmatter, so cowork can manage image placement by editing markdown
+- **Specialist:** Frontend (React / Content System)
 - **Complexity:** M
-- **Depends on:** T4.2
+- **Depends on:** T5.1, T5.2
 - **DoD:**
-  - [x] OG images exist: `og-dark.png`, `og-light.png` (track-specific), `og-image.png` (default)
-  - [x] Dark track pages use `og-dark.png` as social card
-  - [x] Light track pages use `og-light.png` as social card
-  - [x] Home page uses `og-image.png` (split dark/light composition)
-  - [x] Inner pages include page title in OG metadata
-  - [x] Twitter card meta tags present (`twitter:card`, `twitter:image`)
-  - [x] Tests verify OG tags on all route types
-  - [x] Tests pass (`npm test`)
-  - [x] Lint clean (`npm run lint`)
+  - [ ] New frontmatter field `images` supported as structured array: `{src, after, style}`
+  - [ ] Images auto-injected into rendered HTML at positions matching `after` heading text
+  - [ ] Dark track images wrapped with HUD corner brackets
+  - [ ] Light track images wrapped with glassmorphism border (16px radius)
+  - [ ] Images use `next/image` with lazy loading and responsive `sizes`
+  - [ ] All existing HUD/flow images placed on their respective pages
+  - [ ] Tests verify image injection from frontmatter
+  - [ ] Tests pass (`npm run ci`)
 - **Technical Specs:**
-  - Generate OG images per `content/shared/image-placement.md` specs (1200x630)
-  - Update metadata exports in: `dashboard/app/layout.tsx`, `dashboard/app/[track]/[slug]/page.tsx`
-  - Track pages: `openGraph.images` points to track-specific OG image
-  - Inner pages: `openGraph.title` from frontmatter, `openGraph.description` from first paragraph
-  - Add `twitter:card: summary_large_image` meta tags
-  - Existing `og-image.png` may need regeneration to match current design
+  - Extend `PageFrontmatter` interface to include `images?: {src: string; after: string; style: string}[]`
+  - Post-process HTML in `renderMarkdown` or `ContentRenderer` to inject `<Image>` after matching `<h2>`/`<h3>`
+  - Image styles: `hud-frame` (corner brackets + scan-line), `glassmorphism` (rounded + blur border), `full-width` (no frame)
+  - Images served from `/tracks/{track}/assets/` or `/tracks/{track}/`
+  - Update content files with `images` frontmatter for: how-it-works (4 images), about (lattice-detail), whitepaper (mockup)
 - **Test Plan:**
-  - `test/seo/social-cards.test.ts` — verify OG tags on home, track, and inner pages
-  - Expected: ~5 tests
-- **Demo Data Impact:**
-  - None — metadata only
-
----
-
-### T4.6 — Subscriber management scripts
-- **Goal:** CLI scripts to pull, export, list, and delete subscribers from Firestore for operational management
-- **Specialist:** Backend / Tooling
-- **Complexity:** S
-- **Depends on:** None
-- **DoD:**
-  - [x] `bin/subscribers.sh list` — lists subscribers with track, email, signup date
-  - [x] `bin/subscribers.sh export` — exports to CSV (email, track, created_at, metadata)
-  - [x] `bin/subscribers.sh count` — shows count per track
-  - [x] `bin/subscribers.sh delete <email>` — removes a subscriber (with confirmation prompt)
-  - [x] Scripts respect `CAPTHCA_LAND_ENV` for collection prefix (stg_/prd_/local_)
-  - [x] Tests pass (`npm test`)
-  - [x] Lint clean (`npm run lint`)
-- **Technical Specs:**
-  - New file: `bin/subscribers.sh` — shell wrapper that calls a Node.js script
-  - New file: `scripts/subscribers.ts` — Firestore operations using admin SDK
-  - Uses `getCollectionPrefix()` from `dashboard/lib/firestore.ts` for env-aware collection names
-  - CSV export: `email,track,created_at,ip,user_agent,referer,language`
-  - Delete requires `--confirm` flag or interactive "are you sure?" prompt
-  - Defaults to `CAPTHCA_LAND_ENV=local` if not set
-- **Test Plan:**
-  - `test/scripts/subscribers.test.ts` — unit: CSV formatting, collection prefix usage
+  - `test/lib/content-images.test.ts` — verify image injection, frontmatter parsing
   - Expected: ~4 tests
-- **Demo Data Impact:**
-  - Update `bin/gen-demo.sh` to generate sample subscribers for script testing
 
 ---
 
-### T4.7 — Subscriber profiling enrichment
-- **Goal:** Enrich subscriber records at signup time with timezone, locale, screen size, geo (IP-based), and device type for analytics insights
-- **Specialist:** Backend / Analytics
+### T5.4 — Content guide for cowork
+- **Goal:** Write a concise reference guide so Claude Code (cowork) can independently manage content pages
+- **Specialist:** Documentation
 - **Complexity:** S
 - **Depends on:** None
 - **DoD:**
-  - [x] Subscribe endpoint captures: timezone, locale, screen dimensions, device type
-  - [x] Client-side form sends enrichment fields alongside email and track
-  - [x] Geo data derived server-side from IP (country, region) using a lightweight lookup
-  - [x] New fields stored in Firestore subscriber document
-  - [x] No external API calls for geo (use header-based or lightweight DB approach)
-  - [x] Tests verify enrichment fields are stored
-  - [x] Tests pass (`npm test`)
-  - [x] Lint clean (`npm run lint`)
+  - [ ] `content/CONTENT_GUIDE.md` exists with frontmatter spec, marker syntax, rules
+  - [ ] Covers: file structure, frontmatter fields, content markers, image placement, track differences
+  - [ ] Includes example of a complete page file
+  - [ ] Tests pass (`npm run ci`)
 - **Technical Specs:**
-  - Modify subscribe form components to collect: `Intl.DateTimeFormat().resolvedOptions().timeZone`, `navigator.language`, `screen.width`/`screen.height`
-  - Modify `dashboard/app/api/subscribe/route.ts` to accept and store new fields
-  - Device type: derive from user-agent (mobile/tablet/desktop) server-side
-  - Geo: use `cf-ipcountry` header (Cloudflare) or `x-appengine-country` (GCP) — no external API
-  - Firestore document shape adds: `timezone`, `locale`, `screenSize`, `deviceType`, `country`
-  - Keep body size limit in mind (currently 4096) — enrichment adds ~200 bytes
+  - New file: `content/CONTENT_GUIDE.md`
+  - Document all frontmatter fields (track, slug, title, badge, layout_hint, design_notes, sources, section_prefix, images)
+  - Document marker syntax with examples ({highlight}, {table}, {alert}, {quote})
+  - Document image placement frontmatter (after T5.3)
+  - Include rules: verbatim copy, markers on own lines, GFM table syntax
+  - Reference `content/CONTENT_SYSTEM.md` for full system spec
 - **Test Plan:**
-  - `test/api/subscribe-enrichment.test.ts` — verify new fields accepted and stored
-  - Expected: ~5 tests
-- **Demo Data Impact:**
-  - Update `bin/gen-demo.sh` to include enrichment fields in sample subscribers
+  - No automated tests — documentation only
 
 ---
 
-### T4.8 — Optimize images with next/image
-- **Goal:** Convert all track page images to use Next.js `<Image>` component for automatic optimization, lazy loading, and responsive sizing
-- **Specialist:** Frontend (Performance)
+### T5.5 — Academic paper scaffold in content system
+- **Goal:** Add route and placeholder for an academic paper content type, ready for cowork to populate
+- **Specialist:** Frontend (Routing)
 - **Complexity:** S
 - **Depends on:** None
 - **DoD:**
-  - [x] All `<img>` tags in track pages replaced with `next/image` `<Image>` component
-  - [x] Hero images use `priority` prop (above-fold)
-  - [x] Section images use lazy loading (default behavior)
-  - [x] Images have explicit `width`/`height` or `fill` with `sizes` prop
-  - [x] Alt text present on every image (per image-placement.md descriptions)
-  - [x] No layout shift (CLS) from image loading
-  - [x] Tests pass (`npm test`)
-  - [x] Lint clean (`npm run lint`)
+  - [ ] Route exists: `/light/academic-paper` and `/dark/academic-paper`
+  - [ ] Placeholder content files exist: `content/light/pages/academic-paper.md` and `content/dark/pages/academic-paper.md`
+  - [ ] Pages render with appropriate track styling
+  - [ ] Nav bar includes "Paper" link
+  - [ ] Tests updated to expect 8 slugs per track (was 7)
+  - [ ] Tests pass (`npm run ci`)
 - **Technical Specs:**
-  - Audit `dashboard/app/dark/page.tsx` and `dashboard/app/light/page.tsx` for `<img>` tags
-  - Replace with `import Image from "next/image"` and `<Image>` component
-  - Hero images: `priority={true}`, explicit dimensions
-  - Section images: default lazy, with `sizes` prop for responsive breakpoints
-  - Follow `content/shared/image-placement.md` for alt text
-  - Compress source images if any exceed 200KB (hero) / 100KB (section) per spec
+  - Create `content/light/pages/academic-paper.md` and `content/dark/pages/academic-paper.md` with frontmatter + placeholder body
+  - Add `{ slug: "academic-paper", label: "Paper" }` to PAGES array in TrackLayout
+  - Update test assertions from 7 to 8 slugs per track
+  - `generateStaticParams` auto-discovers new pages (no code change needed)
 - **Test Plan:**
-  - Manual: Lighthouse performance audit before/after
-  - Manual: verify no layout shift on page load
-  - CI: `npm run ci` passes
-- **Demo Data Impact:**
-  - None — image optimization only
+  - Existing `test/pages/inner-pages.test.ts` updated for 8 slugs
+  - Expected: update 2 assertions
 
 ---
 
-### T4.9 — Tighten CSP — remove 'unsafe-inline' for scripts
-- **Goal:** Remove `'unsafe-inline'` from the CSP `script-src` directive to prevent inline script injection attacks
-- **Specialist:** Security / Frontend
+### T5.6 — npm audit in CI pipeline
+- **Goal:** Add non-blocking dependency vulnerability check to CI
+- **Specialist:** Infrastructure / Testing
 - **Complexity:** S
 - **Depends on:** None
 - **DoD:**
-  - [x] CSP `script-src` no longer includes `'unsafe-inline'`
-  - [x] All inline scripts converted to external files or use nonce-based CSP
-  - [x] Turnstile widget still functions correctly
-  - [x] No console CSP violations on any page (home, light, dark)
-  - [x] Existing CSP security test updated to verify no `'unsafe-inline'`
-  - [x] Tests pass (`npm test`)
-  - [x] Lint clean (`npm run lint`)
+  - [ ] `npm audit` runs as part of CI pipeline
+  - [ ] Audit failures are reported but do not block CI (non-blocking / warning only)
+  - [ ] Output includes severity summary (critical, high, moderate, low)
+  - [ ] Tests pass (`npm run ci`)
 - **Technical Specs:**
-  - Modify CSP in `dashboard/middleware.ts` or `dashboard/next.config.mjs`
-  - Option A: nonce-based CSP — generate per-request nonce, pass to `<script nonce={}>` tags
-  - Option B: hash-based CSP — compute SHA-256 of each inline script, add to CSP
-  - Nonce approach preferred for Next.js (works with App Router `<Script>` component)
-  - Turnstile: may need `nonce` passed to widget render call
-  - Test all pages for CSP violations in browser console
+  - Add `audit` script to root `package.json`: `npm audit --audit-level=none || true`
+  - Or add to `ci` script chain: `npm run lint && npm run typecheck && npm run test && npm audit --audit-level=critical || echo 'Audit warnings present'`
+  - Dashboard audit: `cd dashboard && npm audit --audit-level=none || true`
+  - Report output but don't fail the pipeline
 - **Test Plan:**
-  - Update `test/infra/security-hardening.test.ts` — verify `'unsafe-inline'` absent from `script-src`
-  - Manual: verify Turnstile works on all pages, no console CSP errors
-  - Expected: ~2 updated tests
-- **Demo Data Impact:**
-  - None — security configuration only
+  - Manual: verify `npm run ci` completes even with audit warnings
+  - No automated test needed
 
 ---
 
-### T4.10 — API route coverage check
-- **Goal:** Add a test that verifies every API route (`route.ts`) has corresponding test coverage, preventing untested endpoints from shipping
-- **Specialist:** Testing / Quality
+### T5.7 — Deploy Sprint 4+5 to staging
+- **Goal:** Deploy current state to staging.capthca.ai and verify
+- **Specialist:** Infrastructure / DevOps
 - **Complexity:** S
-- **Depends on:** None
+- **Depends on:** T5.1, T5.2, T5.3
 - **DoD:**
-  - [x] Test discovers all `dashboard/app/api/**/route.ts` files dynamically
-  - [x] Test verifies each route has at least one corresponding test file in `test/`
-  - [x] Test fails if a new API route is added without tests
-  - [x] Current routes all have coverage (health, subscribe, analytics)
-  - [x] Tests pass (`npm test`)
-  - [x] Lint clean (`npm run lint`)
+  - [ ] `bin/deploy-staging.sh` runs successfully
+  - [ ] staging.capthca.ai loads home page, both track pages, and at least 2 inner pages
+  - [ ] Content renders with track atmosphere (MatrixRain on dark, GradientOrbs on light)
+  - [ ] Social cards verifiable via OG debugger
+  - [ ] No console errors on any page
+  - [ ] Tests pass locally before deploy (`npm run ci`)
 - **Technical Specs:**
-  - New file: `test/coverage/api-route-coverage.test.ts`
-  - Use `fs.readdirSync` or glob to find all `**/api/**/route.ts` files under `dashboard/app/`
-  - For each route, check that a matching test file exists (e.g., `api/health/route.ts` → `test/api/health*.test.ts`)
-  - Mapping convention: route path segments map to test file path or test file name
-  - Allow explicit exceptions via a `KNOWN_UNTESTED` array (should be empty)
+  - Run `bin/deploy-staging.sh`
+  - Smoke test: home, /dark, /light, /dark/about, /light/about, /dark/faq, /light/how-it-works
+  - Verify Turnstile still works on both tracks
+  - Check staging basic auth still active
 - **Test Plan:**
-  - Self-testing: the test itself verifies coverage
-  - Expected: ~3 tests (route discovery, coverage check, no exceptions needed)
-- **Demo Data Impact:**
-  - None — test infrastructure only
+  - Manual: browser verification of all page types
+  - Manual: OG debugger check
