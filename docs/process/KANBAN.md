@@ -6,7 +6,47 @@
 
 ---
 
-## Doing (Sprint 3)
+## Doing (Sprint 4)
+
+- [content] T4.1 — Implement content system (markdown rendering pipeline) (M)
+- [ui] T4.2 — Scaffold all inner page routes (7 pages x 2 tracks) (M)
+- [ui] T4.3 — Per-page design polish (track-specific styling + header images) (L)
+- [ui] T4.4 — Animated transitions between slider positions (S)
+- [ui] T4.5 — Social sharing cards with track-specific images (M)
+- [tooling] T4.6 — Subscriber management scripts (S)
+- [analytics] T4.7 — Subscriber profiling enrichment (S)
+- [ui] T4.8 — Optimize images with next/image (S)
+- [security] T4.9 — Tighten CSP — remove 'unsafe-inline' for scripts (S)
+- [testing] T4.10 — API route coverage check (S)
+
+---
+
+## Backlog
+
+### Post-MVP
+- [email] Welcome email on signup — track-specific content (M)
+- [email] Email provider integration (Resend or SendGrid) (M)
+- [analytics] Analytics dashboard — track preference distribution, conversion funnel (M)
+- [ui] Sound/ambient audio per track (experimental) (M)
+- [security] Move rate limiter to Redis or Cloud Armor for multi-instance consistency (M)
+- [infra] Evaluate Turbopack / Vite for build tooling (M)
+
+### Battle-Tested Patterns (from OpenClaw Lens review)
+- [observability] OpenTelemetry foundation — Edge-Runtime-safe Next.js setup (L)
+- [infra] Blue-green deploys for staging — --no-traffic + traffic shift (S)
+- [infra] npm audit in CI pipeline — non-blocking dependency vulnerability check (S)
+- [infra] Migrate DNS from GoDaddy to Cloudflare — DDoS, CDN, Cloudflare Access (S)
+
+---
+
+## Tech Debt
+
+- [infra] Turnstile console warnings on track pages (non-blocking, cosmetic)
+- [infra] `NEXT_PUBLIC_*` vars require Docker build args — document pattern for future public env vars
+
+---
+
+## Done (Sprint 3)
 
 - [art] T3.1 — Generate all visual assets from art-direction.md (L)
 - [ui] T3.2 — Rebuild home page (DualitySlider) from content spec (L)
@@ -16,44 +56,7 @@
 - [security] T3.6 — Request logging for abuse monitoring (S)
 - [analytics] T3.7 — Instrument slider interaction events (M)
 - [infra] T3.8 — Deploy production to capthca.ai (S)
-
----
-
-## Backlog
-
-### High Priority
-- [infra] Migrate DNS from GoDaddy to Cloudflare — DDoS, CDN, Cloudflare Access (S)
-
-### MVP (Sprint 3+)
-- [tooling] Subscriber management scripts — pull, export CSV, list by track, delete (S)
-- [analytics] Subscriber profiling enrichment — timezone, locale, screen size, geo (IP lookup), device type (S)
-- [ui] Optimize images with next/image, compress track assets (S)
-- [content] Implement content system — render markdown from content/ into dashboard pages (M)
-
-### Post-MVP (Sprint 3+)
-- [email] Welcome email on signup — track-specific content (M)
-- [email] Email provider integration (Resend or SendGrid) (M)
-- [ui] Deep multi-section narrative pages for each track (L)
-- [ui] Social sharing cards with track-specific generated images (M)
-- [analytics] Analytics dashboard — track preference distribution, conversion funnel (M)
-- [ui] Animated transitions between slider positions (S)
-- [ui] Sound/ambient audio per track (experimental) (M)
-- [security] Move rate limiter to Redis or Cloud Armor for multi-instance consistency (M)
-- [security] Tighten CSP — remove 'unsafe-inline' for scripts (S)
-- [infra] Evaluate Turbopack / Vite for build tooling (M)
-
-### Battle-Tested Patterns (from OpenClaw Lens review)
-- [observability] OpenTelemetry foundation — Edge-Runtime-safe Next.js setup (L)
-- [infra] Blue-green deploys for staging — --no-traffic + traffic shift (S)
-- [infra] npm audit in CI pipeline — non-blocking dependency vulnerability check (S)
-- [testing] API route coverage check — ensure every route.ts has test coverage (S)
-
----
-
-## Tech Debt
-
-- [infra] Turnstile console warnings on track pages (non-blocking, cosmetic)
-- [infra] `NEXT_PUBLIC_*` vars require Docker build args — document pattern for future public env vars
+- [content] T3.9 — Align track pages with content system + wire images (M)
 
 ---
 

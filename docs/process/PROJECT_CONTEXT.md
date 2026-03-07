@@ -9,9 +9,9 @@
 
 | Field | Value |
 |-------|-------|
-| **Status** | Active — Sprint 2 Closed, Sprint 3 Planning |
+| **Status** | Active — Sprint 3 Closed, Sprint 4 Planning |
 | **Last Sync** | 2026-03-07 |
-| **Current Sprint** | Sprint 2 Closed |
+| **Current Sprint** | Sprint 3 Closed |
 | **Objective** | Dual-narrative landing page at capthca.ai with email capture |
 
 ---
@@ -77,7 +77,7 @@
 
 | Metric | Value |
 |--------|-------|
-| **Total Tests** | 30 |
+| **Total Tests** | 63 |
 | **Test Runner** | Node.js built-in (`node --test`) |
 | **Test Command** | `npm test` |
 | **CI Command** | `npm run ci` (lint + typecheck + test) |
@@ -92,38 +92,42 @@
 | 0 | Project inception | Completed | 5 | Template init, charter, backlog |
 | 1 | Dual-narrative MVP | Completed | 13 | Slider, track pages, email capture, Turnstile, staging deploy |
 | 2 | Security + Design | Completed | 30 | SecretProvider, HSTS, Firestore prefix, dark/light track designs, subscriber enrichment |
+| 3 | Visual Polish + Observability | Completed | 63 | Art assets, DualitySlider rebuild, structured logging, health endpoint, metrics, analytics, content alignment, production deploy |
 
 ---
 
 ## Current State
 
 ### Working
-- Duality slider React component with mouse/touch support
-- Light track: glassmorphism, gradient orbs, smooth scroll reveal, pull quotes
+- Cinematic DualitySlider with edge-drag navigation, glassmorphism vs Matrix rain
+- Light track: glassmorphism, gradient orbs, DNA helix borders, floating particles
 - Dark track: Matrix digital rain, glitch text, CRT scanlines, alert pulse, HUD brackets
+- Track pages aligned verbatim with content/ markdown system
+- 17+ generated art assets wired into pages
 - Email capture with Turnstile CAPTCHA + honeypot + rate limiting
 - SecretProvider abstraction for all server-side secrets
 - Firestore env-prefixed collections (stg_/prd_/local_)
 - HSTS + CSP + security non-regression tests
 - Subscriber data enrichment (IP, user agent, referer, language)
+- Structured JSON logging (GCP Cloud Logging compatible)
+- Health endpoint /api/health with Firestore connectivity check
+- Custom metrics for subscribe API (log-based)
+- Slider analytics instrumentation (privacy-first, no external SDK)
 - CI pipeline (lint + typecheck + test + build)
+- Production deployment at capthca.ai
 - Staging deployment at staging.capthca.ai (basic auth protected)
 - Content system (`content/`) with markdown + YAML frontmatter
 - SVG favicon + full SEO metadata + Open Graph tags
 
 ### Not Yet Done
-- Production deploy (capthca.ai DNS not configured)
-- Cloudflare DNS migration
-- Home page rebuild (DualitySlider cinematic redesign)
-- Structured logging + health endpoint + metrics
-- Analytics instrumentation
+- Cloudflare DNS migration (DDoS, CDN)
+- Welcome emails for subscribers
 - Subscriber management scripts
+- Programmatic content system rendering (markdown -> pages)
 
 ### Known Limitations
 - Rate limiter is in-memory (resets on container restart, not shared across instances)
 - Turnstile CSP warning from widget iframe (cosmetic, Cloudflare-side)
-- No health endpoint (Cloud Run uses default TCP probe)
-- No structured logging (stdout only)
 
 ---
 
