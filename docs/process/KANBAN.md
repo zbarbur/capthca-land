@@ -32,6 +32,11 @@
 - [infra] Blue-green deploys for staging — --no-traffic + traffic shift (S)
 - [infra] Migrate DNS from GoDaddy to Cloudflare — DDoS, CDN, Cloudflare Access (S)
 
+### Template Sync
+- [template] Improve template sync mechanism — record .template-version at init, diff template-to-template for clean updates, reduce noise from placeholder substitution (M)
+- [template] Add ci:full script pattern to template package.json (S)
+- [template] Sync CAPTHCA from latest template — process docs, checklists, skills may have upstream improvements (S)
+
 ### Infrastructure
 - [infra] Local Cloud Build testing script — simulate build steps locally (S)
 - [infra] Next.js upgrade — address 9 npm audit vulnerabilities (M)
