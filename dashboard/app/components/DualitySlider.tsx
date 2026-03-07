@@ -75,6 +75,7 @@ export function DualitySlider() {
 	const [hintVisible, setHintVisible] = useState(true);
 	const [isMobile, setIsMobile] = useState(false);
 	const [navigatingTo, setNavigatingTo] = useState<"light" | "dark" | null>(null);
+	const [showGlow, setShowGlow] = useState(false);
 	const hasInteracted = useRef(false);
 	const reducedMotion = useRef(false);
 
@@ -151,6 +152,10 @@ export function DualitySlider() {
 			move(e.touches[0].clientX);
 		};
 		const onEnd = () => {
+			if (isDragging.current && !reducedMotion.current) {
+				setShowGlow(true);
+				setTimeout(() => setShowGlow(false), 500);
+			}
 			isDragging.current = false;
 		};
 
@@ -525,6 +530,18 @@ export function DualitySlider() {
 					<span className="select-none text-sm font-bold text-[#1a1a1a]">&#9664; &#9654;</span>
 				</div>
 			</div>
+
+			{/* ── Collision glow on release ────────────────── */}
+			{showGlow && (
+				<div
+					className="slider-collision-glow pointer-events-none absolute top-0 bottom-0 z-[7]"
+					style={{
+						left: `${displayPct}%`,
+						transform: "translateX(-50%)",
+						width: "80px",
+					}}
+				/>
+			)}
 
 			{/* ── Hint text ─────────────────────────────────── */}
 			<p

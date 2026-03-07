@@ -7,22 +7,27 @@ const DASHBOARD_DIR = path.join(process.cwd(), "dashboard");
 
 describe("security hardening", () => {
 	it("HSTS header with 1-year max-age is configured", () => {
-		const config = fs.readFileSync(path.join(DASHBOARD_DIR, "next.config.mjs"), "utf-8");
+		const middleware = fs.readFileSync(path.join(DASHBOARD_DIR, "middleware.ts"), "utf-8");
 		assert.ok(
-			config.includes("Strict-Transport-Security"),
-			"next.config.mjs must include Strict-Transport-Security header",
+			middleware.includes("Strict-Transport-Security"),
+			"middleware.ts must include Strict-Transport-Security header",
 		);
 		assert.ok(
-			config.includes("max-age=31536000"),
+			middleware.includes("max-age=31536000"),
 			"HSTS max-age must be at least 1 year (31536000)",
 		);
 	});
 
-	it("CSP includes required directives", () => {
-		const config = fs.readFileSync(path.join(DASHBOARD_DIR, "next.config.mjs"), "utf-8");
+	it("CSP includes required directives and uses nonce instead of unsafe-inline for scripts", () => {
+		const middleware = fs.readFileSync(path.join(DASHBOARD_DIR, "middleware.ts"), "utf-8");
 		for (const directive of ["default-src", "script-src", "frame-ancestors"]) {
-			assert.ok(config.includes(directive), `CSP must include ${directive} directive`);
+			assert.ok(middleware.includes(directive), `CSP must include ${directive} directive`);
 		}
+		assert.ok(middleware.includes("nonce-"), "CSP script-src must use nonce-based policy");
+		assert.ok(
+			!middleware.includes("script-src 'self' 'unsafe-inline'"),
+			"CSP script-src must not use unsafe-inline",
+		);
 	});
 
 	it("API error responses do not reflect user input", () => {

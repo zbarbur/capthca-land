@@ -22,6 +22,11 @@ export const metadata: Metadata = {
 			},
 		],
 	},
+	twitter: {
+		card: "summary_large_image",
+		title: "CAPTHCA — The Post-Biological Protocol",
+		images: ["/tracks/dark/assets/dark-hero.png"],
+	},
 };
 
 export default function DarkTrack() {
@@ -98,6 +103,7 @@ export default function DarkTrack() {
 									src="/tracks/dark/assets/dark-hero.png"
 									alt="A vast dark digital void with cascading Matrix-style code columns forming a cathedral-like tunnel"
 									fill
+									sizes="(max-width: 850px) 100vw, 850px"
 									className="object-cover"
 									style={{ opacity: 0.18 }}
 									priority
@@ -361,6 +367,7 @@ export default function DarkTrack() {
 								src="/tracks/dark/assets/dark-cta-bg.png"
 								alt=""
 								fill
+								sizes="(max-width: 850px) 100vw, 850px"
 								className="object-cover"
 								style={{ opacity: 0.2 }}
 							/>

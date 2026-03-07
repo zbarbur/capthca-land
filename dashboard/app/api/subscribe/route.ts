@@ -46,7 +46,16 @@ export async function POST(request: Request) {
 	}
 
 	// Parse body
-	let body: { email?: string; track?: string; honeypot?: string; cfToken?: string };
+	let body: {
+		email?: string;
+		track?: string;
+		honeypot?: string;
+		cfToken?: string;
+		timezone?: string;
+		locale?: string;
+		screenWidth?: number;
+		screenHeight?: number;
+	};
 	try {
 		body = await request.json();
 	} catch {
@@ -103,6 +112,23 @@ export async function POST(request: Request) {
 	const referer = request.headers.get("referer") || "";
 	const acceptLanguage = request.headers.get("accept-language") || "";
 
+	// Derive device type from user-agent
+	const deviceType = /Mobile|Android/i.test(userAgent)
+		? "mobile"
+		: /Tablet|iPad/i.test(userAgent)
+			? "tablet"
+			: "desktop";
+
+	// Geo: Cloudflare or GCP header
+	const country =
+		request.headers.get("cf-ipcountry") || request.headers.get("x-appengine-country") || "unknown";
+
+	// Client-side enrichment fields
+	const timezone = typeof body.timezone === "string" ? body.timezone : "";
+	const locale = typeof body.locale === "string" ? body.locale : "";
+	const screenWidth = typeof body.screenWidth === "number" ? body.screenWidth : 0;
+	const screenHeight = typeof body.screenHeight === "number" ? body.screenHeight : 0;
+
 	// Upsert to Firestore
 	try {
 		const now = new Date().toISOString();
@@ -117,6 +143,12 @@ export async function POST(request: Request) {
 				userAgent,
 				referer,
 				acceptLanguage,
+				deviceType,
+				country,
+				timezone,
+				locale,
+				screenWidth,
+				screenHeight,
 			},
 			{ merge: true },
 		);
