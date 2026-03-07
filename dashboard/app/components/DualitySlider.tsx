@@ -148,14 +148,8 @@ export function DualitySlider() {
 		}
 	}, []);
 
-	/* ── Hover expansion (desktop only) ────────────────────── */
-	const displayPct = isDragging.current
-		? percentage
-		: hovered === "light"
-			? Math.max(percentage, 53)
-			: hovered === "dark"
-				? Math.min(percentage, 47)
-				: percentage;
+	/* ── Display percentage (drag only — no hover shift) ──── */
+	const displayPct = percentage;
 
 	/* ── Mobile layout ─────────────────────────────────────── */
 	if (isMobile) {
