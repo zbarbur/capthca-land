@@ -9,9 +9,9 @@
 
 | Field | Value |
 |-------|-------|
-| **Status** | Active — Sprint 2 Closed, Sprint 3 Planning |
+| **Status** | Active — Sprint 3 Closed, Sprint 4 Planning |
 | **Last Sync** | 2026-03-07 |
-| **Current Sprint** | Sprint 2 Closed |
+| **Current Sprint** | Sprint 3 Closed |
 | **Objective** | Dual-narrative landing page at capthca.ai with email capture |
 
 ---
@@ -20,8 +20,8 @@
 
 ```
 ┌──────────────────────────────────────────────────┐
-│              staging.capthca.ai                   │
-│           (basic auth protected)                  │
+│         capthca.ai (production)                   │
+│         staging.capthca.ai (basic auth)           │
 │                                                    │
 │  ┌─────────────┐  ┌───────────┐  ┌────────────┐  │
 │  │  Duality     │  │  /light   │  │  /dark     │  │
@@ -30,13 +30,12 @@
 │         │               │              │          │
 │         └───────────┬───┘──────────────┘          │
 │                     │                              │
-│              ┌──────┴──────┐                       │
-│              │ /api/subscribe│                      │
-│              │ + Turnstile  │                       │
-│              │ + honeypot   │                       │
-│              │ + rate limit │                       │
-│              │ + SecretProv │                       │
-│              └──────┬──────┘                       │
+│  ┌──────────────────┼──────────────────────────┐  │
+│  │ /api/subscribe   │  /api/health  /api/analytics│
+│  │ + Turnstile      │                             │
+│  │ + rate limit     │  Structured JSON logging    │
+│  │ + SecretProv     │  Custom metrics             │
+│  └──────────────────┼─────────────────────────┘  │
 │                     │                              │
 └─────────────────────┼──────────────────────────────┘
                       │
@@ -50,12 +49,13 @@
 
 - **Frontend:** Next.js 14 (App Router) with SSR on Cloud Run
 - **Styling:** Tailwind CSS with CSS variable theme switching (`.theme-light` / `.theme-dark`)
-- **API:** Next.js API routes (single `/api/subscribe` endpoint for MVP)
+- **API:** Next.js API routes (`/api/subscribe`, `/api/health`, `/api/analytics`)
 - **Database:** Firestore (email collection with track preference, env-prefixed)
 - **Hosting:** GCP Cloud Run (auto-scaling, standalone Next.js output)
-- **CI/CD:** Cloud Build (cloudbuild.yaml → staging, cloudbuild-deploy.yaml → production)
+- **CI/CD:** Cloud Build (cloudbuild.yaml -> staging on push, cloudbuild-deploy.yaml -> production manual)
 - **Security:** Turnstile CAPTCHA, honeypot, rate limiter, CSP, HSTS, staging basic auth, SecretProvider
 - **Secrets:** SecretProvider abstraction (`CAPTHCA_LAND_` prefix), GCP Secret Manager in prod/staging
+- **Observability:** Structured JSON logging, custom metrics, analytics instrumentation, health endpoint
 
 ---
 
@@ -65,7 +65,8 @@
 |-----------|-----------|-------------|-------|
 | Frontend + API | Next.js 14 | Cloud Run | Standalone output, SSR |
 | Database | Firestore | GCP (`capthca-489205`) | Env-prefixed collections (stg_/prd_/local_) |
-| Domain | staging.capthca.ai | Cloud Run CNAME | Managed SSL cert |
+| Production | capthca.ai | Cloud Run domain mapping | Managed SSL cert, blue/green deploy |
+| Staging | staging.capthca.ai | Cloud Run CNAME | Managed SSL cert, basic auth |
 | CI/CD | Cloud Build | GCP | Auto on push (staging), manual (prod) |
 | Secrets | Secret Manager + SecretProvider | GCP | `CAPTHCA_LAND_*` env var naming |
 | CAPTCHA | Cloudflare Turnstile | Cloudflare | Invisible mode |
@@ -77,7 +78,7 @@
 
 | Metric | Value |
 |--------|-------|
-| **Total Tests** | 30 |
+| **Total Tests** | 63 |
 | **Test Runner** | Node.js built-in (`node --test`) |
 | **Test Command** | `npm test` |
 | **CI Command** | `npm run ci` (lint + typecheck + test) |
@@ -92,13 +93,14 @@
 | 0 | Project inception | Completed | 5 | Template init, charter, backlog |
 | 1 | Dual-narrative MVP | Completed | 13 | Slider, track pages, email capture, Turnstile, staging deploy |
 | 2 | Security + Design | Completed | 30 | SecretProvider, HSTS, Firestore prefix, dark/light track designs, subscriber enrichment |
+| 3 | Visual polish + Production | Completed | 63 | DualitySlider rebuild, visual assets, observability stack, production deploy to capthca.ai |
 
 ---
 
 ## Current State
 
 ### Working
-- Duality slider React component with mouse/touch support
+- Cinematic duality slider with drag-to-navigate, entrance animations, glassmorphism vs Matrix rain
 - Light track: glassmorphism, gradient orbs, smooth scroll reveal, pull quotes
 - Dark track: Matrix digital rain, glitch text, CRT scanlines, alert pulse, HUD brackets
 - Email capture with Turnstile CAPTCHA + honeypot + rate limiting
@@ -106,24 +108,28 @@
 - Firestore env-prefixed collections (stg_/prd_/local_)
 - HSTS + CSP + security non-regression tests
 - Subscriber data enrichment (IP, user agent, referer, language)
+- Structured JSON logging (Cloud Logging compatible)
+- Health endpoint `/api/health` with Firestore connectivity check
+- Custom metrics for subscribe API
+- Analytics instrumentation (slider interactions)
+- Request logging for abuse monitoring
 - CI pipeline (lint + typecheck + test + build)
+- Production deployment at capthca.ai (SSL provisioned)
 - Staging deployment at staging.capthca.ai (basic auth protected)
 - Content system (`content/`) with markdown + YAML frontmatter
 - SVG favicon + full SEO metadata + Open Graph tags
+- Generated visual assets for both tracks
 
 ### Not Yet Done
-- Production deploy (capthca.ai DNS not configured)
+- www.capthca.ai CNAME DNS record
 - Cloudflare DNS migration
-- Home page rebuild (DualitySlider cinematic redesign)
-- Structured logging + health endpoint + metrics
-- Analytics instrumentation
+- Mobile slider drag-to-navigate
+- Remove V4 references from copy
 - Subscriber management scripts
 
 ### Known Limitations
 - Rate limiter is in-memory (resets on container restart, not shared across instances)
 - Turnstile CSP warning from widget iframe (cosmetic, Cloudflare-side)
-- No health endpoint (Cloud Run uses default TCP probe)
-- No structured logging (stdout only)
 
 ---
 
@@ -145,4 +151,3 @@
 | Content (dark) | `content/dark/` | Dark track section-by-section copy |
 | Research briefs | `content/research/` | Research supporting landing page narrative |
 | Implementation plans | `docs/plans/` | Feature implementation plans |
-| Research (legacy) | `docs/research/` | Storyboards, manifestos, visual research |

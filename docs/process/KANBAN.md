@@ -6,16 +6,9 @@
 
 ---
 
-## Doing (Sprint 3)
+## Doing
 
-- [art] T3.1 — Generate all visual assets from art-direction.md (L)
-- [ui] T3.2 — Rebuild home page (DualitySlider) from content spec (L)
-- [observability] T3.3 — Structured JSON logging (M)
-- [observability] T3.4 — Health endpoint /api/health (S)
-- [observability] T3.5 — Custom metrics for subscribe API (M)
-- [security] T3.6 — Request logging for abuse monitoring (S)
-- [analytics] T3.7 — Instrument slider interaction events (M)
-- [infra] T3.8 — Deploy production to capthca.ai (S)
+(empty — between sprints)
 
 ---
 
@@ -23,14 +16,17 @@
 
 ### High Priority
 - [infra] Migrate DNS from GoDaddy to Cloudflare — DDoS, CDN, Cloudflare Access (S)
+- [ui] Mobile slider drag-to-navigate — touch UX for edge navigation on mobile (S)
+- [content] Remove "V4" references from site copy (S)
+- [infra] Configure www.capthca.ai CNAME in GoDaddy DNS (S)
 
-### MVP (Sprint 3+)
+### MVP (Sprint 4+)
 - [tooling] Subscriber management scripts — pull, export CSV, list by track, delete (S)
 - [analytics] Subscriber profiling enrichment — timezone, locale, screen size, geo (IP lookup), device type (S)
 - [ui] Optimize images with next/image, compress track assets (S)
 - [content] Implement content system — render markdown from content/ into dashboard pages (M)
 
-### Post-MVP (Sprint 3+)
+### Post-MVP (Sprint 4+)
 - [email] Welcome email on signup — track-specific content (M)
 - [email] Email provider integration (Resend or SendGrid) (M)
 - [ui] Deep multi-section narrative pages for each track (L)
@@ -57,6 +53,21 @@
 
 ---
 
+## Done (Sprint 3)
+
+- [art] T3.1 — Generate all visual assets from art-direction.md (L)
+- [ui] T3.2 — Rebuild home page (DualitySlider) from content spec (L)
+- [observability] T3.3 — Structured JSON logging (M)
+- [observability] T3.4 — Health endpoint /api/health (S)
+- [observability] T3.5 — Custom metrics for subscribe API (M)
+- [security] T3.6 — Request logging for abuse monitoring (S)
+- [analytics] T3.7 — Instrument slider interaction events (M)
+- [infra] T3.8 — Deploy production to capthca.ai (S)
+- [ui] T3.9 — Align track pages with content system + wire images (M)
+- [fix] Slider edge-drag navigation — widened thresholds + edge check on release
+
+---
+
 ## Done (Sprint 2)
 
 - [infra] Wire SecretProvider into dashboard — CAPTHCA_LAND_ prefix, update Cloud Build (S)
@@ -71,7 +82,7 @@
 - [ui] Dark track copy — content implemented on page (M)
 - [ui] Light track design — glassmorphism, gradient orbs, smooth scroll reveal, pull quotes (M)
 - [ui] Light track copy — content implemented on page (M)
-- [fix] Body size limit bumped 1024→4096 for Turnstile tokens
+- [fix] Body size limit bumped 1024->4096 for Turnstile tokens
 - [feat] Subscriber data enriched with IP, user agent, referer, accept-language
 
 ---
