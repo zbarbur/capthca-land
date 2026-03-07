@@ -42,7 +42,7 @@ Every page file starts with YAML frontmatter between `---` delimiters.
 | `track` | `"light"` \| `"dark"` | Which track this page belongs to |
 | `slug` | `string` | URL slug — must match the filename (without `.md`) |
 | `title` | `string` | Display heading shown on the page |
-| `layout_hint` | `"standard"` \| `"hero"` \| `"split"` \| `"centered"` | Layout suggestion for the renderer |
+| `layout_hint` | `"standard"` \| `"split"` \| `"centered"` \| `"terminal"` \| `"accordion"` \| `"essay"` | Layout suggestion for the renderer |
 
 ### Optional Fields
 
@@ -202,9 +202,62 @@ Both tracks cover the same topics for every inner page, but with different voice
 
 ## Image Placement
 
-> **Note:** The `images` frontmatter array is being finalized. Full documentation with syntax, supported fields, and examples will be added after the image integration task is complete. For now, refer to `content/shared/image-placement.md` for placement guidance and `content/shared/art-direction.md` for generation prompts.
+Images are auto-injected into page content via the `images` frontmatter array. Each entry places an image after a matching heading.
 
-Images are referenced by filename only in content files. They are served from:
-- Light track: `public/tracks/light/assets/`
-- Dark track: `public/tracks/dark/assets/`
-- Shared: `public/assets/`
+### Syntax
+
+```yaml
+images:
+  - src: "/tracks/dark/assets/dark-01-vulnerability.png"
+    after: "The Vulnerability"
+    style: hud
+  - src: "/tracks/dark/assets/dark-02-reversal.png"
+    after: "The Reversal"
+    style: hud
+```
+
+### Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `src` | `string` | Path to image from public directory (e.g., `/tracks/light/assets/light-hero.png`) |
+| `after` | `string` | Text of the `<h2>` or `<h3>` heading after which to place the image (case-insensitive match) |
+| `style` | `string` | Frame style: `hud`, `glass`, or `full` |
+
+### Frame Styles
+
+- **`hud`** — Dark track: green border with corner brackets, dark background. Use for all dark track images.
+- **`glass`** — Light track: 16px border-radius, blur border, subtle shadow. Use for all light track images.
+- **`full`** — Minimal: 4px border-radius, no decoration. Use for full-width diagrams.
+
+### Image Locations
+
+- Light track: `/tracks/light/assets/`
+- Dark track: `/tracks/dark/assets/`
+- Shared: `/assets/`
+
+### Example
+
+```markdown
+---
+track: dark
+slug: how-it-works
+title: "PROTOCOL SPEC"
+layout_hint: standard
+section_prefix: "02"
+images:
+  - src: "/tracks/dark/assets/dark-03-protocol.png"
+    after: "The Protocol"
+    style: hud
+---
+
+## The Protocol
+
+Content here about the protocol...
+```
+
+The image will be injected as a styled `<div class="content-image content-image-hud">` block after the matched heading.
+
+For placement guidance and image generation prompts, see:
+- `content/shared/image-placement.md` — where each image goes
+- `content/shared/art-direction.md` — generation prompts
