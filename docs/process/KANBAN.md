@@ -23,6 +23,9 @@
 - [security] Move rate limiter to Redis or Cloud Armor for multi-instance consistency (M)
 - [infra] Evaluate Turbopack / Vite for build tooling (M)
 
+### Design & UX
+- [ui] CTA section at bottom of every page (landing + inner) — email capture with track-specific styling; content from shared markdown partial; must verify Turnstile loads correctly on inner pages without CSP or duplicate-widget issues (M)
+
 ### Content & Diagrams
 - [ui] Whitepaper diagram polish — refine spacing, mobile layouts, animations (M)
 - [content] Content system regression tests — full render pipeline (markdown → HTML → diagrams) (S)
