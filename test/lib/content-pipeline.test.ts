@@ -66,6 +66,12 @@ describe("transformContentMarkers", () => {
 		assert.ok(result.includes("{unknown}"));
 	});
 
+	it("passes through HTML with no markers unchanged", () => {
+		const html = "<p>No markers here</p><h2>Title</h2><ul><li>item</li></ul>";
+		const result = transformContentMarkers(html);
+		assert.equal(result, html);
+	});
+
 	it("handles multiple diagram markers in one string", () => {
 		const html = "<p>{diagram:first}</p><p>text</p><p>{diagram:second}</p>";
 		const result = transformContentMarkers(html);
@@ -117,6 +123,13 @@ describe("renderMarkdown", () => {
 		const html = await renderMarkdown("{highlight}\n\nSome text without closing marker");
 		assert.equal(typeof html, "string");
 		assert.ok(html.includes("Some text"));
+	});
+
+	it("handles plain markdown without frontmatter", async () => {
+		const md = "Just a plain paragraph.\n\n## A heading\n\nAnother paragraph.";
+		const html = await renderMarkdown(md);
+		assert.ok(html.includes("<p>Just a plain paragraph.</p>"));
+		assert.ok(html.includes("<h2>A heading</h2>"));
 	});
 
 	it("handles invalid diagram syntax gracefully", async () => {
@@ -188,6 +201,14 @@ describe("getPageContent with diagrams", () => {
 	it("whitepaper page does not contain raw diagram marker text", async () => {
 		const page = await getPageContent("dark", "whitepaper");
 		assert.ok(!page.html.includes("{diagram:statsDashboard}"));
+	});
+
+	it("human-vs-machine page contains rendered tables", async () => {
+		const page = await getPageContent("light", "human-vs-machine");
+		assert.ok(
+			page.html.includes("<table"),
+			"human-vs-machine page should contain a rendered table",
+		);
 	});
 
 	it("page content from each track renders without error", async () => {
