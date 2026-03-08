@@ -4,6 +4,13 @@ import { NextResponse } from "next/server";
 const STAGING_USER = process.env.CAPTHCA_LAND_STAGING_AUTH_USER || "capthca";
 const STAGING_AUTH_PASS = process.env.CAPTHCA_LAND_STAGING_AUTH_PASS || "";
 
+function isAdminHost(host: string | null): boolean {
+	if (!host) return false;
+	// Strip port for local dev
+	const hostname = host.split(":")[0];
+	return hostname === "analytics.capthca.ai" || hostname.startsWith("analytics.");
+}
+
 function isBasicAuthValid(header: string | null): boolean {
 	if (!header?.startsWith("Basic ")) return false;
 	const bytes = Uint8Array.from(globalThis.atob(header.slice(6)), (c) => c.charCodeAt(0));
@@ -61,6 +68,26 @@ function applySecurityHeaders(response: NextResponse, nonce: string): void {
 
 export function middleware(request: NextRequest) {
 	const nonce = crypto.randomUUID();
+	const host = request.headers.get("host");
+
+	// Admin subdomain — IAP handles authentication at the load balancer level
+	if (isAdminHost(host)) {
+		logApiRequest(request);
+		const requestHeaders = new Headers(request.headers);
+		requestHeaders.set("x-nonce", nonce);
+		requestHeaders.set("x-admin-context", "true");
+
+		const iapEmail = request.headers.get("x-goog-authenticated-user-email");
+		if (iapEmail) {
+			requestHeaders.set("x-admin-email", iapEmail);
+		}
+
+		const response = NextResponse.next({
+			request: { headers: requestHeaders },
+		});
+		applySecurityHeaders(response, nonce);
+		return response;
+	}
 
 	// Only gate staging — skip if no password is configured
 	if (!STAGING_AUTH_PASS) {
