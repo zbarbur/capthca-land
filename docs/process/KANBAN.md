@@ -8,14 +8,7 @@
 
 ## Doing
 
-### Sprint 6 — Content consolidation, mobile UX, and housekeeping
-
-- [ui] T6.1 — Mobile experience overhaul (L)
-- [ui] T6.2 — Ambient sound per track (M)
-- [ui] T6.3 — CTA section on every page (M)
-- [cleanup] T6.4 — Remove dead files and audit for orphans (S)
-- [refactor] T6.5 — Wire landing pages into content system (M)
-- [infra] T6.6 — Next.js upgrade to fix audit vulnerabilities (M)
+(empty — Sprint 7 not started)
 
 ---
 
@@ -31,6 +24,7 @@
 ### Content & Diagrams
 - [ui] Whitepaper diagram polish — refine spacing, mobile layouts, animations (M)
 - [content] Content system regression tests — full render pipeline (markdown → HTML → diagrams) (S)
+- [audio] Source ambient audio files for light and dark tracks — loopable, ≤ 500KB each (S)
 
 ### Battle-Tested Patterns (from OpenClaw Lens review)
 - [observability] OpenTelemetry foundation — Edge-Runtime-safe Next.js setup (L)
@@ -53,6 +47,19 @@
 - [infra] Turnstile console warnings on track pages (non-blocking, cosmetic)
 - [infra] `NEXT_PUBLIC_*` vars require Docker build args — document pattern for future public env vars
 - [infra] Turbopack (`--turbo`) fails on paths with spaces — removed from dev script, evaluate when path changes or Turbopack fixes upstream
+
+---
+
+## Done (Sprint 6)
+
+- [ui] T6.1 — Mobile experience overhaul — vertical slider, hamburger nav, responsive diagrams (L)
+- [ui] T6.2 — Ambient sound per track — component + toggle wired, placeholder audio (M)
+- [ui] T6.3 — CTA section on every page — content-driven EmailCapture (M)
+- [cleanup] T6.4 — Remove dead files and audit for orphans (S)
+- [refactor] T6.5 — Wire landing pages into content system (M)
+- [infra] T6.6 — Next.js upgrade 14.2.29 → 14.2.35 (M)
+- [fix] Vertical mobile slider with mirrored content layout, hydration fix
+- [fix] Mobile nav scrollbar resolved
 
 ---
 
