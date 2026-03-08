@@ -57,7 +57,6 @@ describe("mobile home layout", () => {
 	});
 
 	it("mobile CTA buttons have min-h-[44px] touch target", () => {
-		// Both CTA buttons in mobile layout should have minimum 44px height
 		assert.ok(
 			sliderSource.includes("min-h-[44px]"),
 			"CTA buttons should have 44px minimum touch target",
@@ -65,13 +64,52 @@ describe("mobile home layout", () => {
 	});
 
 	it("mobile layout uses dvh units for viewport height", () => {
-		assert.ok(sliderSource.includes("50dvh"), "Should use dvh units for mobile viewport height");
+		assert.ok(sliderSource.includes("100dvh"), "Should use dvh units for mobile viewport height");
 	});
 
-	it("mobile layout reduces LightMotes particle count", () => {
+	it("LightMotes accepts isMobile prop for particle count", () => {
 		assert.ok(
 			sliderSource.includes("isMobile ? 8 : 16"),
 			"Should reduce mote count on mobile for performance",
+		);
+		assert.ok(
+			sliderSource.includes("isMobile={isMobile}"),
+			"Should pass isMobile prop to LightMotes",
+		);
+	});
+
+	it("mobile vertical slider uses height-based clipping", () => {
+		assert.ok(
+			sliderSource.includes("height: `${displayPct}%`"),
+			"Light half should clip by height percentage",
+		);
+	});
+
+	it("mobile slider handle has vertical arrows", () => {
+		assert.ok(
+			sliderSource.includes("&#9650; &#9660;"),
+			"Handle should show up/down arrows on mobile",
+		);
+	});
+
+	it("mobile slider uses vertical cursor", () => {
+		assert.ok(
+			sliderSource.includes("cursor-ns-resize"),
+			"Slider should use ns-resize cursor for vertical drag",
+		);
+	});
+
+	it("drag logic is axis-aware for vertical mode", () => {
+		assert.ok(
+			sliderSource.includes("clientY"),
+			"Mobile drag should use clientY for vertical movement",
+		);
+	});
+
+	it("mobile slider has aria-orientation vertical", () => {
+		assert.ok(
+			sliderSource.includes('aria-orientation="vertical"'),
+			"Mobile slider should declare vertical orientation for accessibility",
 		);
 	});
 });

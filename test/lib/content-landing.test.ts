@@ -111,6 +111,6 @@ describe("getSliderContent", () => {
 	it("returns hint text", async () => {
 		const content = await getSliderContent();
 		assert.equal(content.hint_desktop, "drag to shift reality");
-		assert.equal(content.hint_mobile, "swipe to shift reality");
+		assert.equal(content.hint_mobile, "drag to shift reality");
 	});
 });

@@ -44,6 +44,7 @@
 
 ### Infrastructure
 - [infra] Local Cloud Build testing script — simulate build steps locally (S)
+- [infra] Next.js 15 migration — evaluate breaking changes (React 19, async request APIs, Turbopack), resolve remaining 9 audit vulns (require 15.5.10+), verify Edge Runtime middleware, standalone output, Turnstile, content pipeline (L)
 
 ---
 
