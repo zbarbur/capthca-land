@@ -101,7 +101,7 @@ describe("middleware: admin host detection", () => {
 
 	it("middleware detects analytics.capthca.ai host", () => {
 		assert.ok(
-			middlewareSrc.includes("analytics.capthca.ai") || middlewareSrc.includes("analytics."),
+			middlewareSrc.includes("analytics.capthca.ai"),
 			"middleware must check for analytics subdomain",
 		);
 	});

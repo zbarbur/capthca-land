@@ -8,7 +8,9 @@ function isAdminHost(host: string | null): boolean {
 	if (!host) return false;
 	// Strip port for local dev
 	const hostname = host.split(":")[0];
-	return hostname === "analytics.capthca.ai" || hostname.startsWith("analytics.");
+	return (
+		hostname === "analytics.capthca.ai" || hostname === "analytics.staging.capthca.ai"
+	);
 }
 
 function isBasicAuthValid(header: string | null): boolean {
