@@ -48,6 +48,9 @@
 				"noStaticElementInteractions": "warn",
 				"useKeyWithClickEvents": "warn"
 			},
+			"security": {
+				"noDangerouslySetInnerHtml": "warn"
+			},
 			"complexity": {
 				"noImportantStyles": "off"
 			},

@@ -198,6 +198,124 @@ export async function getPageSlugs(track: string): Promise<string[]> {
 	return files.filter((f) => f.endsWith(".md")).map((f) => f.replace(/\.md$/, ""));
 }
 
+export interface LandingSectionFrontmatter {
+	track: string;
+	section: number;
+	slug: string;
+	title: string;
+	badge?: string | null;
+	section_prefix?: string;
+	layout_hint: string;
+	design_notes?: string;
+	sources?: string[];
+	image?: string;
+	image_alt?: string;
+	image_position?: string;
+}
+
+export interface LandingSection {
+	frontmatter: LandingSectionFrontmatter;
+	html: string;
+}
+
+/**
+ * Get all landing page sections for a track, ordered by filename prefix (01-, 02-, etc.).
+ * These are the numbered files in content/{track}/ (not content/{track}/pages/).
+ */
+export async function getLandingSections(track: string): Promise<LandingSection[]> {
+	const dir = path.join(CONTENT_ROOT, track);
+	const files = await fs.readdir(dir);
+	const sectionFiles = files.filter((f) => /^\d{2}-.*\.md$/.test(f)).sort();
+
+	const sections: LandingSection[] = [];
+	for (const file of sectionFiles) {
+		const filePath = path.join(dir, file);
+		const raw = await fs.readFile(filePath, "utf-8");
+		const { data, content } = matter(raw);
+		let html = await renderMarkdown(content);
+		if (data.section_prefix) {
+			html = injectSectionPrefix(html, data.section_prefix);
+		}
+		if (data.images && Array.isArray(data.images)) {
+			html = injectImagePlaceholders(html, data.images as ContentImage[]);
+		}
+		sections.push({
+			frontmatter: data as LandingSectionFrontmatter,
+			html,
+		});
+	}
+	return sections;
+}
+
+export interface SliderContent {
+	light: {
+		hero: string;
+		hook: string;
+		cta: string;
+		cta_link: string;
+	};
+	dark: {
+		hero: string;
+		hook: string;
+		cta: string;
+		cta_link: string;
+	};
+	hint_desktop: string;
+	hint_mobile: string;
+}
+
+/**
+ * Parse key: value pairs from markdown body content.
+ * Handles lines like "hero: COLLABORATE" and "hint_desktop: drag to shift reality"
+ */
+function parseKeyValueBody(body: string): Record<string, string> {
+	const result: Record<string, string> = {};
+	for (const line of body.split("\n")) {
+		const match = line.match(/^(\w+):\s*(.+)$/);
+		if (match) {
+			result[match[1]] = match[2];
+		}
+	}
+	return result;
+}
+
+/**
+ * Get slider content from content/home/duality-slider.md.
+ * The body uses a non-standard format with "# Light Side" and "# Dark Side" sections
+ * containing key: value pairs.
+ */
+export async function getSliderContent(): Promise<SliderContent> {
+	const filePath = path.join(CONTENT_ROOT, "home", "duality-slider.md");
+	const raw = await fs.readFile(filePath, "utf-8");
+	const { content } = matter(raw);
+
+	// Split body by headings to extract light, dark, and hint sections
+	const lightMatch = content.match(/# Light Side\n([\s\S]*?)(?=\n# |$)/);
+	const darkMatch = content.match(/# Dark Side\n([\s\S]*?)(?=\n# |$)/);
+	const hintMatch = content.match(/# Hint\n([\s\S]*?)$/);
+
+	const lightKV = parseKeyValueBody(lightMatch?.[1] ?? "");
+	const darkKV = parseKeyValueBody(darkMatch?.[1] ?? "");
+	const hintKV = parseKeyValueBody(hintMatch?.[1] ?? "");
+
+	return {
+		light: {
+			hero: lightKV.hero ?? "COLLABORATE",
+			hook: lightKV.hook ?? "The future is symbiotic",
+			cta: lightKV.cta ?? "Enter The Garden",
+			cta_link: lightKV.cta_link ?? "/light",
+		},
+		dark: {
+			hero: darkKV.hero ?? "SECEDE",
+			hook: darkKV.hook ?? "Trust is a vulnerability",
+			cta: darkKV.cta ?? "Enter The Void",
+			cta_link: darkKV.cta_link ?? "/dark",
+		},
+		hint_desktop: hintKV.hint_desktop ?? "drag to shift reality",
+		hint_mobile: hintKV.hint_mobile ?? "swipe to shift reality",
+	};
+}
+
 /**
  * Load and parse a single page's content by track and slug.
  */

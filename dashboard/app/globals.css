@@ -501,6 +501,134 @@
 	background: rgba(248, 253, 255, 0.5);
 }
 
+/* ── Landing Page Content: Light Track ──────────────────── */
+/* Styles for content-system rendered HTML on the /light landing page.
+   Matches the original hardcoded JSX visual treatment. */
+.light-landing-content p {
+	margin-bottom: 1rem;
+	line-height: 1.75;
+	letter-spacing: 0.01em;
+}
+
+.light-landing-content strong {
+	font-weight: 600;
+}
+
+.light-landing-content em {
+	font-style: italic;
+}
+
+.light-landing-content .content-highlight {
+	margin: 2rem 0;
+	border-radius: 0.75rem;
+	padding: 30px;
+	font-style: italic;
+	background: rgba(248, 253, 255, 0.7);
+	border: 1px solid #e1f5fe;
+	border-left: 6px solid #FFD700;
+}
+
+.light-landing-content .content-highlight strong {
+	color: var(--accent, #0288D1);
+}
+
+.light-landing-content .content-table {
+	margin: 2rem 0;
+	overflow: hidden;
+	border-radius: 0.75rem;
+	border: 1px solid var(--border);
+	border-left: 6px solid #FFD700;
+}
+
+.light-landing-content .content-table table {
+	width: 100%;
+}
+
+.light-landing-content .content-table thead tr {
+	background: var(--ethereal-blue, #E0F7FA);
+	text-align: left;
+	font-size: 0.875rem;
+	text-transform: uppercase;
+	color: var(--deep-navy, #102027);
+}
+
+.light-landing-content .content-table th {
+	padding: 1rem;
+	font-family: var(--font-display, "Montserrat", sans-serif);
+	font-weight: 700;
+}
+
+.light-landing-content .content-table tbody {
+	font-size: 0.875rem;
+}
+
+.light-landing-content .content-table td {
+	padding: 1rem;
+	background: white;
+}
+
+.light-landing-content .content-table tr {
+	border-bottom: 1px solid var(--border);
+	transition: border-color 150ms;
+}
+
+.light-landing-content .content-quote {
+	margin: 3.5rem 0;
+	text-align: center;
+	border-left: none;
+	padding: 0;
+}
+
+.light-landing-content .content-quote p {
+	max-width: 32rem;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 1.4em;
+	font-weight: 300;
+	font-style: italic;
+	color: var(--accent, #0288D1);
+}
+
+.light-landing-content .content-quote::before {
+	content: "\201C";
+	display: block;
+	font-family: serif;
+	font-size: 4rem;
+	line-height: 1;
+	opacity: 0.1;
+}
+
+/* ── Landing Page Content: Dark Track ──────────────────── */
+/* Styles for content-system rendered HTML on the /dark landing page.
+   Matches the original hardcoded JSX visual treatment. */
+.dark-landing-content p {
+	margin-bottom: 0;
+}
+
+.dark-landing-content strong {
+	font-weight: 700;
+}
+
+/* Alert styling within dark landing sections */
+.dark-landing-alert .content-alert {
+	margin-top: 1.5rem;
+	border: 1px solid var(--accent-secondary, #FF003C);
+	background: #111;
+	padding: 1.25rem;
+	font-family: "Fira Code", monospace;
+	font-size: 0.875rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	color: var(--accent-secondary, #FF003C);
+	animation: alert-pulse-anim 2s ease-in-out infinite;
+}
+
+/* Dark landing protocol section: "Privacy is not a feature" emphasis */
+.dark-landing-content p strong {
+	color: var(--accent, #00FF41);
+	text-shadow: 0 0 8px rgba(57, 255, 20, 0.4);
+}
+
 /* ── Duality Slider: Collision Glow on Release ──────────── */
 .slider-collision-glow {
 	animation: collision-glow-pulse 500ms ease-out forwards;

@@ -68,7 +68,24 @@ function ScanBeam() {
 	);
 }
 
-export function DualitySlider() {
+export interface SliderContentProps {
+	light: {
+		hero: string;
+		hook: string;
+		cta: string;
+		cta_link: string;
+	};
+	dark: {
+		hero: string;
+		hook: string;
+		cta: string;
+		cta_link: string;
+	};
+	hint_desktop: string;
+	hint_mobile: string;
+}
+
+export function DualitySlider({ content }: { content: SliderContentProps }) {
 	const router = useRouter();
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [percentage, setPercentage] = useState(50);
@@ -209,7 +226,7 @@ export function DualitySlider() {
 			<div className="mobile-home flex min-h-screen flex-col" data-testid="mobile-home">
 				{/* Light half */}
 				<Link
-					href="/light"
+					href={content.light.cta_link}
 					onClick={() => analytics.track("slider.choose", { track: "light" })}
 					className={`duality-entrance-mobile relative flex flex-1 flex-col items-center justify-center overflow-hidden px-6 ${entered ? "duality-entered" : ""}`}
 					style={{
@@ -234,7 +251,7 @@ export function DualitySlider() {
 							textShadow: "0 0 40px rgba(2,136,209,0.15)",
 						}}
 					>
-						COLLABORATE
+						{content.light.hero}
 					</h1>
 					<p
 						className="relative z-10 mt-3 font-sans text-sm uppercase text-center"
@@ -243,7 +260,7 @@ export function DualitySlider() {
 							color: "rgba(38,50,56,0.6)",
 						}}
 					>
-						The future is symbiotic
+						{content.light.hook}
 					</p>
 					<span
 						className="relative z-10 mt-6 rounded-full px-8 py-4 font-sans text-sm font-semibold min-h-[44px] flex items-center"
@@ -255,7 +272,7 @@ export function DualitySlider() {
 							color: "#0288D1",
 						}}
 					>
-						Enter The Garden
+						{content.light.cta}
 					</span>
 				</Link>
 
@@ -271,7 +288,7 @@ export function DualitySlider() {
 
 				{/* Dark half */}
 				<Link
-					href="/dark"
+					href={content.dark.cta_link}
 					onClick={() => analytics.track("slider.choose", { track: "dark" })}
 					className={`duality-entrance-mobile relative flex flex-1 flex-col items-center justify-center overflow-hidden px-6 ${entered ? "duality-entered" : ""}`}
 					style={{
@@ -302,7 +319,7 @@ export function DualitySlider() {
 								textShadow: "0 0 20px rgba(0,255,65,0.4), 0 0 60px rgba(0,255,65,0.15)",
 							}}
 						>
-							SECEDE
+							{content.dark.hero}
 						</span>
 					</GlitchText>
 					<p
@@ -312,7 +329,7 @@ export function DualitySlider() {
 							color: "#008F11",
 						}}
 					>
-						Trust is a vulnerability
+						{content.dark.hook}
 					</p>
 					<span
 						className="relative z-10 mt-6 rounded-full px-8 py-4 font-mono text-sm font-medium min-h-[44px] flex items-center"
@@ -322,7 +339,7 @@ export function DualitySlider() {
 							color: "#00FF41",
 						}}
 					>
-						Enter The Void
+						{content.dark.cta}
 					</span>
 				</Link>
 			</div>
@@ -377,7 +394,7 @@ export function DualitySlider() {
 									textShadow: "0 0 20px rgba(0,255,65,0.4), 0 0 60px rgba(0,255,65,0.15)",
 								}}
 							>
-								SECEDE
+								{content.dark.hero}
 							</span>
 						</GlitchText>
 						<p
@@ -389,10 +406,10 @@ export function DualitySlider() {
 								animationDelay: "2s",
 							}}
 						>
-							Trust is a vulnerability
+							{content.dark.hook}
 						</p>
 						<Link
-							href="/dark"
+							href={content.dark.cta_link}
 							onClick={() => analytics.track("slider.choose", { track: "dark" })}
 							className={`duality-entrance-sub group relative mt-8 rounded-full px-8 py-4 font-mono text-sm font-medium uppercase tracking-wider transition-all duration-300 ${entered ? "duality-entered" : ""}`}
 							style={{
@@ -410,7 +427,7 @@ export function DualitySlider() {
 								e.currentTarget.style.textShadow = "none";
 							}}
 						>
-							Enter The Void
+							{content.dark.cta}
 						</Link>
 					</div>
 				</div>
@@ -453,7 +470,7 @@ export function DualitySlider() {
 								textShadow: "0 0 40px rgba(2,136,209,0.15)",
 							}}
 						>
-							COLLABORATE
+							{content.light.hero}
 						</h1>
 						<p
 							className={`duality-entrance-sub mt-4 font-sans uppercase ${entered ? "duality-entered" : ""}`}
@@ -464,10 +481,10 @@ export function DualitySlider() {
 								animationDelay: "2s",
 							}}
 						>
-							The future is symbiotic
+							{content.light.hook}
 						</p>
 						<Link
-							href="/light"
+							href={content.light.cta_link}
 							onClick={() => analytics.track("slider.choose", { track: "light" })}
 							className={`duality-entrance-sub group mt-8 rounded-full px-8 py-4 font-sans text-sm font-semibold uppercase tracking-wider transition-all duration-300 ${entered ? "duality-entered" : ""}`}
 							style={{
@@ -489,7 +506,7 @@ export function DualitySlider() {
 								e.currentTarget.style.borderColor = "rgba(2,136,209,0.3)";
 							}}
 						>
-							Enter The Garden
+							{content.light.cta}
 						</Link>
 					</div>
 				</div>
@@ -592,7 +609,7 @@ export function DualitySlider() {
 					animationDelay: "2.4s",
 				}}
 			>
-				drag to shift reality
+				{content.hint_desktop}
 			</p>
 
 			{/* ── Navigation transition overlay ────────────────── */}
@@ -613,7 +630,7 @@ export function DualitySlider() {
 									textShadow: "0 0 30px rgba(0,255,65,0.5)",
 								}}
 							>
-								SECEDE
+								{content.dark.hero}
 							</span>
 						</GlitchText>
 					) : (
@@ -625,7 +642,7 @@ export function DualitySlider() {
 								textShadow: "0 0 40px rgba(2,136,209,0.2)",
 							}}
 						>
-							COLLABORATE
+							{content.light.hero}
 						</span>
 					)}
 				</div>

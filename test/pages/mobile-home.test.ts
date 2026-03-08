@@ -34,14 +34,26 @@ describe("mobile home layout", () => {
 		);
 	});
 
-	it("mobile CTAs link to /light and /dark", () => {
-		assert.ok(sliderSource.includes('href="/light"'), "Light CTA should link to /light");
-		assert.ok(sliderSource.includes('href="/dark"'), "Dark CTA should link to /dark");
+	it("mobile CTAs link to tracks via content props", () => {
+		assert.ok(
+			sliderSource.includes("content.light.cta_link"),
+			"Light CTA should use content prop for link",
+		);
+		assert.ok(
+			sliderSource.includes("content.dark.cta_link"),
+			"Dark CTA should use content prop for link",
+		);
 	});
 
-	it("mobile layout renders hero text for both tracks", () => {
-		assert.ok(sliderSource.includes("COLLABORATE"), "Should show COLLABORATE on light half");
-		assert.ok(sliderSource.includes("SECEDE"), "Should show SECEDE on dark half");
+	it("mobile layout renders hero text from content props", () => {
+		assert.ok(
+			sliderSource.includes("content.light.hero"),
+			"Should render light hero word from content",
+		);
+		assert.ok(
+			sliderSource.includes("content.dark.hero"),
+			"Should render dark hero word from content",
+		);
 	});
 
 	it("mobile CTA buttons have min-h-[44px] touch target", () => {
