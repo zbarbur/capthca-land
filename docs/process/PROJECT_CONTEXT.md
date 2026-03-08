@@ -9,9 +9,9 @@
 
 | Field | Value |
 |-------|-------|
-| **Status** | Active — Sprint 5 Closed, Sprint 6 Planning |
+| **Status** | Active — Sprint 6 Closed, Sprint 7 Planning |
 | **Last Sync** | 2026-03-08 |
-| **Current Sprint** | Sprint 5 Closed |
+| **Current Sprint** | Sprint 6 Closed |
 | **Objective** | Dual-narrative landing page at capthca.ai with email capture |
 
 ---
@@ -48,7 +48,7 @@
                └─────────────┘
 ```
 
-- **Frontend:** Next.js 14 (App Router) with SSR on Cloud Run
+- **Frontend:** Next.js 14.2.35 (App Router) with SSR on Cloud Run
 - **Styling:** Tailwind CSS with CSS variable theme switching (`.theme-light` / `.theme-dark`)
 - **API:** Next.js API routes (single `/api/subscribe` endpoint for MVP)
 - **Database:** Firestore (email collection with track preference, env-prefixed)
@@ -56,6 +56,7 @@
 - **CI/CD:** Cloud Build (cloudbuild.yaml → staging, cloudbuild-deploy.yaml → production)
 - **Security:** Turnstile CAPTCHA, honeypot, rate limiter, CSP, HSTS, staging basic auth, SecretProvider
 - **Secrets:** SecretProvider abstraction (`CAPTHCA_LAND_` prefix), GCP Secret Manager in prod/staging
+- **Content:** Markdown + YAML frontmatter in `content/`, rendered via remark/rehype pipeline
 
 ---
 
@@ -63,9 +64,9 @@
 
 | Component | Technology | Environment | Notes |
 |-----------|-----------|-------------|-------|
-| Frontend + API | Next.js 14 | Cloud Run | Standalone output, SSR |
+| Frontend + API | Next.js 14.2.35 | Cloud Run | Standalone output, SSR |
 | Database | Firestore | GCP (`capthca-489205`) | Env-prefixed collections (stg_/prd_/local_) |
-| Domain | staging.capthca.ai | Cloud Run CNAME | Managed SSL cert |
+| Domain | capthca.ai / staging.capthca.ai | Cloud Run CNAME | Managed SSL cert |
 | CI/CD | Cloud Build | GCP | Auto on push (staging), manual (prod) |
 | Secrets | Secret Manager + SecretProvider | GCP | `CAPTHCA_LAND_*` env var naming |
 | CAPTCHA | Cloudflare Turnstile | Cloudflare | Invisible mode |
@@ -77,7 +78,8 @@
 
 | Metric | Value |
 |--------|-------|
-| **Total Tests** | 113 |
+| **Total Tests** | 197 |
+| **Test Suites** | 34 |
 | **Test Runner** | Node.js built-in (`node --test`) |
 | **Test Command** | `npm test` |
 | **CI Command** | `npm run ci` (lint + typecheck + test) |
@@ -95,12 +97,18 @@
 | 3 | Visual Polish + Observability | Completed | 63 | Art assets, DualitySlider rebuild, structured logging, health endpoint, metrics, analytics, content alignment, production deploy |
 | 4 | Content Depth + Hardening | Completed | 94 | Content pipeline (remark/rehype), 14 inner pages, nonce-based CSP, subscriber scripts, enrichment, social cards, API coverage check |
 | 5 | Inner Page Atmosphere | Completed | 113 | Per-page dark/light atmosphere (MatrixRain, GradientOrbs, DNAHelix), content images via frontmatter, 13 whitepaper diagram components (Recharts), academic paper scaffold, npm audit in CI, staging deploy |
+| 6 | Content consolidation, mobile UX, housekeeping | Completed | 197 | Vertical mobile slider, hamburger nav, ambient audio toggle, CTA on every page, dead file cleanup, landing pages wired to content system, Next.js 14.2.35 |
 
 ---
 
 ## Current State
 
 ### Working
+- Vertical mobile slider with mirrored content layout (drag up/down)
+- Mobile hamburger navigation with 44px touch targets
+- Ambient audio component (wired, placeholder audio files)
+- CTA email capture on every page (content-driven from markdown)
+- All landing page copy from content system (no hardcoded prose in JSX)
 - 14 inner pages rendered from markdown content system (remark/rehype pipeline)
 - Unified nav bar with page links on all track pages
 - Nonce-based CSP (no unsafe-inline in script-src)
@@ -111,34 +119,30 @@
 - Cinematic DualitySlider with edge-drag navigation, glassmorphism vs Matrix rain
 - Light track: glassmorphism, gradient orbs, DNA helix borders, floating particles
 - Dark track: Matrix digital rain, glitch text, CRT scanlines, alert pulse, HUD brackets
-- Track pages aligned verbatim with content/ markdown system
 - 17+ generated art assets wired into pages
 - Email capture with Turnstile CAPTCHA + honeypot + rate limiting
 - SecretProvider abstraction for all server-side secrets
 - Firestore env-prefixed collections (stg_/prd_/local_)
 - HSTS + CSP + security non-regression tests
-- Subscriber data enrichment (IP, user agent, referer, language)
 - Structured JSON logging (GCP Cloud Logging compatible)
 - Health endpoint /api/health with Firestore connectivity check
-- Custom metrics for subscribe API (log-based)
-- Slider analytics instrumentation (privacy-first, no external SDK)
 - CI pipeline (lint + typecheck + test + build)
 - Production deployment at capthca.ai
 - Staging deployment at staging.capthca.ai (basic auth protected)
-- Content system (`content/`) with markdown + YAML frontmatter
-- SVG favicon + full SEO metadata + Open Graph tags
 
 ### Not Yet Done
-- Mobile slider / mobile home page experience
+- Real ambient audio files (placeholder paths only)
 - Whitepaper diagram visual polish (spacing, mobile, animations)
 - Cloudflare DNS migration (DDoS, CDN)
 - Welcome emails for subscribers
 - Local Cloud Build testing script
-- Next.js upgrade (npm audit vulnerabilities)
+- Next.js 15 migration (audit vulns require 15.5.10+)
+- Automated browser testing (Playwright/Cypress)
 
 ### Known Limitations
 - Rate limiter is in-memory (resets on container restart, not shared across instances)
 - Turnstile CSP warning from widget iframe (cosmetic, Cloudflare-side)
+- Next.js 14.x audit vulns (9 total) — project not exposed, require 15.5.10+ to fix
 
 ---
 

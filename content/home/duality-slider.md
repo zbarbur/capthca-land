@@ -227,4 +227,4 @@ cta_link: /dark
 # Hint
 
 hint_desktop: drag to shift reality
-hint_mobile: swipe to shift reality
+hint_mobile: drag to shift reality

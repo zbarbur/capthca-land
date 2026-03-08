@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { AmbientAudio } from "./AmbientAudio";
 
 const PAGES = [
 	{ slug: "about", label: "About" },
@@ -24,6 +25,7 @@ export function TrackLayout({
 }) {
 	const pathname = usePathname();
 	const isLanding = pathname === `/${theme}`;
+	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
 	useEffect(() => {
 		document.body.className = `theme-${theme}`;
@@ -31,6 +33,12 @@ export function TrackLayout({
 			document.body.className = "";
 		};
 	}, [theme]);
+
+	// Close mobile menu on route change
+	// biome-ignore lint/correctness/useExhaustiveDependencies: intentionally re-run when pathname changes to close menu on navigation
+	useEffect(() => {
+		setMobileMenuOpen(false);
+	}, [pathname]);
 
 	return (
 		<div className="min-h-screen">
@@ -41,17 +49,18 @@ export function TrackLayout({
 					borderColor: theme === "dark" ? "rgba(57,255,20,0.15)" : "rgba(180,140,50,0.15)",
 				}}
 			>
-				<div className="flex items-center px-6 py-3 text-xs font-mono tracking-wide">
+				<div className="flex items-center px-4 md:px-6 py-3 text-xs font-mono tracking-wide">
 					<Link
 						href={isLanding ? "/" : `/${theme}`}
-						className="shrink-0 transition-opacity hover:opacity-100 text-[var(--accent)] opacity-70"
+						className="shrink-0 transition-opacity hover:opacity-100 text-[var(--accent)] opacity-70 min-h-[44px] flex items-center"
 					>
 						← {isLanding ? "Choice" : theme === "dark" ? "Protocol" : "Standard"}
 					</Link>
-					<span className="mx-3 opacity-20" style={{ color: "var(--accent)" }}>
+					<span className="mx-3 opacity-20 hidden md:inline" style={{ color: "var(--accent)" }}>
 						{"│"}
 					</span>
-					<div className="flex items-center gap-1 overflow-x-auto scrollbar-none">
+					{/* Desktop nav links */}
+					<div className="hidden md:flex items-center gap-1 overflow-x-auto scrollbar-none">
 						{PAGES.map((page, i) => {
 							const href = `/${theme}/${page.slug}`;
 							const isActive = pathname === href;
@@ -72,9 +81,50 @@ export function TrackLayout({
 							);
 						})}
 					</div>
+					{/* Mobile menu toggle */}
+					<button
+						type="button"
+						className="ml-auto md:hidden min-h-[44px] min-w-[44px] flex items-center justify-center text-[var(--accent)]"
+						onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+						aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+						aria-expanded={mobileMenuOpen}
+					>
+						<span className="text-lg">{mobileMenuOpen ? "\u2715" : "\u2630"}</span>
+					</button>
 				</div>
+				{/* Mobile dropdown menu */}
+				{mobileMenuOpen && (
+					<div
+						className="md:hidden border-t px-4 py-2"
+						style={{
+							background: theme === "dark" ? "rgba(0,0,0,0.95)" : "rgba(255,255,255,0.95)",
+							borderColor: theme === "dark" ? "rgba(57,255,20,0.15)" : "rgba(180,140,50,0.15)",
+						}}
+					>
+						<div className="flex flex-col gap-0.5">
+							{PAGES.map((page) => {
+								const href = `/${theme}/${page.slug}`;
+								const isActive = pathname === href;
+								return (
+									<Link
+										key={page.slug}
+										href={href}
+										className={`block px-3 py-3 rounded text-sm font-mono min-h-[44px] flex items-center transition-all ${
+											isActive
+												? "opacity-100 text-[var(--accent)] bg-[var(--accent)]/10"
+												: "opacity-60 hover:opacity-90"
+										}`}
+									>
+										{page.label}
+									</Link>
+								);
+							})}
+						</div>
+					</div>
+				)}
 			</nav>
 			<main>{children}</main>
+			<AmbientAudio theme={theme} />
 		</div>
 	);
 }

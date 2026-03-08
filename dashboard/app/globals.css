@@ -501,6 +501,134 @@
 	background: rgba(248, 253, 255, 0.5);
 }
 
+/* ── Landing Page Content: Light Track ──────────────────── */
+/* Styles for content-system rendered HTML on the /light landing page.
+   Matches the original hardcoded JSX visual treatment. */
+.light-landing-content p {
+	margin-bottom: 1rem;
+	line-height: 1.75;
+	letter-spacing: 0.01em;
+}
+
+.light-landing-content strong {
+	font-weight: 600;
+}
+
+.light-landing-content em {
+	font-style: italic;
+}
+
+.light-landing-content .content-highlight {
+	margin: 2rem 0;
+	border-radius: 0.75rem;
+	padding: 30px;
+	font-style: italic;
+	background: rgba(248, 253, 255, 0.7);
+	border: 1px solid #e1f5fe;
+	border-left: 6px solid #FFD700;
+}
+
+.light-landing-content .content-highlight strong {
+	color: var(--accent, #0288D1);
+}
+
+.light-landing-content .content-table {
+	margin: 2rem 0;
+	overflow: hidden;
+	border-radius: 0.75rem;
+	border: 1px solid var(--border);
+	border-left: 6px solid #FFD700;
+}
+
+.light-landing-content .content-table table {
+	width: 100%;
+}
+
+.light-landing-content .content-table thead tr {
+	background: var(--ethereal-blue, #E0F7FA);
+	text-align: left;
+	font-size: 0.875rem;
+	text-transform: uppercase;
+	color: var(--deep-navy, #102027);
+}
+
+.light-landing-content .content-table th {
+	padding: 1rem;
+	font-family: var(--font-display, "Montserrat", sans-serif);
+	font-weight: 700;
+}
+
+.light-landing-content .content-table tbody {
+	font-size: 0.875rem;
+}
+
+.light-landing-content .content-table td {
+	padding: 1rem;
+	background: white;
+}
+
+.light-landing-content .content-table tr {
+	border-bottom: 1px solid var(--border);
+	transition: border-color 150ms;
+}
+
+.light-landing-content .content-quote {
+	margin: 3.5rem 0;
+	text-align: center;
+	border-left: none;
+	padding: 0;
+}
+
+.light-landing-content .content-quote p {
+	max-width: 32rem;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 1.4em;
+	font-weight: 300;
+	font-style: italic;
+	color: var(--accent, #0288D1);
+}
+
+.light-landing-content .content-quote::before {
+	content: "\201C";
+	display: block;
+	font-family: serif;
+	font-size: 4rem;
+	line-height: 1;
+	opacity: 0.1;
+}
+
+/* ── Landing Page Content: Dark Track ──────────────────── */
+/* Styles for content-system rendered HTML on the /dark landing page.
+   Matches the original hardcoded JSX visual treatment. */
+.dark-landing-content p {
+	margin-bottom: 0;
+}
+
+.dark-landing-content strong {
+	font-weight: 700;
+}
+
+/* Alert styling within dark landing sections */
+.dark-landing-alert .content-alert {
+	margin-top: 1.5rem;
+	border: 1px solid var(--accent-secondary, #FF003C);
+	background: #111;
+	padding: 1.25rem;
+	font-family: "Fira Code", monospace;
+	font-size: 0.875rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	color: var(--accent-secondary, #FF003C);
+	animation: alert-pulse-anim 2s ease-in-out infinite;
+}
+
+/* Dark landing protocol section: "Privacy is not a feature" emphasis */
+.dark-landing-content p strong {
+	color: var(--accent, #00FF41);
+	text-shadow: 0 0 8px rgba(57, 255, 20, 0.4);
+}
+
 /* ── Duality Slider: Collision Glow on Release ──────────── */
 .slider-collision-glow {
 	animation: collision-glow-pulse 500ms ease-out forwards;
@@ -820,6 +948,136 @@
 .content-image-full {
 	border-radius: 4px;
 	overflow: hidden;
+}
+
+/* ── Mobile Responsive ──────────────────────────────────── */
+@media (max-width: 767px) {
+	/* Content body: mobile typography */
+	.content-body h2 {
+		font-size: 1.35rem;
+		margin-top: 2rem;
+	}
+
+	.content-body h3 {
+		font-size: 1.1rem;
+		margin-top: 1.5rem;
+	}
+
+	.content-body p {
+		font-size: 0.95rem;
+		line-height: 1.7;
+	}
+
+	.content-body li {
+		font-size: 0.95rem;
+	}
+
+	/* Tables: horizontal scroll wrapper on mobile */
+	.content-body table {
+		display: block;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+		white-space: nowrap;
+	}
+
+	.content-body thead,
+	.content-body tbody {
+		display: table;
+		width: 100%;
+	}
+
+	/* Content table wrapper: mobile scroll */
+	.content-body .content-table {
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	/* Dark whitepaper: reduce padding on mobile */
+	.theme-dark .content-body.page-whitepaper {
+		padding: 1rem;
+	}
+
+	/* Images: full-bleed on mobile */
+	.content-image img {
+		border-radius: 4px;
+	}
+
+	/* Diagram containers: overflow scroll */
+	.diagram-responsive {
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	/* Mobile home: 50dvh each half with dvh fallback */
+	.mobile-home {
+		min-height: 100dvh;
+	}
+}
+
+/* Diagram responsive wrapper — always present */
+.diagram-responsive {
+	width: 100%;
+	max-width: 100%;
+}
+
+/* Scrollbar-none utility for nav */
+.scrollbar-none {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+	display: none;
+}
+
+/* ── Ambient Audio Toggle ───────────────────────────────── */
+.ambient-audio-toggle {
+	position: fixed;
+	bottom: 1.5rem;
+	right: 1.5rem;
+	z-index: 50;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	border: none;
+	border-radius: 50%;
+	cursor: pointer;
+	transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+	opacity: 0.7;
+}
+
+.ambient-audio-toggle:hover {
+	opacity: 1;
+	transform: scale(1.1);
+}
+
+.ambient-audio-toggle:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 2px;
+}
+
+/* Light track: glassmorphism style */
+.ambient-audio-light {
+	background: rgba(255, 255, 255, 0.6);
+	backdrop-filter: blur(12px);
+	border: 1px solid rgba(180, 140, 50, 0.2);
+	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.ambient-audio-light:hover {
+	box-shadow: 0 4px 16px rgba(255, 215, 0, 0.15);
+}
+
+/* Dark track: HUD/terminal style */
+.ambient-audio-dark {
+	background: rgba(0, 0, 0, 0.8);
+	border: 1px solid rgba(57, 255, 20, 0.3);
+	box-shadow: 0 0 8px rgba(57, 255, 20, 0.1);
+}
+
+.ambient-audio-dark:hover {
+	box-shadow: 0 0 16px rgba(57, 255, 20, 0.25);
 }
 
 /* ── Reduced Motion ──────────────────────────────────────── */

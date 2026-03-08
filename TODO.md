@@ -1,4 +1,6 @@
 # TODO — CAPTHCA land
 
-> Between sprints. See `docs/process/KANBAN.md` for backlog.
-> Last completed: Sprint 5 (Inner Page Atmosphere) — deployed to staging + production.
+> Sprint 6 COMPLETED. See `docs/sprints/SPRINT6_HANDOVER.md` for details.
+> All tasks shipped to staging + production on 2026-03-08.
+
+No active tasks.

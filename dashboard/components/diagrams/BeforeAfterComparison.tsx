@@ -49,18 +49,18 @@ export function BeforeAfterComparison({ track }: { track: "light" | "dark" }) {
 
 	const containerStyle: React.CSSProperties = {
 		display: "flex",
-		gap: isDark ? 0 : "2rem",
+		gap: isDark ? 0 : "1rem",
 		fontFamily: isDark ? "'Courier New', Courier, monospace" : "inherit",
 		flexWrap: "wrap",
 	};
 
 	const columnStyle: React.CSSProperties = {
-		flex: "1 1 300px",
-		minWidth: 280,
+		flex: "1 1 260px",
+		minWidth: 0,
 		background: theme.cardBg,
 		borderRadius: isDark ? 0 : 12,
 		border: isDark ? `1px solid ${theme.border}` : `1px solid ${theme.border}`,
-		padding: "1.5rem",
+		padding: "1rem",
 	};
 
 	const titleStyle = (side: "before" | "after"): React.CSSProperties => ({
@@ -116,9 +116,11 @@ export function BeforeAfterComparison({ track }: { track: "light" | "dark" }) {
 		};
 
 		const noteStyle: React.CSSProperties = {
-			fontSize: "0.8rem",
+			fontSize: "0.75rem",
 			color: isBefore ? theme.muted : theme.accent,
-			whiteSpace: "nowrap",
+			whiteSpace: "normal",
+			textAlign: "right",
+			minWidth: 60,
 		};
 
 		const iconStyle: React.CSSProperties = {

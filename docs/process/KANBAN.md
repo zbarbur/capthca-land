@@ -8,27 +8,23 @@
 
 ## Doing
 
-(empty — between sprints)
+(empty — Sprint 7 not started)
 
 ---
 
 ## Backlog
 
 ### Post-MVP
-- [ui] Mobile slider / mobile home page experience — no slider on mobile currently (M)
 - [email] Welcome email on signup — track-specific content (M)
 - [email] Email provider integration (Resend or SendGrid) (M)
 - [analytics] Analytics dashboard — track preference distribution, conversion funnel (M)
-- [ui] Sound/ambient audio per track (experimental) (M)
 - [security] Move rate limiter to Redis or Cloud Armor for multi-instance consistency (M)
 - [infra] Evaluate Turbopack / Vite for build tooling (M)
-
-### Design & UX
-- [ui] CTA section at bottom of every page (landing + inner) — email capture with track-specific styling; content from shared markdown partial; must verify Turnstile loads correctly on inner pages without CSP or duplicate-widget issues (M)
 
 ### Content & Diagrams
 - [ui] Whitepaper diagram polish — refine spacing, mobile layouts, animations (M)
 - [content] Content system regression tests — full render pipeline (markdown → HTML → diagrams) (S)
+- [audio] Source ambient audio files for light and dark tracks — loopable, ≤ 500KB each (S)
 
 ### Battle-Tested Patterns (from OpenClaw Lens review)
 - [observability] OpenTelemetry foundation — Edge-Runtime-safe Next.js setup (L)
@@ -42,7 +38,7 @@
 
 ### Infrastructure
 - [infra] Local Cloud Build testing script — simulate build steps locally (S)
-- [infra] Next.js upgrade — address 9 npm audit vulnerabilities (M)
+- [infra] Next.js 15 migration — evaluate breaking changes (React 19, async request APIs, Turbopack), resolve remaining 9 audit vulns (require 15.5.10+), verify Edge Runtime middleware, standalone output, Turnstile, content pipeline (L)
 
 ---
 
@@ -51,6 +47,19 @@
 - [infra] Turnstile console warnings on track pages (non-blocking, cosmetic)
 - [infra] `NEXT_PUBLIC_*` vars require Docker build args — document pattern for future public env vars
 - [infra] Turbopack (`--turbo`) fails on paths with spaces — removed from dev script, evaluate when path changes or Turbopack fixes upstream
+
+---
+
+## Done (Sprint 6)
+
+- [ui] T6.1 — Mobile experience overhaul — vertical slider, hamburger nav, responsive diagrams (L)
+- [ui] T6.2 — Ambient sound per track — component + toggle wired, placeholder audio (M)
+- [ui] T6.3 — CTA section on every page — content-driven EmailCapture (M)
+- [cleanup] T6.4 — Remove dead files and audit for orphans (S)
+- [refactor] T6.5 — Wire landing pages into content system (M)
+- [infra] T6.6 — Next.js upgrade 14.2.29 → 14.2.35 (M)
+- [fix] Vertical mobile slider with mirrored content layout, hydration fix
+- [fix] Mobile nav scrollbar resolved
 
 ---
 

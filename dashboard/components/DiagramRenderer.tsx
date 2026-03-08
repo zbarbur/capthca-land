@@ -74,7 +74,7 @@ export function DiagramRenderer({ html, track, className }: DiagramRendererProps
 		const Component = diagramComponents[diagramName];
 		if (Component) {
 			segments.push(
-				<div key={`diagram-${key++}`} className="my-12">
+				<div key={`diagram-${key++}`} className="my-12 diagram-responsive">
 					<Component track={track} />
 				</div>,
 			);

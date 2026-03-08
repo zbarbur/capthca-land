@@ -29,8 +29,8 @@ export function ProtocolOverview({ track }: { track: "light" | "dark" }) {
 	const theme = getTheme(track);
 
 	const cardStyle: React.CSSProperties = {
-		flex: "1 1 200px",
-		minWidth: 180,
+		flex: "1 1 140px",
+		minWidth: 130,
 		maxWidth: 300,
 		background: theme.cardBg,
 		border: `1px solid ${theme.border}`,
