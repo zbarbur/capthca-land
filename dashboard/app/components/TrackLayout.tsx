@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { AmbientAudio } from "./AmbientAudio";
 
 const PAGES = [
 	{ slug: "about", label: "About" },
@@ -123,6 +124,7 @@ export function TrackLayout({
 				)}
 			</nav>
 			<main>{children}</main>
+			<AmbientAudio theme={theme} />
 		</div>
 	);
 }
