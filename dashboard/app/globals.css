@@ -822,6 +822,85 @@
 	overflow: hidden;
 }
 
+/* ── Mobile Responsive ──────────────────────────────────── */
+@media (max-width: 767px) {
+	/* Content body: mobile typography */
+	.content-body h2 {
+		font-size: 1.35rem;
+		margin-top: 2rem;
+	}
+
+	.content-body h3 {
+		font-size: 1.1rem;
+		margin-top: 1.5rem;
+	}
+
+	.content-body p {
+		font-size: 0.95rem;
+		line-height: 1.7;
+	}
+
+	.content-body li {
+		font-size: 0.95rem;
+	}
+
+	/* Tables: horizontal scroll wrapper on mobile */
+	.content-body table {
+		display: block;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+		white-space: nowrap;
+	}
+
+	.content-body thead,
+	.content-body tbody {
+		display: table;
+		width: 100%;
+	}
+
+	/* Content table wrapper: mobile scroll */
+	.content-body .content-table {
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	/* Dark whitepaper: reduce padding on mobile */
+	.theme-dark .content-body.page-whitepaper {
+		padding: 1rem;
+	}
+
+	/* Images: full-bleed on mobile */
+	.content-image img {
+		border-radius: 4px;
+	}
+
+	/* Diagram containers: overflow scroll */
+	.diagram-responsive {
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	/* Mobile home: 50dvh each half with dvh fallback */
+	.mobile-home {
+		min-height: 100dvh;
+	}
+}
+
+/* Diagram responsive wrapper — always present */
+.diagram-responsive {
+	width: 100%;
+	max-width: 100%;
+}
+
+/* Scrollbar-none utility for nav */
+.scrollbar-none {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+	display: none;
+}
+
 /* ── Reduced Motion ──────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
 	.glitch-text::before,

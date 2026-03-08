@@ -12,7 +12,10 @@ import { MatrixRain } from "./MatrixRain";
    Floating warm particles for the light half — pure CSS animation.
    ─────────────────────────────────────────────────────────────── */
 function LightMotes() {
-	const motes = Array.from({ length: 16 }, (_, i) => ({
+	// Fewer motes on mobile for performance
+	const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+	const moteCount = isMobile ? 8 : 16;
+	const motes = Array.from({ length: moteCount }, (_, i) => ({
 		id: i,
 		left: `${Math.random() * 100}%`,
 		size: Math.random() * 4 + 2,
@@ -203,22 +206,29 @@ export function DualitySlider() {
 	/* ── Mobile layout ─────────────────────────────────────── */
 	if (isMobile) {
 		return (
-			<div className="flex min-h-screen flex-col">
+			<div className="mobile-home flex min-h-screen flex-col" data-testid="mobile-home">
 				{/* Light half */}
 				<Link
 					href="/light"
 					onClick={() => analytics.track("slider.choose", { track: "light" })}
-					className={`duality-entrance-mobile relative flex flex-1 flex-col items-center justify-center overflow-hidden ${entered ? "duality-entered" : ""}`}
+					className={`duality-entrance-mobile relative flex flex-1 flex-col items-center justify-center overflow-hidden px-6 ${entered ? "duality-entered" : ""}`}
 					style={{
 						background: "#FFFDF7",
-						minHeight: "50vh",
+						minHeight: "50dvh",
 						animationDelay: "0.3s",
 					}}
+					data-testid="mobile-light-cta"
 				>
 					<GradientOrbs />
 					<LightMotes />
+					<p
+						className="relative z-10 mb-2 font-sans text-xs uppercase tracking-[0.3em]"
+						style={{ color: "rgba(38,50,56,0.5)" }}
+					>
+						The Symbiotic Standard
+					</p>
 					<h1
-						className="relative z-10 font-display font-black leading-none text-[#102027]"
+						className="relative z-10 font-display font-black leading-none text-[#102027] text-center"
 						style={{
 							fontSize: "clamp(2.5rem, 12vw, 5rem)",
 							textShadow: "0 0 40px rgba(2,136,209,0.15)",
@@ -227,16 +237,16 @@ export function DualitySlider() {
 						COLLABORATE
 					</h1>
 					<p
-						className="relative z-10 mt-3 font-sans text-sm uppercase"
+						className="relative z-10 mt-3 font-sans text-sm uppercase text-center"
 						style={{
-							letterSpacing: "0.3em",
+							letterSpacing: "0.2em",
 							color: "rgba(38,50,56,0.6)",
 						}}
 					>
 						The future is symbiotic
 					</p>
 					<span
-						className="relative z-10 mt-6 rounded-full px-6 py-3 font-sans text-sm font-semibold"
+						className="relative z-10 mt-6 rounded-full px-8 py-4 font-sans text-sm font-semibold min-h-[44px] flex items-center"
 						style={{
 							background: "rgba(255,255,255,0.5)",
 							backdropFilter: "blur(8px)",
@@ -251,7 +261,7 @@ export function DualitySlider() {
 
 				{/* Divider */}
 				<div
-					className="relative z-20 h-[3px]"
+					className="relative z-20 h-[3px] shrink-0"
 					style={{
 						background: "linear-gradient(90deg, #00FF41, #FFD700 50%, #0288D1)",
 						boxShadow:
@@ -263,18 +273,28 @@ export function DualitySlider() {
 				<Link
 					href="/dark"
 					onClick={() => analytics.track("slider.choose", { track: "dark" })}
-					className={`duality-entrance-mobile relative flex flex-1 flex-col items-center justify-center overflow-hidden ${entered ? "duality-entered" : ""}`}
+					className={`duality-entrance-mobile relative flex flex-1 flex-col items-center justify-center overflow-hidden px-6 ${entered ? "duality-entered" : ""}`}
 					style={{
 						background: "#050505",
-						minHeight: "50vh",
+						minHeight: "50dvh",
 						animationDelay: "0.5s",
 					}}
+					data-testid="mobile-dark-cta"
 				>
-					<div className="absolute inset-0 z-0 opacity-[0.18]">
+					<div className="absolute inset-0 z-0 opacity-[0.12]">
 						<MatrixRain />
 					</div>
 					<CRTScanlines />
-					<GlitchText as="h1" className="relative z-10 font-display font-black leading-none">
+					<p
+						className="relative z-10 mb-2 font-mono text-xs uppercase tracking-[0.2em]"
+						style={{ color: "#006400" }}
+					>
+						The Post-Biological Protocol
+					</p>
+					<GlitchText
+						as="h1"
+						className="relative z-10 font-display font-black leading-none text-center"
+					>
 						<span
 							style={{
 								fontSize: "clamp(2.5rem, 12vw, 5rem)",
@@ -286,7 +306,7 @@ export function DualitySlider() {
 						</span>
 					</GlitchText>
 					<p
-						className="relative z-10 mt-3 font-mono text-sm uppercase"
+						className="relative z-10 mt-3 font-mono text-sm uppercase text-center"
 						style={{
 							letterSpacing: "0.2em",
 							color: "#008F11",
@@ -295,7 +315,7 @@ export function DualitySlider() {
 						Trust is a vulnerability
 					</p>
 					<span
-						className="relative z-10 mt-6 rounded-full px-6 py-3 font-mono text-sm font-medium"
+						className="relative z-10 mt-6 rounded-full px-8 py-4 font-mono text-sm font-medium min-h-[44px] flex items-center"
 						style={{
 							border: "1px solid #00FF41",
 							background: "transparent",

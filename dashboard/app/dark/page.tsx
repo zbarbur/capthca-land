@@ -54,7 +54,7 @@ export default function DarkTrack() {
 			</div>
 
 			<div
-				className="relative z-[1] mx-auto max-w-[850px] px-6 md:px-10 py-16"
+				className="relative z-[1] mx-auto max-w-[850px] px-4 md:px-10 py-12 md:py-16"
 				style={{
 					background: "rgba(0, 0, 0, 0.88)",
 					borderLeft: "1px solid var(--border)",
@@ -66,7 +66,7 @@ export default function DarkTrack() {
 					<div className="mb-16 pt-8">
 						<GlitchText
 							as="h1"
-							className="font-display text-5xl font-black uppercase md:text-7xl text-[var(--accent)]"
+							className="font-display text-4xl font-black uppercase md:text-7xl text-[var(--accent)]"
 						>
 							SECEDE
 						</GlitchText>
@@ -98,7 +98,7 @@ export default function DarkTrack() {
 							<div className="absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-[var(--accent)] z-10" />
 
 							{/* 15-20% opacity hero background per art direction */}
-							<div className="relative w-full" style={{ height: "400px" }}>
+							<div className="relative w-full" style={{ height: "clamp(200px, 50vw, 400px)" }}>
 								<Image
 									src="/tracks/dark/assets/dark-hero.png"
 									alt="A vast dark digital void with cascading Matrix-style code columns forming a cathedral-like tunnel"

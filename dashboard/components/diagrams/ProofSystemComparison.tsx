@@ -20,6 +20,7 @@ export function ProofSystemComparison({ track }: { track: "light" | "dark" }) {
 
 	const wrapperStyle: React.CSSProperties = {
 		overflowX: "auto",
+		WebkitOverflowScrolling: "touch",
 		borderRadius: isDark ? 0 : 12,
 		border: `1px solid ${theme.border}`,
 		background: theme.cardBg,
@@ -30,7 +31,7 @@ export function ProofSystemComparison({ track }: { track: "light" | "dark" }) {
 		borderCollapse: "collapse",
 		fontFamily: isDark ? "'Courier New', Courier, monospace" : "inherit",
 		fontSize: "0.9rem",
-		minWidth: 500,
+		minWidth: 480,
 	};
 
 	const thStyle = (colIndex: number): React.CSSProperties => {

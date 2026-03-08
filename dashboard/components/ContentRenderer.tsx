@@ -24,15 +24,15 @@ export function ContentRenderer({
 		}[frontmatter.layout_hint] ?? "max-w-6xl";
 
 	return (
-		<article className={`${layoutClass} mx-auto px-6 md:px-10 py-16`}>
+		<article className={`${layoutClass} mx-auto px-4 md:px-10 py-12 md:py-16`}>
 			{/* Page header */}
-			<header className="mb-12">
+			<header className="mb-8 md:mb-12">
 				{frontmatter.badge && (
 					<span className="text-xs uppercase tracking-[0.3em] text-[var(--accent)] font-mono">
 						{frontmatter.badge}
 					</span>
 				)}
-				<h1 className="font-display text-4xl font-black md:text-5xl mt-2">{frontmatter.title}</h1>
+				<h1 className="font-display text-3xl font-black md:text-5xl mt-2">{frontmatter.title}</h1>
 			</header>
 
 			{/* Rendered markdown content — HTML pre-sanitized by rehype-sanitize at build time */}

@@ -60,7 +60,7 @@ export default function LightTrack() {
 			<ScrollReveal smooth>
 				<div className="relative flex min-h-screen flex-col items-center justify-center text-center">
 					<div className="relative z-[1]">
-						<h1 className="font-display text-5xl font-black md:text-7xl text-[var(--deep-navy,#102027)]">
+						<h1 className="font-display text-4xl font-black md:text-7xl text-[var(--deep-navy,#102027)]">
 							COLLABORATE
 						</h1>
 						<p className="mt-2 text-lg uppercase tracking-[0.3em] text-[var(--accent)]">
@@ -75,7 +75,7 @@ export default function LightTrack() {
 
 			{/* Glass content container */}
 			<div
-				className="relative z-[1] mx-auto max-w-[850px] px-6 md:px-[60px]"
+				className="relative z-[1] mx-auto max-w-[850px] px-4 md:px-[60px]"
 				style={{
 					background: "rgba(255, 255, 255, 0.45)",
 					backdropFilter: "blur(12px)",
@@ -257,13 +257,14 @@ export default function LightTrack() {
 
 						{/* Partnership Table */}
 						<div
-							className="my-8 overflow-hidden rounded-xl"
+							className="my-8 overflow-hidden rounded-xl overflow-x-auto"
 							style={{
 								border: "1px solid var(--border)",
 								borderLeft: "6px solid #FFD700",
+								WebkitOverflowScrolling: "touch",
 							}}
 						>
-							<table className="w-full">
+							<table className="w-full" style={{ minWidth: 600 }}>
 								<thead>
 									<tr className="bg-[var(--ethereal-blue,#E0F7FA)] text-left text-sm uppercase text-[var(--deep-navy,#102027)]">
 										<th className="p-4 font-display font-bold">Human Vulnerability</th>

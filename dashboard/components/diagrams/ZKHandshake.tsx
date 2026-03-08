@@ -79,13 +79,14 @@ export function ZKHandshake({ track }: { track: "light" | "dark" }) {
 	const rowHeight = 52;
 
 	return (
-		<div style={{ width: "100%" }}>
+		<div style={{ width: "100%", overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
 			{/* Sequence diagram */}
 			<div
 				style={{
 					display: "flex",
 					gap: 0,
 					width: "100%",
+					minWidth: 380,
 				}}
 			>
 				{/* Agent column */}

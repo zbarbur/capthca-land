@@ -247,8 +247,10 @@ export function SparseMerkleTree({ track }: { track: "light" | "dark" }) {
 	return (
 		<div style={containerStyle}>
 			<div style={titleStyle}>Sparse Merkle Tree — Selective Disclosure</div>
-			<div style={{ minWidth: 500 }}>
-				<TreeBranch node={TREE} theme={theme} isDark={isDark} />
+			<div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+				<div style={{ minWidth: 500 }}>
+					<TreeBranch node={TREE} theme={theme} isDark={isDark} />
+				</div>
 			</div>
 			<div style={legendStyle}>
 				<span>
