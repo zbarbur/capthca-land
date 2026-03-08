@@ -191,16 +191,10 @@ export default async function DarkTrack() {
 
 								{needsSplit ? (
 									<>
-										{/* Body before image split */}
+										{/* Body before image split — content sanitized via rehype-sanitize */}
 										<div
 											className="dark-landing-content font-mono text-sm leading-relaxed md:text-base space-y-4"
-											style={{
-												textShadow:
-													slug === "vulnerability" ? "0 0 8px rgba(57, 255, 20, 0.15)" : undefined,
-											}}
-											dangerouslySetInnerHTML={{
-												__html: beforeSplit,
-											}}
+											dangerouslySetInnerHTML={{ __html: beforeSplit }}
 										/>
 
 										{/* Section image with HUD brackets */}
@@ -274,7 +268,6 @@ export default async function DarkTrack() {
 				})}
 
 				{/* ── Email Capture CTA ── */}
-				{/* @ts-expect-error Async Server Component */}
 				<CTASection track="dark" />
 
 				{/* ── Footer ── */}

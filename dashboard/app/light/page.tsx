@@ -241,7 +241,6 @@ export default async function LightTrack() {
 				})}
 
 				{/* ── Email Capture CTA ── */}
-				{/* @ts-expect-error Async Server Component */}
 				<CTASection track="light" />
 
 				{/* ── Footer ── */}
