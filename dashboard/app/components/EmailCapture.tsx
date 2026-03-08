@@ -19,7 +19,25 @@ type Status = "idle" | "submitting" | "success" | "error";
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "";
 
-export function EmailCapture({ track }: { track: "light" | "dark" }) {
+export interface EmailCaptureProps {
+	track: "light" | "dark";
+	heading?: string;
+	subheading?: string | null;
+	inputPlaceholder?: string;
+	buttonText?: string;
+	successTitle?: string;
+	successMessage?: string;
+}
+
+export function EmailCapture({
+	track,
+	heading,
+	subheading: _subheading,
+	inputPlaceholder,
+	buttonText,
+	successTitle,
+	successMessage,
+}: EmailCaptureProps) {
 	const [email, setEmail] = useState("");
 	const [status, setStatus] = useState<Status>("idle");
 	const [errorMsg, setErrorMsg] = useState("");
@@ -124,10 +142,11 @@ export function EmailCapture({ track }: { track: "light" | "dark" }) {
 				}`}
 			>
 				<p className="text-lg font-bold">
-					{isLight ? "Welcome to the Garden." : "Endpoint registered."}
+					{successTitle ?? (isLight ? "Welcome to the Garden." : "Endpoint registered.")}
 				</p>
 				<p className="mt-2 text-sm opacity-70">
-					{isLight ? "The harmony grows stronger." : "Your signal has been received."}
+					{successMessage ??
+						(isLight ? "The harmony grows stronger." : "Your signal has been received.")}
 				</p>
 			</div>
 		);
@@ -140,7 +159,7 @@ export function EmailCapture({ track }: { track: "light" | "dark" }) {
 					isLight ? "text-[var(--accent)]" : "text-[var(--accent)]"
 				}`}
 			>
-				{isLight ? "Join the Symbiotic Standard" : "Initialize your Protocol"}
+				{heading ?? (isLight ? "Join the Symbiotic Standard" : "Initialize your Protocol")}
 			</p>
 			{/* Honeypot — hidden from humans, bots auto-fill it */}
 			<input
@@ -161,7 +180,9 @@ export function EmailCapture({ track }: { track: "light" | "dark" }) {
 						setEmail(e.target.value);
 						if (status === "error") setStatus("idle");
 					}}
-					placeholder={isLight ? "Join the garden..." : "Submit your endpoint..."}
+					placeholder={
+						inputPlaceholder ?? (isLight ? "Join the garden..." : "Submit your endpoint...")
+					}
 					className={`flex-1 rounded-full px-5 py-3 text-sm outline-none transition-colors ${
 						isLight
 							? "border border-[var(--accent)] bg-white text-[var(--deep-navy,#102027)] placeholder:text-gray-400"
@@ -176,7 +197,7 @@ export function EmailCapture({ track }: { track: "light" | "dark" }) {
 						isLight ? "bg-[var(--accent)] text-white" : "bg-[var(--accent)] text-black"
 					}`}
 				>
-					{status === "submitting" ? "..." : isLight ? "Join" : "Init"}
+					{status === "submitting" ? "..." : (buttonText ?? (isLight ? "Join" : "Init"))}
 				</button>
 			</div>
 			{status === "error" && <p className="mt-3 text-sm text-red-500">{errorMsg}</p>}

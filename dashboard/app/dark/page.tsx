@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { EmailCapture } from "../components/EmailCapture";
+import { CTASection } from "../components/CTASection";
 import { GlitchText } from "../components/GlitchText";
 import { MatrixRain } from "../components/MatrixRain";
 import { ScrollReveal } from "../components/ScrollReveal";
@@ -360,7 +360,7 @@ export default function DarkTrack() {
 
 				{/* ── Email Capture with CTA background ── */}
 				<ScrollReveal delay={100}>
-					<section className="relative py-10 text-center overflow-hidden" id="subscribe">
+					<div className="relative overflow-hidden">
 						{/* CTA background image */}
 						<div className="absolute inset-0 z-0">
 							<Image
@@ -372,10 +372,8 @@ export default function DarkTrack() {
 								style={{ opacity: 0.2 }}
 							/>
 						</div>
-						<div className="relative z-10">
-							<EmailCapture track="dark" />
-						</div>
-					</section>
+						<CTASection track="dark" />
+					</div>
 				</ScrollReveal>
 
 				{/* ── Footer ── */}

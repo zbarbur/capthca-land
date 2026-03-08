@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ContentRenderer } from "../../../components/ContentRenderer";
 import { getPageContent, getPageSlugs } from "../../../lib/content";
+import { CTASection } from "../../components/CTASection";
 import { DNAHelix } from "../../components/DNAHelix";
 import { GradientOrbs } from "../../components/GradientOrbs";
 import { MatrixRain } from "../../components/MatrixRain";
@@ -91,6 +92,9 @@ export default async function InnerPage({ params }: { params: { track: string; s
 				)}
 				<div className="relative z-[1]">
 					<ContentRenderer html={page.html} frontmatter={page.frontmatter} slug={params.slug} />
+					<div className="mx-auto max-w-5xl px-6 md:px-10 border-t border-[var(--border)]">
+						<CTASection track={params.track} />
+					</div>
 				</div>
 			</TrackLayout>
 		);

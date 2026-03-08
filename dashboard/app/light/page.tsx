@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { CTASection } from "../components/CTASection";
 import { DNAHelix } from "../components/DNAHelix";
-import { EmailCapture } from "../components/EmailCapture";
 import { GradientOrbs } from "../components/GradientOrbs";
 import { ScrollReveal } from "../components/ScrollReveal";
 import { TrackLayout } from "../components/TrackLayout";
@@ -570,7 +570,7 @@ export default function LightTrack() {
 
 				{/* ── Email Capture CTA ── */}
 				<ScrollReveal smooth delay={100}>
-					<section className="relative py-10 text-center" id="subscribe">
+					<div className="relative">
 						{/* CTA background image */}
 						<div className="pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-xl">
 							<Image
@@ -581,10 +581,8 @@ export default function LightTrack() {
 								className="object-cover opacity-30"
 							/>
 						</div>
-						<div className="relative z-[1]">
-							<EmailCapture track="light" />
-						</div>
-					</section>
+						<CTASection track="light" />
+					</div>
 				</ScrollReveal>
 
 				{/* ── Footer ── */}

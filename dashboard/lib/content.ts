@@ -150,6 +150,46 @@ export async function renderMarkdown(content: string): Promise<string> {
 }
 
 /**
+ * CTA content parsed from content/{track}/cta.md
+ */
+export interface CTAContent {
+	heading: string;
+	subheading: string | null;
+	input_placeholder: string;
+	button_text: string;
+	success_title: string;
+	success_message: string;
+}
+
+/**
+ * Load CTA content for a given track from content/{track}/cta.md.
+ * The body uses simple "key: value" lines (not standard markdown).
+ */
+export async function getCTAContent(track: string): Promise<CTAContent> {
+	const filePath = path.join(CONTENT_ROOT, track, "cta.md");
+	const raw = await fs.readFile(filePath, "utf-8");
+	const { content } = matter(raw);
+
+	const result: Record<string, string | null> = {};
+	for (const line of content.split("\n")) {
+		const match = line.match(/^(\w+):\s*(.*)$/);
+		if (match) {
+			const value = match[2].replace(/^"(.*)"$/, "$1");
+			result[match[1]] = value === "null" ? null : value;
+		}
+	}
+
+	return {
+		heading: result.heading ?? "",
+		subheading: result.subheading ?? null,
+		input_placeholder: result.input_placeholder ?? "",
+		button_text: result.button_text ?? "",
+		success_title: result.success_title ?? "",
+		success_message: result.success_message ?? "",
+	};
+}
+
+/**
  * Get all page slugs for a given track.
  */
 export async function getPageSlugs(track: string): Promise<string[]> {
