@@ -8,7 +8,14 @@
 
 ## Doing
 
-(empty — Sprint 7 not started)
+### Sprint 7 — Admin foundation, content quality, and polish
+
+- [infra] T7.1 — IAP + analytics subdomain setup (S)
+- [analytics] T7.2 — Admin dashboard scaffold + subscriber stats (M)
+- [observability] T7.3 — App log and error tracking view (M)
+- [content] T7.4 — Content system regression tests (S)
+- [ui] T7.5 — Whitepaper diagram polish (M)
+- [audio] T7.6 — Source ambient audio files (S)
 
 ---
 
@@ -17,14 +24,11 @@
 ### Post-MVP
 - [email] Welcome email on signup — track-specific content (M)
 - [email] Email provider integration (Resend or SendGrid) (M)
-- [analytics] Analytics dashboard — track preference distribution, conversion funnel (M)
 - [security] Move rate limiter to Redis or Cloud Armor for multi-instance consistency (M)
 - [infra] Evaluate Turbopack / Vite for build tooling (M)
-
-### Content & Diagrams
-- [ui] Whitepaper diagram polish — refine spacing, mobile layouts, animations (M)
-- [content] Content system regression tests — full render pipeline (markdown → HTML → diagrams) (S)
-- [audio] Source ambient audio files for light and dark tracks — loopable, ≤ 500KB each (S)
+- [analytics] Conversion funnel visualization — slider → track → subscribe (M)
+- [analytics] CSV export for subscriber data (S)
+- [analytics] Admin audit log — who accessed what, when (S)
 
 ### Battle-Tested Patterns (from OpenClaw Lens review)
 - [observability] OpenTelemetry foundation — Edge-Runtime-safe Next.js setup (L)
