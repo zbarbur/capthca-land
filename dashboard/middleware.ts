@@ -4,13 +4,15 @@ import { NextResponse } from "next/server";
 const STAGING_USER = process.env.CAPTHCA_LAND_STAGING_AUTH_USER || "capthca";
 const STAGING_AUTH_PASS = process.env.CAPTHCA_LAND_STAGING_AUTH_PASS || "";
 
-function isAdminHost(host: string | null): boolean {
+const ADMIN_PATHS = ["/dashboard", "/subscribers", "/logs", "/api/admin"];
+
+function isAdminPath(pathname: string): boolean {
+	return ADMIN_PATHS.some((p) => pathname === p || pathname.startsWith(`${p}/`));
+}
+
+function isLocalDev(host: string | null): boolean {
 	if (!host) return false;
-	// Strip port for local dev
-	const hostname = host.split(":")[0];
-	return (
-		hostname === "analytics.capthca.ai" || hostname === "analytics.staging.capthca.ai"
-	);
+	return host.split(":")[0] === "localhost";
 }
 
 function isBasicAuthValid(header: string | null): boolean {
@@ -72,17 +74,17 @@ export function middleware(request: NextRequest) {
 	const nonce = crypto.randomUUID();
 	const host = request.headers.get("host");
 
-	// Admin subdomain — IAP handles authentication at the load balancer level
-	if (isAdminHost(host)) {
+	// Admin routes — local dev only until Cloudflare Access is configured
+	if (isAdminPath(request.nextUrl.pathname)) {
+		if (!isLocalDev(host)) {
+			return new NextResponse("Not Found", { status: 404 });
+		}
+
 		logApiRequest(request);
 		const requestHeaders = new Headers(request.headers);
 		requestHeaders.set("x-nonce", nonce);
 		requestHeaders.set("x-admin-context", "true");
-
-		const iapEmail = request.headers.get("x-goog-authenticated-user-email");
-		if (iapEmail) {
-			requestHeaders.set("x-admin-email", iapEmail);
-		}
+		requestHeaders.set("x-admin-email", "accounts.google.com:dev@capthca.ai");
 
 		const response = NextResponse.next({
 			request: { headers: requestHeaders },

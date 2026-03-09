@@ -96,44 +96,40 @@ describe("admin-auth: getAdminUser", () => {
 	});
 });
 
-describe("middleware: admin host detection", () => {
+describe("middleware: admin route protection", () => {
 	const middlewareSrc = fs.readFileSync(path.join(DASHBOARD_DIR, "middleware.ts"), "utf-8");
 
-	it("middleware detects analytics.capthca.ai host", () => {
+	it("middleware blocks admin paths for non-localhost hosts", () => {
 		assert.ok(
-			middlewareSrc.includes("analytics.capthca.ai"),
-			"middleware must check for analytics subdomain",
+			middlewareSrc.includes("isAdminPath") && middlewareSrc.includes("isLocalDev"),
+			"middleware must check admin paths and restrict to local dev",
 		);
 	});
 
-	it("middleware sets x-admin-context header for admin host", () => {
+	it("middleware returns 404 for remote admin access", () => {
+		assert.ok(
+			middlewareSrc.includes('"Not Found"') && middlewareSrc.includes("404"),
+			"middleware must return 404 for remote admin requests",
+		);
+	});
+
+	it("middleware sets x-admin-context header for local admin", () => {
 		assert.ok(
 			middlewareSrc.includes("x-admin-context"),
 			"middleware must set x-admin-context header",
 		);
 	});
 
-	it("middleware forwards IAP email as x-admin-email header", () => {
-		assert.ok(
-			middlewareSrc.includes("x-admin-email"),
-			"middleware must set x-admin-email header from IAP header",
-		);
+	it("middleware sets x-admin-email header for local admin", () => {
+		assert.ok(middlewareSrc.includes("x-admin-email"), "middleware must set x-admin-email header");
 	});
 
-	it("middleware reads x-goog-authenticated-user-email header", () => {
-		assert.ok(
-			middlewareSrc.includes("x-goog-authenticated-user-email"),
-			"middleware must read IAP authentication header",
-		);
-	});
-
-	it("admin host path skips basic auth", () => {
-		// The isAdminHost check must come before the basic auth check
-		const adminHostIndex = middlewareSrc.indexOf("isAdminHost");
+	it("admin path check comes before basic auth", () => {
+		const adminPathIndex = middlewareSrc.indexOf("isAdminPath");
 		const basicAuthIndex = middlewareSrc.indexOf("isBasicAuthValid");
 		assert.ok(
-			adminHostIndex < basicAuthIndex,
-			"admin host check must precede basic auth check in middleware",
+			adminPathIndex < basicAuthIndex,
+			"admin path check must precede basic auth check in middleware",
 		);
 	});
 });

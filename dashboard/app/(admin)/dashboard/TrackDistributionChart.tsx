@@ -1,6 +1,13 @@
 "use client";
 
-import { Cell, Pie, PieChart, type PieLabelRenderProps, ResponsiveContainer, Tooltip } from "recharts";
+import {
+	Cell,
+	Pie,
+	PieChart,
+	type PieLabelRenderProps,
+	ResponsiveContainer,
+	Tooltip,
+} from "recharts";
 
 const COLORS = ["#38bdf8", "#22c55e"]; // sky-400, green-500
 

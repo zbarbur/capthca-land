@@ -63,10 +63,7 @@ describe("mobile responsive — diagrams", () => {
 		}
 		// DiagramWrapper itself provides overflow-x-auto
 		const wrapper = fs.readFileSync("dashboard/components/diagrams/DiagramWrapper.tsx", "utf-8");
-		assert.ok(
-			wrapper.includes("overflow-x-auto"),
-			"DiagramWrapper should provide overflow-x-auto",
-		);
+		assert.ok(wrapper.includes("overflow-x-auto"), "DiagramWrapper should provide overflow-x-auto");
 	});
 
 	it("BeforeAfterComparison uses flexWrap for mobile stacking", () => {

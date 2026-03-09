@@ -3,12 +3,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { describe, it } from "node:test";
 
-const LIGHT_AUDIO = path.resolve(
-	"dashboard/public/tracks/light/assets/ambient-light.mp3",
-);
-const DARK_AUDIO = path.resolve(
-	"dashboard/public/tracks/dark/assets/ambient-dark.mp3",
-);
+const LIGHT_AUDIO = path.resolve("dashboard/public/tracks/light/assets/ambient-light.mp3");
+const DARK_AUDIO = path.resolve("dashboard/public/tracks/dark/assets/ambient-dark.mp3");
 
 describe("ambient audio files", () => {
 	it("light track ambient audio file exists", () => {

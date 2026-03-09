@@ -44,7 +44,7 @@ describe("AmbientAudio component", () => {
 	});
 
 	it("uses HTMLAudioElement with loop", () => {
-		assert.ok(componentSrc.includes("new Audio()"), "Should create HTMLAudioElement");
+		assert.ok(componentSrc.includes("new Audio("), "Should create HTMLAudioElement");
 		assert.ok(componentSrc.includes("audio.loop = true"), "Should set loop to true");
 	});
 
