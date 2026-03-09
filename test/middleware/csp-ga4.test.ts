@@ -23,9 +23,7 @@ describe("CSP headers include GA4 domains", () => {
 
 	it("connect-src includes *.google-analytics.com", () => {
 		// Find the connect-src line specifically
-		const connectLine = middlewareSrc
-			.split("\n")
-			.find((line) => line.includes("connect-src"));
+		const connectLine = middlewareSrc.split("\n").find((line) => line.includes("connect-src"));
 		assert.ok(connectLine, "connect-src directive should exist");
 		assert.ok(
 			connectLine.includes("https://*.google-analytics.com"),
@@ -34,9 +32,7 @@ describe("CSP headers include GA4 domains", () => {
 	});
 
 	it("connect-src includes *.googletagmanager.com", () => {
-		const connectLine = middlewareSrc
-			.split("\n")
-			.find((line) => line.includes("connect-src"));
+		const connectLine = middlewareSrc.split("\n").find((line) => line.includes("connect-src"));
 		assert.ok(connectLine, "connect-src directive should exist");
 		assert.ok(
 			connectLine.includes("https://*.googletagmanager.com"),
