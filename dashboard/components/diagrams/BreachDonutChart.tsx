@@ -1,6 +1,7 @@
 "use client";
 
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
+import { DiagramWrapper } from "./DiagramWrapper";
 import { getTheme } from "./theme";
 
 const DATA = [
@@ -19,65 +20,67 @@ export function BreachDonutChart({ track }: { track: "light" | "dark" }) {
 	const colors = track === "light" ? COLORS_LIGHT : COLORS_DARK;
 
 	return (
-		<div style={{ width: "100%", textAlign: "center" }}>
-			<ResponsiveContainer width="100%" height={300}>
-				<PieChart>
-					<Pie
-						data={DATA}
-						cx="50%"
-						cy="50%"
-						innerRadius={70}
-						outerRadius={110}
-						dataKey="value"
-						stroke="none"
-					>
-						{DATA.map((entry, index) => (
-							<Cell key={entry.name} fill={colors[index % colors.length]} />
-						))}
-					</Pie>
-					<Tooltip
-						contentStyle={{
-							backgroundColor: theme.cardBg,
-							border: `1px solid ${theme.border}`,
-							color: theme.text,
-							borderRadius: 8,
-						}}
-						// eslint-disable-next-line @typescript-eslint/no-explicit-any
-						formatter={(value: any) => [`${value}%`]}
-					/>
-					{/* Center label */}
-					<text
-						x="50%"
-						y="46%"
-						textAnchor="middle"
-						dominantBaseline="central"
-						fill={theme.text}
-						fontSize={28}
-						fontWeight="bold"
-					>
-						68%
-					</text>
-					<text
-						x="50%"
-						y="57%"
-						textAnchor="middle"
-						dominantBaseline="central"
-						fill={theme.muted}
-						fontSize={12}
-					>
-						Human Element
-					</text>
-				</PieChart>
-			</ResponsiveContainer>
-			<p
-				style={{
-					color: theme.muted,
-					fontSize: 11,
-					marginTop: 4,
-				}}
-			>
-				Source: Verizon DBIR 2024
-			</p>
-		</div>
+		<DiagramWrapper>
+			<div style={{ width: "100%", textAlign: "center" }}>
+				<ResponsiveContainer width="100%" height={300}>
+					<PieChart>
+						<Pie
+							data={DATA}
+							cx="50%"
+							cy="50%"
+							innerRadius={70}
+							outerRadius={110}
+							dataKey="value"
+							stroke="none"
+						>
+							{DATA.map((entry, index) => (
+								<Cell key={entry.name} fill={colors[index % colors.length]} />
+							))}
+						</Pie>
+						<Tooltip
+							contentStyle={{
+								backgroundColor: theme.cardBg,
+								border: `1px solid ${theme.border}`,
+								color: theme.text,
+								borderRadius: 8,
+							}}
+							// eslint-disable-next-line @typescript-eslint/no-explicit-any
+							formatter={(value: any) => [`${value}%`]}
+						/>
+						{/* Center label */}
+						<text
+							x="50%"
+							y="46%"
+							textAnchor="middle"
+							dominantBaseline="central"
+							fill={theme.text}
+							fontSize={28}
+							fontWeight="bold"
+						>
+							68%
+						</text>
+						<text
+							x="50%"
+							y="57%"
+							textAnchor="middle"
+							dominantBaseline="central"
+							fill={theme.muted}
+							fontSize={12}
+						>
+							Human Element
+						</text>
+					</PieChart>
+				</ResponsiveContainer>
+				<p
+					style={{
+						color: theme.muted,
+						fontSize: 12,
+						marginTop: 4,
+					}}
+				>
+					Source: Verizon DBIR 2024
+				</p>
+			</div>
+		</DiagramWrapper>
 	);
 }

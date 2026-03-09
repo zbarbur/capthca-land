@@ -1,5 +1,6 @@
 "use client";
 
+import { DiagramWrapper } from "./DiagramWrapper";
 import { getTheme } from "./theme";
 
 const EVENTS = [
@@ -25,110 +26,110 @@ export function CaptchaTimeline({ track }: { track: "light" | "dark" }) {
 		: `0 0 12px ${theme.secondary}, 0 0 24px ${theme.secondary}80`;
 
 	return (
-		<div style={{ width: "100%" }}>
-			<style>{`
+		<DiagramWrapper>
+			<div style={{ width: "100%" }}>
+				<style>{`
 				@keyframes captcha-timeline-pulse {
 					0%, 100% { box-shadow: 0 0 12px ${theme.secondary}, 0 0 24px ${theme.secondary}60; }
 					50% { box-shadow: 0 0 20px ${theme.secondary}, 0 0 40px ${theme.secondary}90; }
 				}
 			`}</style>
-			<div
-				style={{
-					overflowX: "auto",
-					padding: "24px 0",
-					WebkitOverflowScrolling: "touch",
-				}}
-			>
 				<div
 					style={{
-						display: "flex",
-						alignItems: "center",
-						position: "relative",
-						minWidth: EVENTS.length * 140,
-						padding: "40px 24px",
+						padding: "24px 0",
 					}}
 				>
-					{/* Horizontal line */}
 					<div
 						style={{
-							position: "absolute",
-							top: "50%",
-							left: 24,
-							right: 24,
-							height: 2,
-							backgroundColor: lineColor,
-							transform: "translateY(-1px)",
+							display: "flex",
+							alignItems: "center",
+							position: "relative",
+							minWidth: EVENTS.length * 140,
+							padding: "40px 24px",
 						}}
-					/>
+					>
+						{/* Horizontal line */}
+						<div
+							style={{
+								position: "absolute",
+								top: "50%",
+								left: 24,
+								right: 24,
+								height: 2,
+								backgroundColor: lineColor,
+								transform: "translateY(-1px)",
+							}}
+						/>
 
-					{EVENTS.map((item) => {
-						const isCapthca = item.type === "breakthrough";
-						const nodeSize = isCapthca ? 20 : 12;
+						{EVENTS.map((item) => {
+							const isCapthca = item.type === "breakthrough";
+							const nodeSize = isCapthca ? 20 : 12;
 
-						return (
-							<div
-								key={item.year}
-								style={{
-									flex: "1 0 0",
-									display: "flex",
-									flexDirection: "column",
-									alignItems: "center",
-									position: "relative",
-									zIndex: 1,
-								}}
-							>
-								{/* Year above */}
+							return (
 								<div
+									key={item.year}
 									style={{
-										fontSize: isCapthca ? 15 : 12,
-										fontWeight: isCapthca ? 700 : 500,
-										color: isCapthca ? capthcaColor : theme.muted,
-										marginBottom: 12,
-										whiteSpace: "nowrap",
+										flex: "1 0 0",
+										display: "flex",
+										flexDirection: "column",
+										alignItems: "center",
+										position: "relative",
+										zIndex: 1,
 									}}
 								>
-									{item.year}
-								</div>
+									{/* Year above */}
+									<div
+										style={{
+											fontSize: isCapthca ? 15 : 12,
+											fontWeight: isCapthca ? 700 : 500,
+											color: isCapthca ? capthcaColor : theme.muted,
+											marginBottom: 12,
+											whiteSpace: "nowrap",
+										}}
+									>
+										{item.year}
+									</div>
 
-								{/* Node */}
-								<div
-									style={{
-										width: nodeSize,
-										height: nodeSize,
-										borderRadius: "50%",
-										backgroundColor: isCapthca ? capthcaColor : nodeColor,
-										boxShadow: isCapthca ? capthcaGlow : "none",
-										...(isCapthca && !isLight
-											? {
-													animation: "captcha-timeline-pulse 2s ease-in-out infinite",
-												}
-											: {}),
-									}}
-								/>
+									{/* Node */}
+									<div
+										style={{
+											width: nodeSize,
+											height: nodeSize,
+											borderRadius: "50%",
+											backgroundColor: isCapthca ? capthcaColor : nodeColor,
+											boxShadow: isCapthca ? capthcaGlow : "none",
+											...(isCapthca && !isLight
+												? {
+														animation: "captcha-timeline-pulse 2s ease-in-out infinite",
+													}
+												: {}),
+										}}
+									/>
 
-								{/* Event below */}
-								<div
-									style={{
-										fontSize: isCapthca ? 14 : 11,
-										fontWeight: isCapthca ? 700 : 400,
-										color: isCapthca ? capthcaColor : theme.text,
-										marginTop: 12,
-										textAlign: "center",
-										whiteSpace: "nowrap",
-										...(isCapthca
-											? {
-													textShadow: isLight ? "none" : `0 0 8px ${theme.secondary}80`,
-												}
-											: {}),
-									}}
-								>
-									{item.event}
+									{/* Event below */}
+									<div
+										style={{
+											fontSize: isCapthca ? 14 : 12,
+											fontWeight: isCapthca ? 700 : 400,
+											color: isCapthca ? capthcaColor : theme.text,
+											marginTop: 12,
+											textAlign: "center",
+											whiteSpace: "nowrap",
+											...(isCapthca
+												? {
+														textShadow: isLight ? "none" : `0 0 8px ${theme.secondary}80`,
+													}
+												: {}),
+										}}
+									>
+										{item.event}
+									</div>
 								</div>
-							</div>
-						);
-					})}
+							);
+						})}
+					</div>
 				</div>
 			</div>
-		</div>
+		</DiagramWrapper>
 	);
 }

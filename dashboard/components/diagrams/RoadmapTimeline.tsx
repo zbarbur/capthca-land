@@ -1,5 +1,6 @@
 "use client";
 
+import { DiagramWrapper } from "./DiagramWrapper";
 import { getTheme } from "./theme";
 
 const PHASES = [
@@ -77,8 +78,9 @@ export function RoadmapTimeline({ track }: { track: "light" | "dark" }) {
 	const pulseColor = isLight ? theme.accent : theme.secondary;
 
 	return (
-		<div style={{ width: "100%" }}>
-			<style>{`
+		<DiagramWrapper>
+			<div style={{ width: "100%" }}>
+				<style>{`
 				@keyframes roadmap-pulse {
 					0%, 100% { box-shadow: 0 0 0 0 ${pulseColor}60; }
 					50% { box-shadow: 0 0 0 8px ${pulseColor}00; }
@@ -107,114 +109,114 @@ export function RoadmapTimeline({ track }: { track: "light" | "dark" }) {
 				}
 			`}</style>
 
-			<div
-				data-roadmap-container=""
-				style={{
-					display: "flex",
-					flexDirection: "column",
-					alignItems: "flex-start",
-					gap: 0,
-					padding: "16px 0",
-				}}
-			>
-				{PHASES.map((item, index) => (
-					<div key={item.phase}>
-						<div
-							data-roadmap-phase=""
-							style={{
-								display: "flex",
-								flexDirection: "row",
-								alignItems: "center",
-							}}
-						>
-							{/* Date — shown above circle on desktop, hidden on mobile (shown in text block instead) */}
+				<div
+					data-roadmap-container=""
+					style={{
+						display: "flex",
+						flexDirection: "column",
+						alignItems: "flex-start",
+						gap: 0,
+						padding: "16px 0",
+					}}
+				>
+					{PHASES.map((item, index) => (
+						<div key={item.phase}>
 							<div
+								data-roadmap-phase=""
 								style={{
-									display: "none",
-								}}
-								data-roadmap-date=""
-							/>
-
-							{/* Circle */}
-							<div style={getCircleStyle(item.status)}>{item.phase}</div>
-
-							{/* Text block (mobile: to the right; desktop: below) */}
-							<div
-								data-roadmap-text=""
-								style={{
-									marginLeft: 16,
-									marginTop: 0,
+									display: "flex",
+									flexDirection: "row",
+									alignItems: "center",
 								}}
 							>
+								{/* Date — shown above circle on desktop, hidden on mobile (shown in text block instead) */}
 								<div
 									style={{
-										fontSize: 11,
-										color: theme.muted,
-										fontWeight: 500,
-										letterSpacing: "0.04em",
-										textTransform: "uppercase",
+										display: "none",
+									}}
+									data-roadmap-date=""
+								/>
+
+								{/* Circle */}
+								<div style={getCircleStyle(item.status)}>{item.phase}</div>
+
+								{/* Text block (mobile: to the right; desktop: below) */}
+								<div
+									data-roadmap-text=""
+									style={{
+										marginLeft: 16,
+										marginTop: 0,
 									}}
 								>
-									{item.date}
-								</div>
-								<div
-									style={{
-										fontSize: 14,
-										fontWeight: 600,
-										color:
-											item.status === "complete" || item.status === "in-progress"
-												? theme.text
-												: theme.muted,
-										marginTop: 2,
-									}}
-								>
-									{item.title}
-								</div>
-								<div
-									style={{
-										fontSize: 11,
-										color:
-											item.status === "complete"
-												? isLight
-													? theme.secondary
-													: theme.accent
-												: item.status === "in-progress"
-													? isLight
-														? theme.accent
-														: theme.secondary
+									<div
+										style={{
+											fontSize: 12,
+											color: theme.muted,
+											fontWeight: 500,
+											letterSpacing: "0.04em",
+											textTransform: "uppercase",
+										}}
+									>
+										{item.date}
+									</div>
+									<div
+										style={{
+											fontSize: 14,
+											fontWeight: 600,
+											color:
+												item.status === "complete" || item.status === "in-progress"
+													? theme.text
 													: theme.muted,
-										fontWeight: 600,
-										textTransform: "uppercase",
-										letterSpacing: "0.05em",
-										marginTop: 2,
-									}}
-								>
-									{item.status.replace("-", " ")}
+											marginTop: 2,
+										}}
+									>
+										{item.title}
+									</div>
+									<div
+										style={{
+											fontSize: 12,
+											color:
+												item.status === "complete"
+													? isLight
+														? theme.secondary
+														: theme.accent
+													: item.status === "in-progress"
+														? isLight
+															? theme.accent
+															: theme.secondary
+														: theme.muted,
+											fontWeight: 600,
+											textTransform: "uppercase",
+											letterSpacing: "0.05em",
+											marginTop: 2,
+										}}
+									>
+										{item.status.replace("-", " ")}
+									</div>
 								</div>
 							</div>
+
+							{/* Vertical connecting line (mobile) */}
+							{index < PHASES.length - 1 && (
+								<div
+									data-roadmap-line-v=""
+									style={{
+										display: "block",
+										width: 2,
+										height: 32,
+										backgroundColor: getLineColor(index),
+										marginLeft: 19,
+									}}
+								/>
+							)}
+
+							{/* Horizontal connecting line (desktop) — rendered via CSS positioning */}
 						</div>
+					))}
+				</div>
 
-						{/* Vertical connecting line (mobile) */}
-						{index < PHASES.length - 1 && (
-							<div
-								data-roadmap-line-v=""
-								style={{
-									display: "block",
-									width: 2,
-									height: 32,
-									backgroundColor: getLineColor(index),
-									marginLeft: 19,
-								}}
-							/>
-						)}
-
-						{/* Horizontal connecting line (desktop) — rendered via CSS positioning */}
-					</div>
-				))}
-			</div>
-
-			{/* Desktop horizontal lines overlay */}
-			<style>{`
+				{/* Desktop horizontal lines overlay */}
+				<style>{`
 				@media (min-width: 768px) {
 					[data-roadmap-container] {
 						position: relative;
@@ -236,6 +238,7 @@ export function RoadmapTimeline({ track }: { track: "light" | "dark" }) {
 					}
 				}
 			`}</style>
-		</div>
+			</div>
+		</DiagramWrapper>
 	);
 }

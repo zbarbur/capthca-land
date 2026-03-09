@@ -8,14 +8,7 @@
 
 ## Doing
 
-### Sprint 7 — Admin foundation, content quality, and polish
-
-- [infra] T7.1 — IAP + analytics subdomain setup (S)
-- [analytics] T7.2 — Admin dashboard scaffold + subscriber stats (M)
-- [observability] T7.3 — App log and error tracking view (M)
-- [content] T7.4 — Content system regression tests (S)
-- [ui] T7.5 — Whitepaper diagram polish (M)
-- [audio] T7.6 — Source ambient audio files (S)
+(empty)
 
 ---
 
@@ -26,14 +19,18 @@
 - [email] Email provider integration (Resend or SendGrid) (M)
 - [security] Move rate limiter to Redis or Cloud Armor for multi-instance consistency (M)
 - [infra] Evaluate Turbopack / Vite for build tooling (M)
-- [analytics] Conversion funnel visualization — slider → track → subscribe (M)
+- [analytics] GA4 integration — gtag.js setup, custom events (slider, track select, audio toggle, CTA click), CSP update (M)
+- [analytics] GA4 Data API in admin dashboard — page views, active users, engagement time, top pages, returning visitors (M)
+- [analytics] User journey tracking — page flow, scroll depth, time on page, session-level engagement scoring (M)
+- [analytics] Conversion funnel visualization — slider → track → inner pages → subscribe (M)
 - [analytics] CSV export for subscriber data (S)
 - [analytics] Admin audit log — who accessed what, when (S)
+- [analytics] BigQuery export — GA4 raw events to BigQuery, join with Firestore subscriber data, custom funnels and cohort analysis (L)
 
 ### Battle-Tested Patterns (from OpenClaw Lens review)
 - [observability] OpenTelemetry foundation — Edge-Runtime-safe Next.js setup (L)
 - [infra] Blue-green deploys for staging — --no-traffic + traffic shift (S)
-- [infra] Migrate DNS from GoDaddy to Cloudflare — DDoS, CDN, Cloudflare Access (S)
+- [infra] Migrate DNS to Cloudflare — DDoS, CDN, Cloudflare Access for admin dashboard (S)
 
 ### Template Sync
 - [template] Improve template sync mechanism — record .template-version at init, diff template-to-template for clean updates, reduce noise from placeholder substitution (M)
@@ -51,6 +48,18 @@
 - [infra] Turnstile console warnings on track pages (non-blocking, cosmetic)
 - [infra] `NEXT_PUBLIC_*` vars require Docker build args — document pattern for future public env vars
 - [infra] Turbopack (`--turbo`) fails on paths with spaces — removed from dev script, evaluate when path changes or Turbopack fixes upstream
+
+---
+
+## Done (Sprint 7)
+
+- [infra] T7.1 — Admin auth + middleware route blocking (local-only, Cloudflare Access planned) (S)
+- [analytics] T7.2 — Admin dashboard scaffold + subscriber stats + delete actions (M)
+- [observability] T7.3 — Cloud Logging viewer with severity/type filters (M)
+- [content] T7.4 — Content pipeline regression tests (29 tests) (S)
+- [ui] T7.5 — Whitepaper diagram polish — DiagramWrapper, animations, mobile fixes (M)
+- [audio] T7.6 — Real ambient audio (Suno) + singleton playback across navigations (S)
+- [security] Admin routes blocked with 404 for non-localhost hosts
 
 ---
 

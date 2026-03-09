@@ -1,5 +1,6 @@
 "use client";
 
+import { DiagramWrapper } from "./DiagramWrapper";
 import { getTheme } from "./theme";
 
 interface TreeNode {
@@ -101,7 +102,7 @@ function NodeCard({
 	};
 
 	const tagStyle: React.CSSProperties = {
-		fontSize: "0.6rem",
+		fontSize: "0.75rem",
 		marginLeft: "0.4rem",
 		textTransform: "uppercase",
 		letterSpacing: "0.05em",
@@ -206,7 +207,6 @@ export function SparseMerkleTree({ track }: { track: "light" | "dark" }) {
 	const isDark = track === "dark";
 
 	const containerStyle: React.CSSProperties = {
-		overflowX: "auto",
 		padding: "1.5rem",
 		background: theme.cardBg,
 		borderRadius: isDark ? 0 : 12,
@@ -245,27 +245,29 @@ export function SparseMerkleTree({ track }: { track: "light" | "dark" }) {
 	});
 
 	return (
-		<div style={containerStyle}>
-			<div style={titleStyle}>Sparse Merkle Tree — Selective Disclosure</div>
-			<div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
-				<div style={{ minWidth: 500 }}>
-					<TreeBranch node={TREE} theme={theme} isDark={isDark} />
+		<DiagramWrapper>
+			<div style={containerStyle}>
+				<div style={titleStyle}>Sparse Merkle Tree — Selective Disclosure</div>
+				<div>
+					<div style={{ minWidth: 500 }}>
+						<TreeBranch node={TREE} theme={theme} isDark={isDark} />
+					</div>
+				</div>
+				<div style={legendStyle}>
+					<span>
+						<span style={dotStyle(theme.accent, true)} />
+						Revealed / Proof Path
+					</span>
+					<span>
+						<span style={dotStyle(theme.muted)} />
+						Hidden
+					</span>
+					<span>
+						<span style={dotStyle(isDark ? theme.subtle : theme.border)} />
+						Intermediate
+					</span>
 				</div>
 			</div>
-			<div style={legendStyle}>
-				<span>
-					<span style={dotStyle(theme.accent, true)} />
-					Revealed / Proof Path
-				</span>
-				<span>
-					<span style={dotStyle(theme.muted)} />
-					Hidden
-				</span>
-				<span>
-					<span style={dotStyle(isDark ? theme.subtle : theme.border)} />
-					Intermediate
-				</span>
-			</div>
-		</div>
+		</DiagramWrapper>
 	);
 }

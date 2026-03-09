@@ -18,19 +18,146 @@ export function getCollectionPrefix(): string {
 // In-memory store for local dev without Java/emulator
 const memoryStore = new Map<string, Map<string, Record<string, unknown>>>();
 
+export interface DocSnapshot {
+	id: string;
+	data(): Record<string, unknown>;
+}
+
+export interface QuerySnapshot {
+	docs: DocSnapshot[];
+	size: number;
+}
+
+export interface QueryRef {
+	get(): Promise<QuerySnapshot>;
+	limit(n: number): QueryRef;
+	startAfter(doc: DocSnapshot): QueryRef;
+	orderBy(field: string, direction?: "asc" | "desc"): QueryRef;
+	where(field: string, op: string, value: unknown): QueryRef;
+}
+
 export interface DocRef {
 	set(
 		data: Record<string, unknown>,
 		options?: { merge?: boolean } & Record<string, unknown>,
 	): Promise<unknown>;
+	delete(): Promise<unknown>;
 }
 
-export interface CollectionRef {
+export interface CollectionRef extends QueryRef {
 	doc(id: string): DocRef;
 }
 
 export interface DbLike {
 	collection(name: string): CollectionRef;
+}
+
+/**
+ * Mask an IP address by replacing the last octet with "xxx".
+ * IPv6 addresses are returned with the last group masked.
+ */
+export function maskIp(ip: string): string {
+	if (!ip) return "unknown";
+	// IPv4
+	const ipv4Parts = ip.split(".");
+	if (ipv4Parts.length === 4) {
+		ipv4Parts[3] = "xxx";
+		return ipv4Parts.join(".");
+	}
+	// IPv6 — mask last group
+	const ipv6Parts = ip.split(":");
+	if (ipv6Parts.length > 1) {
+		ipv6Parts[ipv6Parts.length - 1] = "xxxx";
+		return ipv6Parts.join(":");
+	}
+	return ip;
+}
+
+function createMemoryQueryRef(
+	col: Map<string, Record<string, unknown>>,
+	filters: Array<{ field: string; op: string; value: unknown }> = [],
+	orderByField?: string,
+	orderByDir?: "asc" | "desc",
+	limitN?: number,
+	startAfterDoc?: DocSnapshot,
+): QueryRef {
+	const applyFilters = (): DocSnapshot[] => {
+		let entries = Array.from(col.entries()).map(([id, data]) => ({
+			id,
+			data: () => ({ ...data }),
+		}));
+
+		for (const filter of filters) {
+			entries = entries.filter((doc) => {
+				const val = doc.data()[filter.field];
+				switch (filter.op) {
+					case "==":
+						return val === filter.value;
+					case "!=":
+						return val !== filter.value;
+					case ">":
+						return (val as number) > (filter.value as number);
+					case ">=":
+						return (val as number) >= (filter.value as number);
+					case "<":
+						return (val as number) < (filter.value as number);
+					case "<=":
+						return (val as number) <= (filter.value as number);
+					default:
+						return true;
+				}
+			});
+		}
+
+		if (orderByField) {
+			entries.sort((a, b) => {
+				const aVal = a.data()[orderByField];
+				const bVal = b.data()[orderByField];
+				if (aVal === bVal) return 0;
+				const cmp = aVal != null && bVal != null && aVal < bVal ? -1 : 1;
+				return orderByDir === "desc" ? -cmp : cmp;
+			});
+		}
+
+		if (startAfterDoc) {
+			const idx = entries.findIndex((e) => e.id === startAfterDoc.id);
+			if (idx >= 0) {
+				entries = entries.slice(idx + 1);
+			}
+		}
+
+		if (limitN != null) {
+			entries = entries.slice(0, limitN);
+		}
+
+		return entries;
+	};
+
+	return {
+		async get(): Promise<QuerySnapshot> {
+			const docs = applyFilters();
+			return { docs, size: docs.length };
+		},
+		where(field: string, op: string, value: unknown): QueryRef {
+			return createMemoryQueryRef(
+				col,
+				[...filters, { field, op, value }],
+				orderByField,
+				orderByDir,
+				limitN,
+				startAfterDoc,
+			);
+		},
+		orderBy(field: string, direction?: "asc" | "desc"): QueryRef {
+			return createMemoryQueryRef(col, filters, field, direction || "asc", limitN, startAfterDoc);
+		},
+		limit(n: number): QueryRef {
+			return createMemoryQueryRef(col, filters, orderByField, orderByDir, n, startAfterDoc);
+		},
+		startAfter(doc: DocSnapshot): QueryRef {
+			return createMemoryQueryRef(col, filters, orderByField, orderByDir, limitN, doc);
+		},
+	};
 }
 
 function createMemoryDb(): DbLike {
@@ -41,8 +168,11 @@ function createMemoryDb(): DbLike {
 			}
 			// biome-ignore lint/style/noNonNullAssertion: guaranteed by has-check above
 			const col = memoryStore.get(name)!;
+
+			const queryRef = createMemoryQueryRef(col);
+
 			return {
-				doc(id: string) {
+				doc(id: string): DocRef {
 					return {
 						async set(data: Record<string, unknown>, options?: { merge?: boolean }) {
 							if (options?.merge && col.has(id)) {
@@ -53,7 +183,24 @@ function createMemoryDb(): DbLike {
 							}
 							console.log(`[memory-store] ${name}/${id}:`, col.get(id));
 						},
+						async delete() {
+							col.delete(id);
+							console.log(`[memory-store] deleted ${name}/${id}`);
+						},
 					};
+				},
+				get: queryRef.get.bind(queryRef),
+				where(field: string, op: string, value: unknown): QueryRef {
+					return createMemoryQueryRef(col, [{ field, op, value }]);
+				},
+				orderBy(field: string, direction?: "asc" | "desc"): QueryRef {
+					return createMemoryQueryRef(col, [], field, direction || "asc");
+				},
+				limit(n: number): QueryRef {
+					return createMemoryQueryRef(col, [], undefined, undefined, n);
+				},
+				startAfter(doc: DocSnapshot): QueryRef {
+					return createMemoryQueryRef(col, [], undefined, undefined, undefined, doc);
 				},
 			};
 		},

@@ -4,6 +4,17 @@ import { NextResponse } from "next/server";
 const STAGING_USER = process.env.CAPTHCA_LAND_STAGING_AUTH_USER || "capthca";
 const STAGING_AUTH_PASS = process.env.CAPTHCA_LAND_STAGING_AUTH_PASS || "";
 
+const ADMIN_PATHS = ["/dashboard", "/subscribers", "/logs", "/api/admin"];
+
+function isAdminPath(pathname: string): boolean {
+	return ADMIN_PATHS.some((p) => pathname === p || pathname.startsWith(`${p}/`));
+}
+
+function isLocalDev(host: string | null): boolean {
+	if (!host) return false;
+	return host.split(":")[0] === "localhost";
+}
+
 function isBasicAuthValid(header: string | null): boolean {
 	if (!header?.startsWith("Basic ")) return false;
 	const bytes = Uint8Array.from(globalThis.atob(header.slice(6)), (c) => c.charCodeAt(0));
@@ -61,6 +72,26 @@ function applySecurityHeaders(response: NextResponse, nonce: string): void {
 
 export function middleware(request: NextRequest) {
 	const nonce = crypto.randomUUID();
+	const host = request.headers.get("host");
+
+	// Admin routes — local dev only until Cloudflare Access is configured
+	if (isAdminPath(request.nextUrl.pathname)) {
+		if (!isLocalDev(host)) {
+			return new NextResponse("Not Found", { status: 404 });
+		}
+
+		logApiRequest(request);
+		const requestHeaders = new Headers(request.headers);
+		requestHeaders.set("x-nonce", nonce);
+		requestHeaders.set("x-admin-context", "true");
+		requestHeaders.set("x-admin-email", "accounts.google.com:dev@capthca.ai");
+
+		const response = NextResponse.next({
+			request: { headers: requestHeaders },
+		});
+		applySecurityHeaders(response, nonce);
+		return response;
+	}
 
 	// Only gate staging — skip if no password is configured
 	if (!STAGING_AUTH_PASS) {

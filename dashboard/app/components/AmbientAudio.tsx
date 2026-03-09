@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface AmbientAudioProps {
 	theme: "light" | "dark";
@@ -8,72 +8,78 @@ interface AmbientAudioProps {
 
 const STORAGE_KEY = "capthca-audio-muted";
 
+// Module-level singleton — survives component remounts during navigation
+let globalAudio: HTMLAudioElement | null = null;
+let globalTrack: string | null = null;
+
+function getOrCreateAudio(theme: "light" | "dark"): HTMLAudioElement {
+	const src =
+		theme === "dark"
+			? "/tracks/dark/assets/ambient-dark.mp3"
+			: "/tracks/light/assets/ambient-light.mp3";
+
+	if (globalAudio && globalTrack === theme) {
+		return globalAudio;
+	}
+
+	// Track changed — swap source but keep playing position concept
+	if (globalAudio) {
+		globalAudio.pause();
+		globalAudio.src = "";
+	}
+
+	const audio = new Audio(src);
+	audio.loop = true;
+	audio.volume = 0.3;
+	globalAudio = audio;
+	globalTrack = theme;
+	return audio;
+}
+
 /**
  * Ambient audio toggle for track pages.
  * Audio does NOT autoplay — requires explicit user click (browser policy compliant).
- * Mute state persists across navigations via localStorage.
+ * Uses a module-level Audio singleton so playback continues across page navigations.
+ * Mute state persists via localStorage.
  */
 export function AmbientAudio({ theme }: AmbientAudioProps) {
-	const audioRef = useRef<HTMLAudioElement | null>(null);
 	const [muted, setMuted] = useState(true);
 	const [hasInteracted, setHasInteracted] = useState(false);
 
-	// Read persisted mute state on mount
+	// Read persisted mute state on mount — resume playback if previously unmuted
 	useEffect(() => {
 		try {
 			const stored = localStorage.getItem(STORAGE_KEY);
 			if (stored === "false") {
 				setMuted(false);
+				setHasInteracted(true);
 			}
 		} catch {
 			// localStorage unavailable (SSR, private mode, etc.)
 		}
 	}, []);
 
-	// Create / update audio element when theme or muted state changes
+	// Manage audio playback
 	useEffect(() => {
 		if (!hasInteracted) return;
 
-		if (!audioRef.current) {
-			const audio = new Audio();
-			audio.loop = true;
-			audio.volume = 0.3;
-			audioRef.current = audio;
-		}
-
-		const audio = audioRef.current;
-		const src =
-			theme === "dark"
-				? "/tracks/dark/assets/ambient-dark.mp3"
-				: "/tracks/light/assets/ambient-light.mp3";
-
-		if (audio.src !== new URL(src, window.location.origin).href) {
-			audio.src = src;
-		}
+		const audio = getOrCreateAudio(theme);
 
 		if (!muted) {
-			audio.play().catch(() => {
-				// Browser blocked playback — silently fail
+			audio.play().catch((err) => {
+				console.warn(
+					"[AmbientAudio] play() blocked:",
+					err.message,
+					"src:",
+					audio.src,
+					"readyState:",
+					audio.readyState,
+				);
 			});
 		} else {
 			audio.pause();
 		}
-
-		return () => {
-			// Cleanup on unmount
-		};
 	}, [theme, muted, hasInteracted]);
-
-	// Cleanup audio element on unmount
-	useEffect(() => {
-		return () => {
-			if (audioRef.current) {
-				audioRef.current.pause();
-				audioRef.current.src = "";
-				audioRef.current = null;
-			}
-		};
-	}, []);
 
 	// Persist mute preference
 	useEffect(() => {
@@ -103,6 +109,7 @@ export function AmbientAudio({ theme }: AmbientAudioProps) {
 			aria-label={isMuted ? "Unmute ambient audio" : "Mute ambient audio"}
 			title={isMuted ? "Unmute ambient audio" : "Mute ambient audio"}
 			className={`ambient-audio-toggle ${theme === "dark" ? "ambient-audio-dark" : "ambient-audio-light"}`}
+			data-pulse={!hasInteracted ? "true" : undefined}
 		>
 			{isMuted ? <SpeakerMutedIcon theme={theme} /> : <SpeakerIcon theme={theme} />}
 		</button>

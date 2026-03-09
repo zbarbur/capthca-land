@@ -1,5 +1,6 @@
 "use client";
 
+import { DiagramWrapper } from "./DiagramWrapper";
 import { getTheme } from "./theme";
 
 interface Item {
@@ -139,16 +140,18 @@ export function BeforeAfterComparison({ track }: { track: "light" | "dark" }) {
 	};
 
 	return (
-		<div style={containerStyle}>
-			<div style={columnStyle}>
-				<div style={titleStyle("before")}>Legacy Identity</div>
-				{BEFORE_ITEMS.map((item, i) => renderItem(item, "before", i))}
+		<DiagramWrapper>
+			<div style={containerStyle}>
+				<div style={columnStyle}>
+					<div style={titleStyle("before")}>Legacy Identity</div>
+					{BEFORE_ITEMS.map((item, i) => renderItem(item, "before", i))}
+				</div>
+				<div style={dividerStyle} />
+				<div style={columnStyle}>
+					<div style={titleStyle("after")}>CAPTHCA</div>
+					{AFTER_ITEMS.map((item, i) => renderItem(item, "after", i))}
+				</div>
 			</div>
-			<div style={dividerStyle} />
-			<div style={columnStyle}>
-				<div style={titleStyle("after")}>CAPTHCA</div>
-				{AFTER_ITEMS.map((item, i) => renderItem(item, "after", i))}
-			</div>
-		</div>
+		</DiagramWrapper>
 	);
 }
