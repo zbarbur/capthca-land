@@ -103,6 +103,7 @@ export function AmbientAudio({ theme }: AmbientAudioProps) {
 			aria-label={isMuted ? "Unmute ambient audio" : "Mute ambient audio"}
 			title={isMuted ? "Unmute ambient audio" : "Mute ambient audio"}
 			className={`ambient-audio-toggle ${theme === "dark" ? "ambient-audio-dark" : "ambient-audio-light"}`}
+			data-pulse={!hasInteracted ? "true" : undefined}
 		>
 			{isMuted ? <SpeakerMutedIcon theme={theme} /> : <SpeakerIcon theme={theme} />}
 		</button>
