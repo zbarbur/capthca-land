@@ -30,7 +30,7 @@
 ### Battle-Tested Patterns (from OpenClaw Lens review)
 - [observability] OpenTelemetry foundation — Edge-Runtime-safe Next.js setup (L)
 - [infra] Blue-green deploys for staging — --no-traffic + traffic shift (S)
-- [infra] Migrate DNS to Cloudflare — DDoS, CDN, Cloudflare Access for admin dashboard (S)
+- [infra] Migrate DNS to Cloudflare — DDoS, CDN, Cloudflare Access for admin dashboard + staging protection (replaces basic auth) (M)
 
 ### Template Sync
 - [template] Improve template sync mechanism — record .template-version at init, diff template-to-template for clean updates, reduce noise from placeholder substitution (M)
