@@ -9,9 +9,9 @@
 
 | Field | Value |
 |-------|-------|
-| **Status** | Active — Sprint 6 Closed, Sprint 7 Planning |
-| **Last Sync** | 2026-03-08 |
-| **Current Sprint** | Sprint 6 Closed |
+| **Status** | Active — Sprint 7 Closed, Sprint 8 Planning |
+| **Last Sync** | 2026-03-09 |
+| **Current Sprint** | Sprint 7 Closed |
 | **Objective** | Dual-narrative landing page at capthca.ai with email capture |
 
 ---
@@ -78,8 +78,8 @@
 
 | Metric | Value |
 |--------|-------|
-| **Total Tests** | 197 |
-| **Test Suites** | 34 |
+| **Total Tests** | 307 |
+| **Test Suites** | 56 |
 | **Test Runner** | Node.js built-in (`node --test`) |
 | **Test Command** | `npm test` |
 | **CI Command** | `npm run ci` (lint + typecheck + test) |
@@ -98,15 +98,17 @@
 | 4 | Content Depth + Hardening | Completed | 94 | Content pipeline (remark/rehype), 14 inner pages, nonce-based CSP, subscriber scripts, enrichment, social cards, API coverage check |
 | 5 | Inner Page Atmosphere | Completed | 113 | Per-page dark/light atmosphere (MatrixRain, GradientOrbs, DNAHelix), content images via frontmatter, 13 whitepaper diagram components (Recharts), academic paper scaffold, npm audit in CI, staging deploy |
 | 6 | Content consolidation, mobile UX, housekeeping | Completed | 197 | Vertical mobile slider, hamburger nav, ambient audio toggle, CTA on every page, dead file cleanup, landing pages wired to content system, Next.js 14.2.35 |
+| 7 | Admin foundation, content quality, polish | Completed | 307 | Admin dashboard (local-only), subscriber stats, Cloud Logging viewer, content pipeline tests, diagram polish, real ambient audio with seamless navigation |
 
 ---
 
 ## Current State
 
 ### Working
+- Admin dashboard with subscriber stats, log viewer (local-only, remote blocked with 404)
+- Ambient audio with real tracks, module-level singleton for seamless cross-navigation playback
 - Vertical mobile slider with mirrored content layout (drag up/down)
 - Mobile hamburger navigation with 44px touch targets
-- Ambient audio component (wired, placeholder audio files)
 - CTA email capture on every page (content-driven from markdown)
 - All landing page copy from content system (no hardcoded prose in JSX)
 - 14 inner pages rendered from markdown content system (remark/rehype pipeline)
@@ -131,9 +133,7 @@
 - Staging deployment at staging.capthca.ai (basic auth protected)
 
 ### Not Yet Done
-- Real ambient audio files (placeholder paths only)
-- Whitepaper diagram visual polish (spacing, mobile, animations)
-- Cloudflare DNS migration (DDoS, CDN)
+- Cloudflare Access for admin dashboard (DNS migration + Zero Trust)
 - Welcome emails for subscribers
 - Local Cloud Build testing script
 - Next.js 15 migration (audit vulns require 15.5.10+)
