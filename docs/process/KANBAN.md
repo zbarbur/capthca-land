@@ -8,7 +8,14 @@
 
 ## Doing
 
-(empty)
+### Sprint 8 — Analytics foundation and infrastructure hardening
+
+- [analytics] T8.1 — GA4 integration with custom events (M)
+- [analytics] T8.2 — GA4 Data API in admin dashboard (M)
+- [infra] T8.3 — Migrate DNS to Cloudflare with Access policies (M)
+- [template] T8.4 — Improve template sync mechanism (M)
+- [infra] T8.5 — Add ci:full script pattern (S)
+- [template] T8.6 — Sync CAPTHCA from latest template (S)
 
 ---
 
@@ -19,8 +26,6 @@
 - [email] Email provider integration (Resend or SendGrid) (M)
 - [security] Move rate limiter to Redis or Cloud Armor for multi-instance consistency (M)
 - [infra] Evaluate Turbopack / Vite for build tooling (M)
-- [analytics] GA4 integration — gtag.js setup, custom events (slider, track select, audio toggle, CTA click), CSP update (M)
-- [analytics] GA4 Data API in admin dashboard — page views, active users, engagement time, top pages, returning visitors (M)
 - [analytics] User journey tracking — page flow, scroll depth, time on page, session-level engagement scoring (M)
 - [analytics] Conversion funnel visualization — slider → track → inner pages → subscribe (M)
 - [analytics] CSV export for subscriber data (S)
@@ -30,12 +35,8 @@
 ### Battle-Tested Patterns (from OpenClaw Lens review)
 - [observability] OpenTelemetry foundation — Edge-Runtime-safe Next.js setup (L)
 - [infra] Blue-green deploys for staging — --no-traffic + traffic shift (S)
-- [infra] Migrate DNS to Cloudflare — DDoS, CDN, Cloudflare Access for admin dashboard + staging protection (replaces basic auth) (M)
 
 ### Template Sync
-- [template] Improve template sync mechanism — record .template-version at init, diff template-to-template for clean updates, reduce noise from placeholder substitution (M)
-- [template] Add ci:full script pattern to template package.json (S)
-- [template] Sync CAPTHCA from latest template — process docs, checklists, skills may have upstream improvements (S)
 
 ### Infrastructure
 - [infra] Local Cloud Build testing script — simulate build steps locally (S)
