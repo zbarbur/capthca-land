@@ -6,6 +6,7 @@ import { GlitchText } from "../components/GlitchText";
 import { MatrixRain } from "../components/MatrixRain";
 import { ScrollReveal } from "../components/ScrollReveal";
 import { TrackLayout } from "../components/TrackLayout";
+import { TrackPageView } from "../components/TrackPageView";
 
 export const metadata: Metadata = {
 	title: "The Post-Biological Protocol",
@@ -86,6 +87,7 @@ export default async function DarkTrack() {
 
 	return (
 		<TrackLayout theme="dark">
+			<TrackPageView track="dark" />
 			{/* Matrix digital rain background */}
 			<MatrixRain />
 

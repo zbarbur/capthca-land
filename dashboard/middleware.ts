@@ -50,11 +50,11 @@ function logApiRequest(request: NextRequest): void {
 function buildCspHeader(nonce: string): string {
 	return [
 		"default-src 'self'",
-		`script-src 'self' 'nonce-${nonce}' 'unsafe-eval' https://challenges.cloudflare.com`,
+		`script-src 'self' 'nonce-${nonce}' 'unsafe-eval' https://challenges.cloudflare.com https://*.googletagmanager.com https://*.google-analytics.com`,
 		"style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
 		"font-src 'self' https://fonts.gstatic.com",
 		"img-src 'self' data: blob:",
-		"connect-src 'self' https://challenges.cloudflare.com",
+		"connect-src 'self' https://challenges.cloudflare.com https://*.google-analytics.com https://*.googletagmanager.com",
 		"frame-src https://challenges.cloudflare.com",
 		"frame-ancestors 'none'",
 	].join("; ");

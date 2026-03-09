@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { analytics } from "../../lib/analytics";
+import { analytics, trackEvent } from "../../lib/analytics";
 import { GlitchText } from "./GlitchText";
 import { GradientOrbs } from "./GradientOrbs";
 import { MatrixRain } from "./MatrixRain";
@@ -227,6 +227,7 @@ export function DualitySlider({ content }: { content: SliderContentProps }) {
 		if (!hasDragged.current) {
 			hasDragged.current = true;
 			analytics.track("slider.drag");
+			trackEvent({ event: "slider_interaction", category: "engagement", label: "drag" });
 		}
 	}, []);
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { trackEvent } from "../../lib/analytics";
 
 interface AmbientAudioProps {
 	theme: "light" | "dark";
@@ -95,10 +96,17 @@ export function AmbientAudio({ theme }: AmbientAudioProps) {
 		if (!hasInteracted) {
 			setHasInteracted(true);
 			setMuted(false);
+			trackEvent({ event: "audio_toggle", category: "engagement", label: "unmute" });
 		} else {
-			setMuted((prev) => !prev);
+			const next = !muted;
+			setMuted(next);
+			trackEvent({
+				event: "audio_toggle",
+				category: "engagement",
+				label: next ? "mute" : "unmute",
+			});
 		}
-	}, [hasInteracted]);
+	}, [hasInteracted, muted]);
 
 	const isMuted = !hasInteracted || muted;
 

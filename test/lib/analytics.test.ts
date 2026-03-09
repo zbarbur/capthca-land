@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { afterEach, beforeEach, describe, it } from "node:test";
-import { analytics } from "../../dashboard/lib/analytics.ts";
+import { analytics, trackEvent } from "../../dashboard/lib/analytics.ts";
 
 describe("analytics", () => {
 	let captured: unknown[][] = [];
@@ -71,5 +71,29 @@ describe("analytics", () => {
 		analytics.track("slider.hover", { side: "light" });
 		assert.equal(captured.length, 1);
 		assert.equal(captured[0][0], "[analytics]");
+	});
+});
+
+describe("trackEvent (GA4)", () => {
+	it("trackEvent is exported and is a function", () => {
+		assert.equal(typeof trackEvent, "function");
+	});
+
+	it("trackEvent is a no-op when NEXT_PUBLIC_GA4_MEASUREMENT_ID is not set", () => {
+		// The env var is not set in test environment, so this should not throw
+		assert.doesNotThrow(() => {
+			trackEvent({ event: "test_event", category: "test" });
+		});
+	});
+
+	it("trackEvent accepts optional label and value", () => {
+		assert.doesNotThrow(() => {
+			trackEvent({
+				event: "test_event",
+				category: "test",
+				label: "some_label",
+				value: 42,
+			});
+		});
 	});
 });

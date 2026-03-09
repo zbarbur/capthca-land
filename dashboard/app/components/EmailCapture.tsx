@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { trackEvent } from "../../lib/analytics";
 
 declare global {
 	interface Window {
@@ -87,6 +88,7 @@ export function EmailCapture({
 
 			setStatus("submitting");
 			setErrorMsg("");
+			trackEvent({ event: "cta_click", category: "conversion", label: track });
 
 			try {
 				// Read honeypot value
