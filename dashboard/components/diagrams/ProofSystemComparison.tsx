@@ -1,5 +1,6 @@
 "use client";
 
+import { DiagramWrapper } from "./DiagramWrapper";
 import { getTheme } from "./theme";
 
 const HEADERS = ["Property", "Groth16", "PLONK", "zk-STARKs"];
@@ -102,37 +103,39 @@ export function ProofSystemComparison({ track }: { track: "light" | "dark" }) {
 	};
 
 	return (
-		<div style={wrapperStyle}>
-			<table style={tableStyle}>
-				<thead>
-					<tr>
-						{HEADERS.map((header, i) => (
-							<th key={i} style={thStyle(i)}>
-								{header}
-							</th>
-						))}
-					</tr>
-				</thead>
-				<tbody>
-					{ROWS.map((row, rowIdx) => (
-						<tr key={rowIdx}>
-							{row.map((cell, colIdx) => (
-								<td key={colIdx} style={tdStyle(colIdx, rowIdx, cell)}>
-									{cell}
-								</td>
+		<DiagramWrapper>
+			<div style={wrapperStyle}>
+				<table style={tableStyle}>
+					<thead>
+						<tr>
+							{HEADERS.map((header, i) => (
+								<th key={i} style={thStyle(i)}>
+									{header}
+								</th>
 							))}
 						</tr>
-					))}
-				</tbody>
-				<tfoot>
-					<tr>
-						<td colSpan={4} style={captionStyle}>
-							Groth16 selected as primary proof system for minimal proof size and fastest
-							verification
-						</td>
-					</tr>
-				</tfoot>
-			</table>
-		</div>
+					</thead>
+					<tbody>
+						{ROWS.map((row, rowIdx) => (
+							<tr key={rowIdx}>
+								{row.map((cell, colIdx) => (
+									<td key={colIdx} style={tdStyle(colIdx, rowIdx, cell)}>
+										{cell}
+									</td>
+								))}
+							</tr>
+						))}
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colSpan={4} style={captionStyle}>
+								Groth16 selected as primary proof system for minimal proof size and fastest
+								verification
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</DiagramWrapper>
 	);
 }

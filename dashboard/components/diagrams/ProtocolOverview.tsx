@@ -1,5 +1,6 @@
 "use client";
 
+import { DiagramWrapper } from "./DiagramWrapper";
 import { getTheme } from "./theme";
 
 const PHASES = [
@@ -76,44 +77,46 @@ export function ProtocolOverview({ track }: { track: "light" | "dark" }) {
 	};
 
 	return (
-		<div
-			style={{
-				width: "100%",
-				display: "flex",
-				flexWrap: "wrap",
-				alignItems: "center",
-				justifyContent: "center",
-				gap: 0,
-			}}
-		>
-			{PHASES.map((phase, i) => (
-				<div
-					key={phase.number}
-					style={{
-						display: "contents",
-					}}
-				>
-					<div style={cardStyle}>
-						<div style={numberStyle}>{phase.number}</div>
-						<div style={nameStyle}>{phase.name}</div>
-						<div style={descStyle}>{phase.description}</div>
-					</div>
-					{i < PHASES.length - 1 && (
-						<div style={arrowStyle}>
-							{/* horizontal arrow on md+, vertical on small */}
-							<span className="hidden md:inline">&rarr;</span>
-							<span className="inline md:hidden">&darr;</span>
+		<DiagramWrapper>
+			<div
+				style={{
+					width: "100%",
+					display: "flex",
+					flexWrap: "wrap",
+					alignItems: "center",
+					justifyContent: "center",
+					gap: 0,
+				}}
+			>
+				{PHASES.map((phase, i) => (
+					<div
+						key={phase.number}
+						style={{
+							display: "contents",
+						}}
+					>
+						<div style={cardStyle}>
+							<div style={numberStyle}>{phase.number}</div>
+							<div style={nameStyle}>{phase.name}</div>
+							<div style={descStyle}>{phase.description}</div>
 						</div>
-					)}
-				</div>
-			))}
+						{i < PHASES.length - 1 && (
+							<div style={arrowStyle}>
+								{/* horizontal arrow on md+, vertical on small */}
+								<span className="hidden md:inline">&rarr;</span>
+								<span className="inline md:hidden">&darr;</span>
+							</div>
+						)}
+					</div>
+				))}
 
-			<style>{`
+				<style>{`
 				/* Override display:contents children for responsive layout */
 				@media (max-width: 767px) {
 					/* Stack into 2x2 grid on mobile */
 				}
 			`}</style>
-		</div>
+			</div>
+		</DiagramWrapper>
 	);
 }

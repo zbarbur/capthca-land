@@ -1,5 +1,6 @@
 "use client";
 
+import { DiagramWrapper } from "./DiagramWrapper";
 import { getTheme } from "./theme";
 import { useCountUp } from "./useCountUp";
 
@@ -72,27 +73,29 @@ function StatCard({ stat, track }: { stat: (typeof STATS)[number]; track: "light
 
 export function StatsDashboard({ track }: { track: "light" | "dark" }) {
 	return (
-		<div style={{ width: "100%" }}>
-			<style>{`
+		<DiagramWrapper>
+			<div style={{ width: "100%" }}>
+				<style>{`
 				@media (min-width: 768px) {
 					[data-stats-grid] {
 						grid-template-columns: repeat(4, 1fr) !important;
 					}
 				}
 			`}</style>
-			<div
-				data-stats-grid=""
-				style={{
-					display: "grid",
-					gridTemplateColumns: "repeat(2, 1fr)",
-					gap: 16,
-					width: "100%",
-				}}
-			>
-				{STATS.map((stat) => (
-					<StatCard key={stat.label} stat={stat} track={track} />
-				))}
+				<div
+					data-stats-grid=""
+					style={{
+						display: "grid",
+						gridTemplateColumns: "repeat(2, 1fr)",
+						gap: 16,
+						width: "100%",
+					}}
+				>
+					{STATS.map((stat) => (
+						<StatCard key={stat.label} stat={stat} track={track} />
+					))}
+				</div>
 			</div>
-		</div>
+		</DiagramWrapper>
 	);
 }

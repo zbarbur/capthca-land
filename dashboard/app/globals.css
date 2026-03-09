@@ -1020,6 +1020,23 @@
 	max-width: 100%;
 }
 
+/* ── Diagram Entrance Animation ───────────────────────── */
+@keyframes diagram-fade-in {
+	from {
+		opacity: 0;
+		transform: translateY(16px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.diagram-wrapper {
+	width: 100%;
+	max-width: 100%;
+}
+
 /* Scrollbar-none utility for nav */
 .scrollbar-none {
 	-ms-overflow-style: none;
@@ -1103,5 +1120,6 @@
 	.scan-beam-move { animation: none; }
 	.slider-handle-glow { animation: none; }
 	.slider-collision-glow { animation: none; opacity: 0; }
+	.diagram-wrapper { opacity: 1; transform: none; transition: none; }
 }
 
