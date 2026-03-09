@@ -43,12 +43,22 @@ export function parseIapEmail(headerValue: string | null): string | null {
 }
 
 /**
+ * Extract the admin email from the Cloudflare Access header.
+ * CF Access sends a plain email: "user@example.com"
+ */
+export function parseCfAccessEmail(headerValue: string | null): string | null {
+	if (!headerValue || headerValue.trim() === "") return null;
+	return headerValue.trim();
+}
+
+/**
  * Resolve the admin user from a request.
- * Reads the IAP header and checks against the admin users config.
+ * Checks IAP header first, then Cloudflare Access header.
  */
 export function getAdminUser(request: Request): AdminUser | null {
 	const iapHeader = request.headers.get("x-goog-authenticated-user-email");
-	const email = parseIapEmail(iapHeader);
+	const cfHeader = request.headers.get("Cf-Access-Authenticated-User-Email");
+	const email = parseIapEmail(iapHeader) ?? parseCfAccessEmail(cfHeader);
 	if (!email) return null;
 
 	const adminUsers = parseAdminUsers(process.env.CAPTHCA_LAND_ADMIN_USERS);

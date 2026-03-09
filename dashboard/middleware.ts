@@ -74,23 +74,41 @@ export function middleware(request: NextRequest) {
 	const nonce = crypto.randomUUID();
 	const host = request.headers.get("host");
 
-	// Admin routes — local dev only until Cloudflare Access is configured
+	// Admin routes — Cloudflare Access, localhost dev, or 404
 	if (isAdminPath(request.nextUrl.pathname)) {
-		if (!isLocalDev(host)) {
-			return new NextResponse("Not Found", { status: 404 });
+		const cfEmail = request.headers.get("Cf-Access-Authenticated-User-Email");
+
+		if (cfEmail) {
+			// Cloudflare Access authenticated request
+			logApiRequest(request);
+			const requestHeaders = new Headers(request.headers);
+			requestHeaders.set("x-nonce", nonce);
+			requestHeaders.set("x-admin-context", "true");
+			requestHeaders.set("x-admin-email", cfEmail);
+
+			const response = NextResponse.next({
+				request: { headers: requestHeaders },
+			});
+			applySecurityHeaders(response, nonce);
+			return response;
 		}
 
-		logApiRequest(request);
-		const requestHeaders = new Headers(request.headers);
-		requestHeaders.set("x-nonce", nonce);
-		requestHeaders.set("x-admin-context", "true");
-		requestHeaders.set("x-admin-email", "accounts.google.com:dev@capthca.ai");
+		if (isLocalDev(host)) {
+			// Local dev fallback — simulated admin identity
+			logApiRequest(request);
+			const requestHeaders = new Headers(request.headers);
+			requestHeaders.set("x-nonce", nonce);
+			requestHeaders.set("x-admin-context", "true");
+			requestHeaders.set("x-admin-email", "accounts.google.com:dev@capthca.ai");
 
-		const response = NextResponse.next({
-			request: { headers: requestHeaders },
-		});
-		applySecurityHeaders(response, nonce);
-		return response;
+			const response = NextResponse.next({
+				request: { headers: requestHeaders },
+			});
+			applySecurityHeaders(response, nonce);
+			return response;
+		}
+
+		return new NextResponse("Not Found", { status: 404 });
 	}
 
 	// Only gate staging — skip if no password is configured
