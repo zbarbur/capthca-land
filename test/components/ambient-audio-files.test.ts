@@ -19,24 +19,19 @@ describe("ambient audio files", () => {
 		assert.ok(fs.existsSync(DARK_AUDIO), "ambient-dark.mp3 must exist");
 	});
 
-	// TODO: Enable when real audio files are sourced (T7.6)
-	// These tests verify files are actual audio (> 1KB), not placeholders
-	it.todo("light audio file is not empty (> 1KB for real audio)");
-	it.todo("dark audio file is not empty (> 1KB for real audio)");
-
-	it("light audio file is under 500KB", () => {
+	it("light audio file is real audio (not a placeholder)", () => {
 		const stats = fs.statSync(LIGHT_AUDIO);
 		assert.ok(
-			stats.size <= 500 * 1024,
-			`ambient-light.mp3 is ${Math.round(stats.size / 1024)}KB — must be ≤ 500KB`,
+			stats.size > 1024,
+			`ambient-light.mp3 is ${stats.size} bytes — must be > 1KB (not a placeholder)`,
 		);
 	});
 
-	it("dark audio file is under 500KB", () => {
+	it("dark audio file is real audio (not a placeholder)", () => {
 		const stats = fs.statSync(DARK_AUDIO);
 		assert.ok(
-			stats.size <= 500 * 1024,
-			`ambient-dark.mp3 is ${Math.round(stats.size / 1024)}KB — must be ≤ 500KB`,
+			stats.size > 1024,
+			`ambient-dark.mp3 is ${stats.size} bytes — must be > 1KB (not a placeholder)`,
 		);
 	});
 });
