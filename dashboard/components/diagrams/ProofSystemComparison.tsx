@@ -20,8 +20,6 @@ export function ProofSystemComparison({ track }: { track: "light" | "dark" }) {
 	const isDark = track === "dark";
 
 	const wrapperStyle: React.CSSProperties = {
-		overflowX: "auto",
-		WebkitOverflowScrolling: "touch",
 		borderRadius: isDark ? 0 : 12,
 		border: `1px solid ${theme.border}`,
 		background: theme.cardBg,

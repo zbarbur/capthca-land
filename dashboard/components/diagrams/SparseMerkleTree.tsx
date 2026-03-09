@@ -207,7 +207,6 @@ export function SparseMerkleTree({ track }: { track: "light" | "dark" }) {
 	const isDark = track === "dark";
 
 	const containerStyle: React.CSSProperties = {
-		overflowX: "auto",
 		padding: "1.5rem",
 		background: theme.cardBg,
 		borderRadius: isDark ? 0 : 12,
@@ -249,7 +248,7 @@ export function SparseMerkleTree({ track }: { track: "light" | "dark" }) {
 		<DiagramWrapper>
 			<div style={containerStyle}>
 				<div style={titleStyle}>Sparse Merkle Tree — Selective Disclosure</div>
-				<div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+				<div>
 					<div style={{ minWidth: 500 }}>
 						<TreeBranch node={TREE} theme={theme} isDark={isDark} />
 					</div>

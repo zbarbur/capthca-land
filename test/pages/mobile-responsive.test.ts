@@ -46,35 +46,27 @@ describe("mobile responsive — diagrams", () => {
 		}
 	});
 
-	it("SparseMerkleTree has overflow-x scrolling for mobile", () => {
-		const src = fs.readFileSync("dashboard/components/diagrams/SparseMerkleTree.tsx", "utf-8");
+	it("diagram components use DiagramWrapper for overflow handling", () => {
+		const diagrams = [
+			"SparseMerkleTree",
+			"ProofSystemComparison",
+			"ZKHandshake",
+			"CredentialLifecycle",
+			"CaptchaTimeline",
+		];
+		for (const name of diagrams) {
+			const src = fs.readFileSync(`dashboard/components/diagrams/${name}.tsx`, "utf-8");
+			assert.ok(
+				src.includes("DiagramWrapper"),
+				`${name} should use DiagramWrapper for overflow handling`,
+			);
+		}
+		// DiagramWrapper itself provides overflow-x-auto
+		const wrapper = fs.readFileSync("dashboard/components/diagrams/DiagramWrapper.tsx", "utf-8");
 		assert.ok(
-			src.includes("overflowX"),
-			"SparseMerkleTree should have overflowX for mobile scrolling",
+			wrapper.includes("overflow-x-auto"),
+			"DiagramWrapper should provide overflow-x-auto",
 		);
-	});
-
-	it("ProofSystemComparison table wrapper has overflow-x auto", () => {
-		const src = fs.readFileSync("dashboard/components/diagrams/ProofSystemComparison.tsx", "utf-8");
-		assert.ok(
-			src.includes("overflowX"),
-			"ProofSystemComparison should have overflowX auto wrapper",
-		);
-	});
-
-	it("ZKHandshake has overflow-x auto for narrow screens", () => {
-		const src = fs.readFileSync("dashboard/components/diagrams/ZKHandshake.tsx", "utf-8");
-		assert.ok(src.includes("overflowX"), "ZKHandshake should have overflowX for mobile");
-	});
-
-	it("CredentialLifecycle has overflow-x auto", () => {
-		const src = fs.readFileSync("dashboard/components/diagrams/CredentialLifecycle.tsx", "utf-8");
-		assert.ok(src.includes("overflowX"), "CredentialLifecycle should have overflowX for mobile");
-	});
-
-	it("CaptchaTimeline has overflow-x auto for horizontal scrolling", () => {
-		const src = fs.readFileSync("dashboard/components/diagrams/CaptchaTimeline.tsx", "utf-8");
-		assert.ok(src.includes("overflowX"), "CaptchaTimeline should have overflowX auto");
 	});
 
 	it("BeforeAfterComparison uses flexWrap for mobile stacking", () => {

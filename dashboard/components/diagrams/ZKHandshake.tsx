@@ -81,7 +81,7 @@ export function ZKHandshake({ track }: { track: "light" | "dark" }) {
 
 	return (
 		<DiagramWrapper>
-			<div style={{ width: "100%", overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+			<div style={{ width: "100%" }}>
 				{/* Sequence diagram */}
 				<div
 					style={{

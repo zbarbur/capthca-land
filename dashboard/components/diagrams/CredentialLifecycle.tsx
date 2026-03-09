@@ -110,8 +110,6 @@ export function CredentialLifecycle({ track }: { track: "light" | "dark" }) {
 					width: "100%",
 					display: "flex",
 					justifyContent: "center",
-					overflowX: "auto",
-					WebkitOverflowScrolling: "touch",
 				}}
 			>
 				<div

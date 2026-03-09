@@ -84,11 +84,15 @@ describe("Diagram polish", () => {
 		}
 	});
 
-	it("globals.css contains @keyframes diagram-fade-in", () => {
+	it("globals.css contains .diagram-wrapper with reduced-motion support", () => {
 		const css = fs.readFileSync(GLOBALS_CSS, "utf-8");
 		assert.ok(
-			css.includes("@keyframes diagram-fade-in"),
-			"globals.css should define diagram-fade-in keyframes",
+			css.includes(".diagram-wrapper"),
+			"globals.css should define .diagram-wrapper styles",
+		);
+		assert.ok(
+			css.includes("prefers-reduced-motion"),
+			"globals.css should respect prefers-reduced-motion",
 		);
 	});
 

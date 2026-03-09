@@ -36,9 +36,7 @@ export function CaptchaTimeline({ track }: { track: "light" | "dark" }) {
 			`}</style>
 				<div
 					style={{
-						overflowX: "auto",
 						padding: "24px 0",
-						WebkitOverflowScrolling: "touch",
 					}}
 				>
 					<div
