@@ -18,12 +18,13 @@ export function AmbientAudio({ theme }: AmbientAudioProps) {
 	const [muted, setMuted] = useState(true);
 	const [hasInteracted, setHasInteracted] = useState(false);
 
-	// Read persisted mute state on mount
+	// Read persisted mute state on mount — resume playback if previously unmuted
 	useEffect(() => {
 		try {
 			const stored = localStorage.getItem(STORAGE_KEY);
 			if (stored === "false") {
 				setMuted(false);
+				setHasInteracted(true);
 			}
 		} catch {
 			// localStorage unavailable (SSR, private mode, etc.)
