@@ -12,6 +12,7 @@ substitutions:
   _TAG: "latest"
   _STAGING_SERVICE: "capthca-land-staging"
   _TURNSTILE_SITE_KEY: "0x4AAAAAACl986ntf-pNkY_a"
+  _GA4_MEASUREMENT_ID: "G-QKRV6MR895"
 
 steps:
   # ── Step 1: Install Dependencies ──────────────────────────────────────────
@@ -79,6 +80,7 @@ steps:
       - "--snapshot-mode=redo"
       - "--log-format=text"
       - "--build-arg=NEXT_PUBLIC_TURNSTILE_SITE_KEY=${_TURNSTILE_SITE_KEY}"
+      - "--build-arg=NEXT_PUBLIC_GA4_MEASUREMENT_ID=${_GA4_MEASUREMENT_ID}"
     waitFor: ["security-audit", "lint", "test"]
 
   # ── Step 6: Deploy to Staging ─────────────────────────────────────────────
@@ -106,7 +108,7 @@ steps:
           --concurrency=80 \
           --port=8080 \
           --set-env-vars="GOOGLE_CLOUD_PROJECT=${PROJECT_ID},NEXT_PUBLIC_TURNSTILE_SITE_KEY=${_TURNSTILE_SITE_KEY},CAPTHCA_LAND_STAGING_AUTH_USER=capthca,CAPTHCA_LAND_ENV=stg" \
-          --set-secrets="CAPTHCA_LAND_STAGING_AUTH_PASS=staging-auth-pass:latest,CAPTHCA_LAND_TURNSTILE_SECRET_KEY=turnstile-secret-key:latest" \
+          --set-secrets="CAPTHCA_LAND_STAGING_AUTH_PASS=staging-auth-pass:latest,CAPTHCA_LAND_TURNSTILE_SECRET_KEY=turnstile-secret-key:latest,CAPTHCA_LAND_ADMIN_USERS=CAPTHCA_LAND_ADMIN_USERS:latest" \
           $$EXTRA_FLAGS
         # Ensure public access (--allow-unauthenticated may silently fail without IAM permissions)
         gcloud run services add-iam-policy-binding ${_STAGING_SERVICE} \

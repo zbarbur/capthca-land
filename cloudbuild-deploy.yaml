@@ -19,6 +19,7 @@ substitutions:
   _IMAGE_NAME: "capthca-land"
   _TAG: "latest"
   _TURNSTILE_SITE_KEY: "0x4AAAAAACl986ntf-pNkY_a"
+  _GA4_MEASUREMENT_ID: "G-QKRV6MR895"
 
 steps:
   # ── Step 1: Deploy to Cloud Run (Blue/Green) ──────────────────────────────
@@ -45,7 +46,7 @@ steps:
           --concurrency=80 \
           --port=8080 \
           --set-env-vars="GOOGLE_CLOUD_PROJECT=${PROJECT_ID},NEXT_PUBLIC_TURNSTILE_SITE_KEY=${_TURNSTILE_SITE_KEY},CAPTHCA_LAND_ENV=prd" \
-          --set-secrets="CAPTHCA_LAND_TURNSTILE_SECRET_KEY=turnstile-secret-key:latest" \
+          --set-secrets="CAPTHCA_LAND_TURNSTILE_SECRET_KEY=turnstile-secret-key:latest,CAPTHCA_LAND_ADMIN_USERS=CAPTHCA_LAND_ADMIN_USERS:latest" \
           $$EXTRA_FLAGS
         gcloud run services add-iam-policy-binding ${_SERVICE_NAME} \
           --region=${_REGION} \
