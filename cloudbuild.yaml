@@ -23,7 +23,7 @@ steps:
       - "-c"
       - |
         set -euo pipefail
-        apk add --no-cache git
+        apk add --no-cache git bash
         echo "==> Installing root dependencies..."
         npm ci
         echo "==> Installing dashboard dependencies..."

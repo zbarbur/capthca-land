@@ -74,6 +74,7 @@ describe("template-sync runtime", () => {
 	it("--help exits 0 and prints usage", () => {
 		// execSync is safe here: hardcoded script path, no user input
 		// Quote the path to handle spaces in the project directory
+		// Quote the path to handle spaces in the project directory
 		const output = execSync(`bash "${SYNC_SCRIPT}" --help`, {
 			cwd: PROJECT_DIR,
 			encoding: "utf-8",
