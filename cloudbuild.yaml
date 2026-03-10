@@ -107,7 +107,7 @@ steps:
           --timeout=300 \
           --concurrency=80 \
           --port=8080 \
-          --set-env-vars="GOOGLE_CLOUD_PROJECT=${PROJECT_ID},NEXT_PUBLIC_TURNSTILE_SITE_KEY=${_TURNSTILE_SITE_KEY},CAPTHCA_LAND_STAGING_AUTH_USER=capthca,CAPTHCA_LAND_ENV=stg" \
+          --set-env-vars="GOOGLE_CLOUD_PROJECT=${PROJECT_ID},NEXT_PUBLIC_TURNSTILE_SITE_KEY=${_TURNSTILE_SITE_KEY},CAPTHCA_LAND_STAGING_AUTH_USER=capthca,CAPTHCA_LAND_ENV=stg,CAPTHCA_LAND_GA4_PROPERTY_ID=527694351" \
           --set-secrets="CAPTHCA_LAND_STAGING_AUTH_PASS=staging-auth-pass:latest,CAPTHCA_LAND_TURNSTILE_SECRET_KEY=turnstile-secret-key:latest,CAPTHCA_LAND_ADMIN_USERS=CAPTHCA_LAND_ADMIN_USERS:latest" \
           $$EXTRA_FLAGS
         # Ensure public access (--allow-unauthenticated may silently fail without IAM permissions)
