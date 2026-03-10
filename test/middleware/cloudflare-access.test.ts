@@ -50,8 +50,7 @@ describe("admin-auth: getAdminUser supports CF Access header", () => {
 	});
 
 	it("prefers IAP header over CF Access when both present", () => {
-		process.env.CAPTHCA_LAND_ADMIN_USERS =
-			'{"iap@capthca.ai":"write","cf@capthca.ai":"read"}';
+		process.env.CAPTHCA_LAND_ADMIN_USERS = '{"iap@capthca.ai":"write","cf@capthca.ai":"read"}';
 		const request = new Request("https://admin.capthca.ai/dashboard", {
 			headers: {
 				"x-goog-authenticated-user-email": "accounts.google.com:iap@capthca.ai",
