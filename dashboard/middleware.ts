@@ -4,10 +4,8 @@ import { NextResponse } from "next/server";
 const STAGING_USER = process.env.CAPTHCA_LAND_STAGING_AUTH_USER || "capthca";
 const STAGING_AUTH_PASS = process.env.CAPTHCA_LAND_STAGING_AUTH_PASS || "";
 
-const ADMIN_PATHS = ["/dashboard", "/subscribers", "/logs", "/analytics", "/api/admin"];
-
 function isAdminPath(pathname: string): boolean {
-	return ADMIN_PATHS.some((p) => pathname === p || pathname.startsWith(`${p}/`));
+	return pathname.startsWith("/admin") || pathname.startsWith("/api/admin");
 }
 
 function isLocalDev(host: string | null): boolean {

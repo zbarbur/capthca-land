@@ -6,7 +6,7 @@ import { describe, it } from "node:test";
 const DASHBOARD_DIR = path.join(process.cwd(), "dashboard");
 
 describe("admin: logs page", () => {
-	const logsPagePath = path.join(DASHBOARD_DIR, "app", "(admin)", "logs", "page.tsx");
+	const logsPagePath = path.join(DASHBOARD_DIR, "app", "admin", "logs", "page.tsx");
 
 	it("logs page file exists", () => {
 		assert.ok(fs.existsSync(logsPagePath), "logs page must exist at (admin)/logs/page.tsx");
@@ -19,7 +19,7 @@ describe("admin: logs page", () => {
 });
 
 describe("admin: LogViewer client component", () => {
-	const logViewerPath = path.join(DASHBOARD_DIR, "app", "(admin)", "logs", "LogViewer.tsx");
+	const logViewerPath = path.join(DASHBOARD_DIR, "app", "admin", "logs", "LogViewer.tsx");
 
 	it("LogViewer file exists", () => {
 		assert.ok(fs.existsSync(logViewerPath), "LogViewer.tsx must exist");

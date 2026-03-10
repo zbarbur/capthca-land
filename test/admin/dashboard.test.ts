@@ -81,7 +81,7 @@ describe("admin: maskIp function", () => {
 
 describe("admin: layout", () => {
 	const layoutSrc = fs.readFileSync(
-		path.join(DASHBOARD_DIR, "app", "(admin)", "layout.tsx"),
+		path.join(DASHBOARD_DIR, "app", "admin", "layout.tsx"),
 		"utf-8",
 	);
 
@@ -124,7 +124,7 @@ describe("admin: layout", () => {
 
 describe("admin: dashboard page", () => {
 	const dashboardSrc = fs.readFileSync(
-		path.join(DASHBOARD_DIR, "app", "(admin)", "dashboard", "page.tsx"),
+		path.join(DASHBOARD_DIR, "app", "admin", "dashboard", "page.tsx"),
 		"utf-8",
 	);
 
@@ -159,7 +159,7 @@ describe("admin: dashboard page", () => {
 
 describe("admin: TrackDistributionChart", () => {
 	const chartSrc = fs.readFileSync(
-		path.join(DASHBOARD_DIR, "app", "(admin)", "dashboard", "TrackDistributionChart.tsx"),
+		path.join(DASHBOARD_DIR, "app", "admin", "dashboard", "TrackDistributionChart.tsx"),
 		"utf-8",
 	);
 
@@ -175,7 +175,7 @@ describe("admin: TrackDistributionChart", () => {
 
 describe("admin: subscribers page", () => {
 	const subscribersSrc = fs.readFileSync(
-		path.join(DASHBOARD_DIR, "app", "(admin)", "subscribers", "page.tsx"),
+		path.join(DASHBOARD_DIR, "app", "admin", "subscribers", "page.tsx"),
 		"utf-8",
 	);
 

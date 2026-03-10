@@ -72,7 +72,7 @@ describe("admin: analytics API route", () => {
 });
 
 describe("admin: analytics page", () => {
-	const pagePath = path.join(DASHBOARD_DIR, "app", "(admin)", "analytics", "page.tsx");
+	const pagePath = path.join(DASHBOARD_DIR, "app", "admin", "analytics", "page.tsx");
 
 	it("analytics page file exists", () => {
 		assert.ok(fs.existsSync(pagePath), "analytics page must exist at (admin)/analytics/page.tsx");
@@ -90,7 +90,7 @@ describe("admin: analytics page", () => {
 });
 
 describe("admin: AnalyticsView client component", () => {
-	const viewPath = path.join(DASHBOARD_DIR, "app", "(admin)", "analytics", "AnalyticsView.tsx");
+	const viewPath = path.join(DASHBOARD_DIR, "app", "admin", "analytics", "AnalyticsView.tsx");
 
 	it("AnalyticsView file exists", () => {
 		assert.ok(fs.existsSync(viewPath), "AnalyticsView.tsx must exist");
@@ -140,11 +140,11 @@ describe("admin: AnalyticsView client component", () => {
 });
 
 describe("admin: layout includes Analytics nav item", () => {
-	const layoutPath = path.join(DASHBOARD_DIR, "app", "(admin)", "layout.tsx");
+	const layoutPath = path.join(DASHBOARD_DIR, "app", "admin", "layout.tsx");
 
 	it("layout has Analytics in NAV_ITEMS", () => {
 		const src = fs.readFileSync(layoutPath, "utf-8");
 		assert.ok(src.includes('"Analytics"'), "Layout must include Analytics label in nav");
-		assert.ok(src.includes('"/analytics"'), "Layout must include /analytics href in nav");
+		assert.ok(src.includes("/admin/analytics"), "Layout must include /admin/analytics href in nav");
 	});
 });
