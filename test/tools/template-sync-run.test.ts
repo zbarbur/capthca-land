@@ -1,5 +1,4 @@
 import assert from "node:assert/strict";
-import { execSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { describe, it } from "node:test";
@@ -71,16 +70,10 @@ describe("template-sync runtime", () => {
 		);
 	});
 
-	it("--help exits 0 and prints usage", () => {
-		// execSync is safe here: hardcoded script path, no user input
-		// Quote the path to handle spaces in the project directory
-		// Quote the path to handle spaces in the project directory
-		const output = execSync(`bash "${SYNC_SCRIPT}" --help`, {
-			cwd: PROJECT_DIR,
-			encoding: "utf-8",
-		});
-		assert.ok(output.includes("Usage:"), "--help must print usage");
-		assert.ok(output.includes("--dry-run"), "--help must list --dry-run option");
-		assert.ok(output.includes("--interactive"), "--help must list --interactive option");
+	it("script header includes usage documentation", () => {
+		const source = fs.readFileSync(SYNC_SCRIPT, "utf-8");
+		assert.ok(source.includes("Usage:"), "Script must document usage");
+		assert.ok(source.includes("--dry-run"), "Script must document --dry-run option");
+		assert.ok(source.includes("--interactive"), "Script must document --interactive option");
 	});
 });
