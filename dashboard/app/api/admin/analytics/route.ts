@@ -21,7 +21,7 @@ export async function GET(request: Request) {
 	if (!propertyId) {
 		return NextResponse.json({
 			data: null,
-			message: "GA4 property ID not configured",
+			message: "Analytics not configured. Contact your administrator.",
 		});
 	}
 

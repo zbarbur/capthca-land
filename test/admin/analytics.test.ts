@@ -130,11 +130,15 @@ describe("admin: AnalyticsView client component", () => {
 		assert.ok(src.includes("recharts"), "AnalyticsView must import from recharts");
 	});
 
-	it("AnalyticsView shows empty state when GA4 not configured", () => {
+	it("AnalyticsView shows empty state with user-friendly message", () => {
 		const src = fs.readFileSync(viewPath, "utf-8");
 		assert.ok(
-			src.includes("CAPTHCA_LAND_GA4_PROPERTY_ID"),
-			"AnalyticsView must mention CAPTHCA_LAND_GA4_PROPERTY_ID in empty state",
+			src.includes("unavailable"),
+			"AnalyticsView must show user-friendly empty state message",
+		);
+		assert.ok(
+			!src.includes("CAPTHCA_LAND_"),
+			"AnalyticsView must not expose internal env var names",
 		);
 	});
 });

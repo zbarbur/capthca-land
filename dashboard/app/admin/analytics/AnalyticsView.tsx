@@ -87,7 +87,7 @@ export default function AnalyticsView() {
 			{!loading && !data && (
 				<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-8 text-center">
 					<p className="text-zinc-400 text-sm">
-						{message || "GA4 analytics not configured. Set CAPTHCA_LAND_GA4_PROPERTY_ID to enable."}
+						{message || "Analytics data unavailable. Please try again later."}
 					</p>
 				</div>
 			)}
