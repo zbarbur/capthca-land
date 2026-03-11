@@ -8,7 +8,7 @@
 
 ## Doing
 
-(empty)
+_(empty — Sprint 9 not started)_
 
 ---
 
@@ -19,27 +19,26 @@
 - [email] Email provider integration (Resend or SendGrid) (M)
 - [security] Move rate limiter to Redis or Cloud Armor for multi-instance consistency (M)
 - [infra] Evaluate Turbopack / Vite for build tooling (M)
-- [analytics] GA4 integration — gtag.js setup, custom events (slider, track select, audio toggle, CTA click), CSP update (M)
-- [analytics] GA4 Data API in admin dashboard — page views, active users, engagement time, top pages, returning visitors (M)
 - [analytics] User journey tracking — page flow, scroll depth, time on page, session-level engagement scoring (M)
 - [analytics] Conversion funnel visualization — slider → track → inner pages → subscribe (M)
+- [analytics] Custom date range picker — arbitrary start/end dates for analytics (S)
+- [analytics] Expanded analytics — traffic sources, device breakdown, geography, custom events (M)
 - [analytics] CSV export for subscriber data (S)
 - [analytics] Admin audit log — who accessed what, when (S)
 - [analytics] BigQuery export — GA4 raw events to BigQuery, join with Firestore subscriber data, custom funnels and cohort analysis (L)
+- [analytics] Separate GA4 property for staging — prevent staging traffic from polluting production analytics (S)
 
 ### Battle-Tested Patterns (from OpenClaw Lens review)
 - [observability] OpenTelemetry foundation — Edge-Runtime-safe Next.js setup (L)
 - [infra] Blue-green deploys for staging — --no-traffic + traffic shift (S)
-- [infra] Migrate DNS to Cloudflare — DDoS, CDN, Cloudflare Access for admin dashboard + staging protection (replaces basic auth) (M)
 
 ### Template Sync
-- [template] Improve template sync mechanism — record .template-version at init, diff template-to-template for clean updates, reduce noise from placeholder substitution (M)
-- [template] Add ci:full script pattern to template package.json (S)
-- [template] Sync CAPTHCA from latest template — process docs, checklists, skills may have upstream improvements (S)
 
 ### Infrastructure
+- [infra] `bin/create-secret.sh` — create Secret Manager secrets with IAM binding for Cloud Run service account in one step (S)
 - [infra] Local Cloud Build testing script — simulate build steps locally (S)
 - [infra] Next.js 15 migration — evaluate breaking changes (React 19, async request APIs, Turbopack), resolve remaining 9 audit vulns (require 15.5.10+), verify Edge Runtime middleware, standalone output, Turnstile, content pipeline (L)
+- [security] Remove staging basic auth — fully replace with Cloudflare Access (S)
 
 ---
 
@@ -48,6 +47,23 @@
 - [infra] Turnstile console warnings on track pages (non-blocking, cosmetic)
 - [infra] `NEXT_PUBLIC_*` vars require Docker build args — document pattern for future public env vars
 - [infra] Turbopack (`--turbo`) fails on paths with spaces — removed from dev script, evaluate when path changes or Turbopack fixes upstream
+- [infra] Error messages in admin dashboard should never expose env var names or internal config
+
+---
+
+## Done (Sprint 8)
+
+- [analytics] T8.1 — GA4 integration with custom events (M)
+- [analytics] T8.2 — GA4 Data API in admin dashboard (M)
+- [infra] T8.3 — Migrate DNS to Cloudflare with Access policies (M)
+- [template] T8.4 — Improve template sync mechanism (M)
+- [infra] T8.5 — Add ci:full script pattern (S)
+- [template] T8.6 — Sync CAPTHCA from latest template (S)
+- [fix] Admin routes moved from (admin) route group to /admin path prefix
+- [fix] Image 400s on staging — exclude asset paths from middleware matcher
+- [fix] GA4 Data API enabled in GCP, service account granted Viewer on GA4 property
+- [fix] Secret Manager IAM binding for CAPTHCA_LAND_ADMIN_USERS
+- [fix] Cloud Build Alpine bash dependency removed — source-based test instead
 
 ---
 

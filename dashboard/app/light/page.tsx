@@ -6,6 +6,7 @@ import { DNAHelix } from "../components/DNAHelix";
 import { GradientOrbs } from "../components/GradientOrbs";
 import { ScrollReveal } from "../components/ScrollReveal";
 import { TrackLayout } from "../components/TrackLayout";
+import { TrackPageView } from "../components/TrackPageView";
 
 export const metadata: Metadata = {
 	title: "The Symbiotic Standard",
@@ -69,6 +70,7 @@ export default async function LightTrack() {
 
 	return (
 		<TrackLayout theme="light">
+			<TrackPageView track="light" />
 			{/* Fixed warm gradient background — covers entire viewport while scrolling */}
 			<div
 				className="pointer-events-none fixed inset-0 z-0"

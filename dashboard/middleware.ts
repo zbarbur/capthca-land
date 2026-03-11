@@ -4,10 +4,8 @@ import { NextResponse } from "next/server";
 const STAGING_USER = process.env.CAPTHCA_LAND_STAGING_AUTH_USER || "capthca";
 const STAGING_AUTH_PASS = process.env.CAPTHCA_LAND_STAGING_AUTH_PASS || "";
 
-const ADMIN_PATHS = ["/dashboard", "/subscribers", "/logs", "/api/admin"];
-
 function isAdminPath(pathname: string): boolean {
-	return ADMIN_PATHS.some((p) => pathname === p || pathname.startsWith(`${p}/`));
+	return pathname.startsWith("/admin") || pathname.startsWith("/api/admin");
 }
 
 function isLocalDev(host: string | null): boolean {
@@ -50,11 +48,11 @@ function logApiRequest(request: NextRequest): void {
 function buildCspHeader(nonce: string): string {
 	return [
 		"default-src 'self'",
-		`script-src 'self' 'nonce-${nonce}' 'unsafe-eval' https://challenges.cloudflare.com`,
+		`script-src 'self' 'nonce-${nonce}' 'unsafe-eval' https://challenges.cloudflare.com https://*.googletagmanager.com https://*.google-analytics.com`,
 		"style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
 		"font-src 'self' https://fonts.gstatic.com",
 		"img-src 'self' data: blob:",
-		"connect-src 'self' https://challenges.cloudflare.com",
+		"connect-src 'self' https://challenges.cloudflare.com https://*.google-analytics.com https://*.googletagmanager.com",
 		"frame-src https://challenges.cloudflare.com",
 		"frame-ancestors 'none'",
 	].join("; ");
@@ -74,23 +72,41 @@ export function middleware(request: NextRequest) {
 	const nonce = crypto.randomUUID();
 	const host = request.headers.get("host");
 
-	// Admin routes — local dev only until Cloudflare Access is configured
+	// Admin routes — Cloudflare Access, localhost dev, or 404
 	if (isAdminPath(request.nextUrl.pathname)) {
-		if (!isLocalDev(host)) {
-			return new NextResponse("Not Found", { status: 404 });
+		const cfEmail = request.headers.get("Cf-Access-Authenticated-User-Email");
+
+		if (cfEmail) {
+			// Cloudflare Access authenticated request
+			logApiRequest(request);
+			const requestHeaders = new Headers(request.headers);
+			requestHeaders.set("x-nonce", nonce);
+			requestHeaders.set("x-admin-context", "true");
+			requestHeaders.set("x-admin-email", cfEmail);
+
+			const response = NextResponse.next({
+				request: { headers: requestHeaders },
+			});
+			applySecurityHeaders(response, nonce);
+			return response;
 		}
 
-		logApiRequest(request);
-		const requestHeaders = new Headers(request.headers);
-		requestHeaders.set("x-nonce", nonce);
-		requestHeaders.set("x-admin-context", "true");
-		requestHeaders.set("x-admin-email", "accounts.google.com:dev@capthca.ai");
+		if (isLocalDev(host)) {
+			// Local dev fallback — simulated admin identity
+			logApiRequest(request);
+			const requestHeaders = new Headers(request.headers);
+			requestHeaders.set("x-nonce", nonce);
+			requestHeaders.set("x-admin-context", "true");
+			requestHeaders.set("x-admin-email", "accounts.google.com:dev@capthca.ai");
 
-		const response = NextResponse.next({
-			request: { headers: requestHeaders },
-		});
-		applySecurityHeaders(response, nonce);
-		return response;
+			const response = NextResponse.next({
+				request: { headers: requestHeaders },
+			});
+			applySecurityHeaders(response, nonce);
+			return response;
+		}
+
+		return new NextResponse("Not Found", { status: 404 });
 	}
 
 	// Only gate staging — skip if no password is configured
@@ -123,5 +139,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-	matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+	matcher: ["/((?!_next/static|_next/image|favicon.ico|tracks/|assets/).*)"],
 };

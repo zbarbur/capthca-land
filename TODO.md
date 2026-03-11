@@ -1,6 +1,4 @@
 # TODO — CAPTHCA land
 
-> Sprint 7: Completed
-> All tasks delivered. See `docs/sprints/SPRINT7_HANDOVER.md`.
-
----
+> No active sprint. Ready for Sprint 9 planning.
+> See `docs/process/KANBAN.md` for backlog.

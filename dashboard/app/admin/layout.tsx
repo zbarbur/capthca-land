@@ -1,9 +1,14 @@
 import { headers } from "next/headers";
 import Link from "next/link";
-import { type AdminUser, parseAdminUsers, parseIapEmail } from "@/lib/admin-auth";
+import {
+	type AdminUser,
+	parseAdminUsers,
+	parseCfAccessEmail,
+	parseIapEmail,
+} from "@/lib/admin-auth";
 
 function getAdminUserFromHeaders(email: string | null): AdminUser | null {
-	const parsed = parseIapEmail(email);
+	const parsed = parseIapEmail(email) ?? parseCfAccessEmail(email);
 	if (!parsed) return null;
 	const adminUsers = parseAdminUsers(process.env.CAPTHCA_LAND_ADMIN_USERS);
 	const role = adminUsers[parsed];
@@ -12,9 +17,10 @@ function getAdminUserFromHeaders(email: string | null): AdminUser | null {
 }
 
 const NAV_ITEMS = [
-	{ href: "/dashboard", label: "Dashboard", icon: "📊" },
-	{ href: "/subscribers", label: "Subscribers", icon: "👥" },
-	{ href: "/logs", label: "Logs", icon: "📋" },
+	{ href: "/admin/dashboard", label: "Dashboard", icon: "📊" },
+	{ href: "/admin/subscribers", label: "Subscribers", icon: "👥" },
+	{ href: "/admin/logs", label: "Logs", icon: "📋" },
+	{ href: "/admin/analytics", label: "Analytics", icon: "📈" },
 ];
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
