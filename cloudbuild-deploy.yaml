@@ -19,7 +19,6 @@ substitutions:
   _IMAGE_NAME: "capthca-land"
   _TAG: "latest"
   _TURNSTILE_SITE_KEY: "0x4AAAAAACl986ntf-pNkY_a"
-  _GA4_MEASUREMENT_ID: "G-QKRV6MR895"
 
 steps:
   # ── Step 1: Deploy to Cloud Run (Blue/Green) ──────────────────────────────
