@@ -28,7 +28,10 @@ export async function GET(request: Request) {
 	try {
 		const data = await fetchGA4Metrics(propertyId, dateRange);
 		if (!data) {
-			return NextResponse.json({ data: null, message: "No analytics data available for this period." });
+			return NextResponse.json({
+				data: null,
+				message: "No analytics data available for this period.",
+			});
 		}
 		return NextResponse.json({ data });
 	} catch (err) {
