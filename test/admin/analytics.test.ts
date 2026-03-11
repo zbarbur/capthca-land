@@ -28,11 +28,11 @@ describe("admin: ga4-reporting helper", () => {
 		);
 	});
 
-	it("ga4-reporting handles errors gracefully", () => {
+	it("ga4-reporting propagates errors for caller to handle", () => {
 		const src = fs.readFileSync(helperPath, "utf-8");
 		assert.ok(
-			src.includes("catch") && src.includes("return null"),
-			"ga4-reporting must catch errors and return null",
+			src.includes("catch") && src.includes("throw"),
+			"ga4-reporting must catch and re-throw errors for the API route to handle",
 		);
 	});
 

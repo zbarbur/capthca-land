@@ -27,9 +27,13 @@ export async function GET(request: Request) {
 
 	try {
 		const data = await fetchGA4Metrics(propertyId, dateRange);
+		if (!data) {
+			return NextResponse.json({ data: null, message: "No analytics data available for this period." });
+		}
 		return NextResponse.json({ data });
 	} catch (err) {
 		console.error("[admin/analytics] Failed to fetch analytics:", err);
-		return NextResponse.json({ data: null, message: "Failed to fetch analytics" });
+		const msg = err instanceof Error ? err.message : "Unknown error";
+		return NextResponse.json({ data: null, message: `Failed to fetch analytics: ${msg}` });
 	}
 }

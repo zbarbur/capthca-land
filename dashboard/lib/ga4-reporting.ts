@@ -17,13 +17,8 @@ const DATE_RANGE_MAP: Record<DateRange, string> = {
 	"90d": "90daysAgo",
 };
 
-function getClient(): BetaAnalyticsDataClient | null {
-	try {
-		return new BetaAnalyticsDataClient();
-	} catch (err) {
-		console.warn("[ga4-reporting] Failed to create analytics client:", err);
-		return null;
-	}
+function getClient(): BetaAnalyticsDataClient {
+	return new BetaAnalyticsDataClient();
 }
 
 export async function fetchGA4Metrics(
@@ -31,7 +26,6 @@ export async function fetchGA4Metrics(
 	dateRange: DateRange = "30d",
 ): Promise<GA4Metrics | null> {
 	const client = getClient();
-	if (!client) return null;
 
 	const startDate = DATE_RANGE_MAP[dateRange];
 	const property = `properties/${propertyId}`;
@@ -134,6 +128,6 @@ export async function fetchGA4Metrics(
 		};
 	} catch (err) {
 		console.warn("[ga4-reporting] Failed to fetch GA4 metrics:", err);
-		return null;
+		throw err;
 	}
 }

@@ -28,6 +28,8 @@
 - [infra] Evaluate Turbopack / Vite for build tooling (M)
 - [analytics] User journey tracking — page flow, scroll depth, time on page, session-level engagement scoring (M)
 - [analytics] Conversion funnel visualization — slider → track → inner pages → subscribe (M)
+- [analytics] Custom date range picker — arbitrary start/end dates for analytics (S)
+- [analytics] Expanded analytics — traffic sources, device breakdown, geography, custom events (M)
 - [analytics] CSV export for subscriber data (S)
 - [analytics] Admin audit log — who accessed what, when (S)
 - [analytics] BigQuery export — GA4 raw events to BigQuery, join with Firestore subscriber data, custom funnels and cohort analysis (L)
