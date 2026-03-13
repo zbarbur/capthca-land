@@ -61,7 +61,7 @@ update_template_version() {
 	local repo
 	repo=$(read_template_repo)
 	if [ -z "$repo" ]; then
-		repo="https://github.com/zbarbur/capthca-template"
+		repo="https://github.com/zbarbur/agentic-scrum-template"
 	fi
 	cat > "$VERSION_FILE" <<EOF
 # Last synced template version
@@ -82,7 +82,7 @@ while [[ $# -gt 0 ]]; do
 			echo "Adding template remote..."
 			REPO_URL=$(read_template_repo)
 			if [ -z "$REPO_URL" ]; then
-				REPO_URL="https://github.com/zbarbur/capthca-template"
+				REPO_URL="https://github.com/zbarbur/agentic-scrum-template"
 			fi
 			git remote add template "$REPO_URL" 2>/dev/null \
 				&& echo "Done. Remote 'template' added (${REPO_URL})." \
